@@ -48,6 +48,9 @@ querydsl {
     jpa = true
     querydslSourcesDir = querydslDir
 }
+
+
+
 sourceSets {
     main.java.srcDir querydslDir
 }
