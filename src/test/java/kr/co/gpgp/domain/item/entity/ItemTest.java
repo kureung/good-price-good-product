@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.entity.item;
+package kr.co.gpgp.domain.item.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
