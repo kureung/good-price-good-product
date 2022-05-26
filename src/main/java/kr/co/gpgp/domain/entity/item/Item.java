@@ -1,5 +1,6 @@
 package kr.co.gpgp.domain.entity.item;
 
+import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.Embedded;
@@ -15,30 +16,26 @@ import lombok.NoArgsConstructor;
 public class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
 
     private int price;
     private int stockQuantity;
-    private String imageUrl;
 
     @Embedded
     private ItemInfo info;
 
-    private Item(int price, int stockQuantity, String imageUrl,
-        ItemInfo info) {
+    private Item(int price, int stockQuantity, ItemInfo info) {
         this.price = price;
         this.stockQuantity = stockQuantity;
-        this.imageUrl = imageUrl;
         this.info = info;
     }
 
-    public static Item create(int price, int stockQuantity, String imageUrl, ItemInfo info) {
-        return new Item(price, stockQuantity, imageUrl, info);
+    public static Item of(int price, int stockQuantity, ItemInfo info) {
+        return new Item(price, stockQuantity, info);
     }
 
-    public void removeStock(int quantity) {
+    public void minusStock(int quantity) {
         validationRemoveStock(quantity);
         stockQuantity -= quantity;
     }
@@ -50,7 +47,7 @@ public class Item {
         }
     }
 
-    public void addStock(int quantity) {
+    public void plusStock(int quantity) {
         validationAddStock(quantity);
         stockQuantity += quantity;
     }
@@ -62,10 +59,9 @@ public class Item {
         }
     }
 
-    public void update(Item newItem) {
-        this.price = newItem.getPrice();
-        this.stockQuantity = newItem.getStockQuantity();
-        this.imageUrl = newItem.getImageUrl();
-        this.info = newItem.getInfo();
+    public void update(int price, int stockQuantity, ItemInfo info) {
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.info = info;
     }
 }
