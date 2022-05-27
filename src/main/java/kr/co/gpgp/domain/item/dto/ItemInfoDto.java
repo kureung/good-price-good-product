@@ -54,4 +54,5 @@ public class ItemInfoDto {
 
         return new ItemInfoDto(name, weight, code, imageUrl, releaseDate);
     }
+
 }
