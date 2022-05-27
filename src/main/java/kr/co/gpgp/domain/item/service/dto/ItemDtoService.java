@@ -10,10 +10,10 @@ public interface ItemDtoService {
 
     ItemDtoResponse itemConversionDto(Item item);
 
-     Item dtoConversionItem(ItemDtoRequest request);
+    Item dtoConversionItem(ItemDtoRequest request);
 
-     ItemInfo dtoConversionItemInfo(ItemInfoDto infoDto);
+    ItemInfo dtoConversionItemInfo(ItemInfoDto infoDto);
 
-     ItemInfoDto itemInfoConversionDto(ItemInfo info);
+    ItemInfoDto itemInfoConversionDto(ItemInfo info);
 
 }

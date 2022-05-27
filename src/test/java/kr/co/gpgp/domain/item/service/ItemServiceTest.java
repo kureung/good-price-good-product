@@ -48,8 +48,7 @@ class ItemServiceTest {
                         500,
                         "123",
                         LocalDate.now(),
-                        "www.naver.com"
-                    ))
+                        "www.naver.com"))
             ),
 
             Arguments.of(
@@ -61,8 +60,7 @@ class ItemServiceTest {
                         600,
                         "456",
                         LocalDate.now().minusMonths(1),
-                        "www.google.co.kr"
-                    ))
+                        "www.google.co.kr"))
             ),
 
             Arguments.of(
@@ -74,9 +72,7 @@ class ItemServiceTest {
                         700,
                         "789",
                         LocalDate.now().minusDays(2),
-                        "www.daum.net"
-                    )
-                )
+                        "www.daum.net"))
             )
         );
     }
