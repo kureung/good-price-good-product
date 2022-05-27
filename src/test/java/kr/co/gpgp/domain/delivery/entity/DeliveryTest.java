@@ -2,6 +2,7 @@ package kr.co.gpgp.domain.delivery.entity;
 
 import static org.assertj.core.api.Assertions.*;
 
+import kr.co.gpgp.domain.delivery.exception.DeliveryStatusOverflowException;
 import org.junit.jupiter.api.Test;
 
 public class DeliveryTest {
@@ -26,7 +27,7 @@ public class DeliveryTest {
         delivery.next();
         delivery.next();
         assertThat(delivery)
-            .isNotInstanceOf(ArrayIndexOutOfBoundsException.class);
+            .isNotInstanceOf(DeliveryStatusOverflowException.class);
 
     }
 
