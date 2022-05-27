@@ -1,50 +1,74 @@
 package kr.co.gpgp.domain.delivery.entity;
 
+import static javax.persistence.EnumType.STRING;
+
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
-public class Delivery /*extends BaseEntity*/ {
-
-    public enum Status {
-        ACCEPT,         //결제완료
-        INSTRUCT,       //상품준비중
-        DEPARTURE,      //배송지시
-        FINAL_DELIVERY, //배송중
-        NONE_TRACKING   //배송완료
-    }
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(STRING)
     private Status status;
 
+    private interface StatusUse {
+        String get();
+        Status next();
+    }// |
+    //  V
+    protected enum Status implements  StatusUse {
+        ACCEPT {
+            public String get()  { return "결제완료"; }
+            public Status next() { return INSTRUCT; }
+        },
+        INSTRUCT {
+            public String get()  { return "상품준비중"; }
+            public Status next() { return DEPARTURE; }
+        },
+        DEPARTURE {
+            public String get()  { return "배송지시"; }
+            public Status next() { return FINAL_DELIVERY; }
+        },
+        FINAL_DELIVERY {
+            public String get()  { return "배송중"; }
+            public Status next() { return NONE_TRACKING; }
+        },
+        NONE_TRACKING {
+            public String get()  { return "배송완료"; }
+            public Status next()  {
+                throw new ArrayIndexOutOfBoundsException("이미 완료된 배송입니다.");
+            }
+        };
 
-    @OneToOne
-    private Address address;
-//   System.out.println(status.ordinal()); //enum 순서
-
-
-    public void updateStatus() {
-        // 업데이트 호출하면 자동으로 됨
-        if (status == null) {
-            status = Status.ACCEPT;
-        } else if (status == Status.ACCEPT) {
-            status = Status.INSTRUCT;
-        } else if (status == Status.INSTRUCT) {
-            status = Status.DEPARTURE;
-        } else if (status == Status.DEPARTURE) {
-            status = Status.FINAL_DELIVERY;
-        } else if (status == Status.FINAL_DELIVERY) {
-            status = Status.NONE_TRACKING;
+        private Status statusNext() {
+            return this.next();
         }
+
+        private String getValue() {
+            return this.get();
+        }
+
+    }
+
+    protected Delivery() {
+        status = Status.ACCEPT;
+    }
+
+    public void next() {
+        status = status.statusNext();
+    }
+
+    public String getStatus() {
+        return status.getValue();
     }
 
 
