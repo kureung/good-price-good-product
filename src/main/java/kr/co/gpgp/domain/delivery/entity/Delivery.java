@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import kr.co.gpgp.domain.delivery.entity.enums.StatusImpl;
 import lombok.Getter;
 
 @Entity
@@ -18,58 +19,17 @@ public class Delivery {
     private Long id;
 
     @Enumerated(STRING)
-    private Status status;
-
-    private interface StatusUse {
-        String get();
-        Status next();
-    }// |
-    //  V
-    protected enum Status implements  StatusUse {
-        ACCEPT {
-            public String get()  { return "결제완료"; }
-            public Status next() { return INSTRUCT; }
-        },
-        INSTRUCT {
-            public String get()  { return "상품준비중"; }
-            public Status next() { return DEPARTURE; }
-        },
-        DEPARTURE {
-            public String get()  { return "배송지시"; }
-            public Status next() { return FINAL_DELIVERY; }
-        },
-        FINAL_DELIVERY {
-            public String get()  { return "배송중"; }
-            public Status next() { return NONE_TRACKING; }
-        },
-        NONE_TRACKING {
-            public String get()  { return "배송완료"; }
-            public Status next()  {
-                throw new ArrayIndexOutOfBoundsException("이미 완료된 배송입니다.");
-            }
-        };
-
-        private Status statusNext() {
-            return this.next();
-        }
-
-        private String getValue() {
-            return this.get();
-        }
-
-    }
+    private StatusImpl status;
 
     protected Delivery() {
-        status = Status.ACCEPT;
+        status = StatusImpl.ACCEPT;
     }
 
     public void next() {
-        status = status.statusNext();
+        status = status.next();
     }
 
     public String getStatus() {
-        return status.getValue();
+        return status.get();
     }
-
-
 }
