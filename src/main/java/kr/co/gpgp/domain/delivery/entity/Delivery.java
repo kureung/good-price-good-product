@@ -20,43 +20,46 @@ public class Delivery {
     @Enumerated(STRING)
     private Status status;
 
-    private enum Status {
-
-        ACCEPT("결제완료"),          //결제완료
-        INSTRUCT("상품준비중"),       //상품준비중
-        DEPARTURE("배송지시"),       //배송지시
-        FINAL_DELIVERY("배송중"),    //배송중
-        NONE_TRACKING("배송완료");   //배송완료
-
-        private int index = this.ordinal();
-        private String val;
-
-        Status(String val) {
-            this.val = val;
-        }
+    private interface StatusUse {
+        String get();
+        Status next();
+    }// |
+    //  V
+    protected enum Status implements  StatusUse {
+        ACCEPT {
+            public String get()  { return "결제완료"; }
+            public Status next() { return INSTRUCT; }
+        },
+        INSTRUCT {
+            public String get()  { return "상품준비중"; }
+            public Status next() { return DEPARTURE; }
+        },
+        DEPARTURE {
+            public String get()  { return "배송지시"; }
+            public Status next() { return FINAL_DELIVERY; }
+        },
+        FINAL_DELIVERY {
+            public String get()  { return "배송중"; }
+            public Status next() { return NONE_TRACKING; }
+        },
+        NONE_TRACKING {
+            public String get()  { return "배송완료"; }
+            public Status next()  {
+                throw new ArrayIndexOutOfBoundsException("이미 완료된 배송입니다.");
+            }
+        };
 
         private Status statusNext() {
-            switch (this) {
-                case ACCEPT:
-                    return INSTRUCT;
-                case INSTRUCT:
-                    return DEPARTURE;
-                case DEPARTURE:
-                    return FINAL_DELIVERY;
-                case FINAL_DELIVERY:
-                    return NONE_TRACKING;
-                default:
-                    throw new EnumConstantNotPresentException(Status.class,"이미 완료된 배송입니다.");
-            }
+            return this.next();
         }
 
         private String getValue() {
-            return val;
+            return this.get();
         }
 
     }
 
-    public Delivery() {
+    protected Delivery() {
         status = Status.ACCEPT;
     }
 
