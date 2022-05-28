@@ -15,12 +15,14 @@ public class ItemServiceImpl implements ItemService{
     private final ItemRepository itemRepository;
 
     @Override
+    @Transactional
     public Long save(Item item) {
         Item savedItem = itemRepository.save(item);
         return savedItem.getId();
     }
 
     @Override
+    @Transactional
     public void update(Long itemId, Item item) {
         Item findItem = findOne(itemId);
         findItem.update(item.getPrice(), item.getStockQuantity(), item.getInfo());
