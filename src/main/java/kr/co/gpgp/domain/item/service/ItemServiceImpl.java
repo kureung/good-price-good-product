@@ -1,6 +1,6 @@
 package kr.co.gpgp.domain.item.service;
 
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,14 +30,7 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public Item findOne(Long itemId) {
-        Optional<Item> findItemOptional = itemRepository.findById(itemId);
-        validationFindItem(findItemOptional);
-        return findItemOptional.orElse(null);
-    }
-
-    private void validationFindItem(Optional<Item> findItemOptional) {
-        if (findItemOptional.isEmpty()) {
-            throw new IllegalStateException("회원을 찾을 수 없습니다.");
-        }
+        return itemRepository.findById(itemId)
+            .orElseThrow(() -> new NoSuchElementException("회원을 찾을 수 없습니다."));
     }
 }

@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.item.service;
 
-import java.util.List;
 import kr.co.gpgp.domain.item.entity.Item;
 
 public interface ItemService {
