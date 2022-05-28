@@ -10,11 +10,12 @@ spring:
 
   jpa:
     open-in-view: false
-     hibernate:
-       ddl-auto: create
-     properties:
-       hibernate:
-         format_sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
 
 logging:
   level:
