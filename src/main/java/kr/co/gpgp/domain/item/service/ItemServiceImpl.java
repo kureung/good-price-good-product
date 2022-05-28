@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.item.service;
 
-import java.util.List;
 import java.util.Optional;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.repository.ItemRepository;
@@ -25,11 +24,6 @@ public class ItemServiceImpl implements ItemService{
     public void update(Long itemId, Item item) {
         Item findItem = findOne(itemId);
         findItem.update(item.getPrice(), item.getStockQuantity(), item.getInfo());
-    }
-
-    @Override
-    public List<Item> findAll() {
-        return itemRepository.findAll();
     }
 
     @Override

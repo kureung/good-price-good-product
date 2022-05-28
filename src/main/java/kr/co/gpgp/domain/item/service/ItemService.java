@@ -9,7 +9,5 @@ public interface ItemService {
 
     void update(Long itemId, Item item);
 
-    List<Item> findAll();
-
     Item findOne(Long itemId);
 }
