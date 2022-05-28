@@ -21,24 +21,20 @@ public class Address {
     private String zipCode;         //우편번호
     private String name;            //이름
 
-    private String requirement;     //요청사항 null ok
     private String detailed;        //상세주소
 
 
     @Builder
-    public Address(String roadName, String detailed, String zipCode, String name,
-        String requirement
+    public Address(String roadName, String detailed, String zipCode, String name
     ) {
         AddressValidator.verifyZipCodes(zipCode);
         AddressValidator.verifyRoadName(roadName);
         AddressValidator.verifyName(name);
-        AddressValidator.verifyRequirement(requirement);
         AddressValidator.verifyDetailed(detailed);
 
         this.roadName = roadName;
         this.zipCode = zipCode;
         this.name = name;
-        this.requirement = requirement;
         this.detailed = detailed;
     }
 
@@ -48,7 +44,6 @@ public class Address {
         private static final int NAME_MIN_LEN = 1;
         private static final int ROADNAME_MAX_LEN = 40;
         private static final int ROADNAME_MIN_LEN = 9;
-        protected static final int REQUIREMENT_MAX_LEN = 18;
 
         private static final Pattern OLD_ZIP_CODE = Pattern.compile("^\\d{3}-\\d{3}$");
         private static final Pattern NEW_ZIP_CODE = Pattern.compile("^\\d{5}$");
@@ -82,13 +77,6 @@ public class Address {
                 throw new IllegalArgumentException("주소 이름 길이가 맞지 않습니다.");
             }
         }
-
-        private static void verifyRequirement(String requirement) {
-            if (!numberBetween(0, REQUIREMENT_MAX_LEN, requirement.length())) {
-                throw new IllegalArgumentException("요청사항은 " + REQUIREMENT_MAX_LEN + "자를 넘을수 없습니다.");
-            }
-        }
-
 
         private static void verifyDetailed(String detailed) {
             if (detailed.length() > 17) {

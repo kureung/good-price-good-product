@@ -26,7 +26,6 @@ public class AddressTest {
             Address.builder()
                 .zipCode(arg)
                 .roadName(SUCCESS_ROADNAME)
-                .requirement(SUCCESS_REQUIREMENT)
                 .name(SUCCESS_NAME)
                 .detailed(SUCCESS_DETAILED)
                 .build()
@@ -42,7 +41,6 @@ public class AddressTest {
             Address.builder()
                 .zipCode(arg)
                 .roadName(SUCCESS_ROADNAME)
-                .requirement(SUCCESS_REQUIREMENT)
                 .name(SUCCESS_NAME)
                 .detailed(SUCCESS_DETAILED)
                 .build()
@@ -57,7 +55,6 @@ public class AddressTest {
             Address.builder()
                 .zipCode(SUCCESS_USERPOSTALCODE_NEW)
                 .roadName(arg)
-                .requirement(SUCCESS_REQUIREMENT)
                 .name(SUCCESS_NAME)
                 .detailed(SUCCESS_DETAILED)
                 .build()
@@ -75,7 +72,6 @@ public class AddressTest {
             Address.builder()
                 .zipCode(SUCCESS_USERPOSTALCODE_NEW)
                 .roadName(roadname)
-                .requirement(SUCCESS_REQUIREMENT)
                 .name(SUCCESS_NAME)
                 .detailed(SUCCESS_DETAILED)
                 .build()
@@ -90,7 +86,6 @@ public class AddressTest {
             Address.builder()
                 .zipCode(SUCCESS_USERPOSTALCODE_NEW)
                 .roadName(SUCCESS_ROADNAME)
-                .requirement(SUCCESS_REQUIREMENT)
                 .name(arg)
                 .detailed(SUCCESS_DETAILED)
                 .build()
@@ -105,7 +100,6 @@ public class AddressTest {
             Address.builder()
                 .zipCode(SUCCESS_USERPOSTALCODE_NEW)
                 .roadName(SUCCESS_ROADNAME)
-                .requirement(SUCCESS_REQUIREMENT)
                 .name(arg)
                 .detailed(SUCCESS_DETAILED)
                 .build()
@@ -113,20 +107,7 @@ public class AddressTest {
             .hasMessage("주소 이름 길이가 맞지 않습니다.");
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"1234512345_1234512345_123451 ","가나다라마바사_가나다라마바사_가나다라마바사"})
-    void 요청사항_길이가_벗어나_예외가_발생합니다(String arg) {
-        assertThatThrownBy(() ->
-            Address.builder()
-                .zipCode(SUCCESS_USERPOSTALCODE_NEW)
-                .roadName(SUCCESS_ROADNAME)
-                .requirement(arg)
-                .name(SUCCESS_NAME)
-                .detailed(SUCCESS_DETAILED)
-                .build()
-        ).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("요청사항은 " + Address.AddressValidator.REQUIREMENT_MAX_LEN + "자를 넘을수 없습니다.");
-    }
+
 
     @ParameterizedTest
     @ValueSource(strings = {"1234512345_1234512345_1234512345_1234512345_1234512345_ "})
@@ -135,7 +116,6 @@ public class AddressTest {
             Address.builder()
                 .zipCode(SUCCESS_USERPOSTALCODE_NEW)
                 .roadName(SUCCESS_ROADNAME)
-                .requirement(SUCCESS_REQUIREMENT)
                 .name(SUCCESS_NAME)
                 .detailed(arg)
                 .build()
