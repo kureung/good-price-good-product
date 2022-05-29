@@ -21,8 +21,8 @@ public class Seller {
     private int totalPrice;      //총 금액
     private LocalDateTime field; //정산 날짜
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @Builder
     public Seller(int totalPrice, LocalDateTime field) {
