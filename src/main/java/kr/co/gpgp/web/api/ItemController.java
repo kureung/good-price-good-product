@@ -9,10 +9,10 @@ import kr.co.gpgp.domain.item.service.ItemService;
 import kr.co.gpgp.domain.item.service.dto.ItemDtoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,8 +27,7 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemDtoResponse> register(
-        @Valid ItemDtoRequest request,
-        BindingResult result) {
+        @Valid @RequestBody ItemDtoRequest request) {
 
         Item item = itemDtoService.dtoConversionItem(request);
         Long itemId = itemService.save(item);
@@ -52,4 +51,17 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/{itemId}")
+    public ResponseEntity<ItemDtoResponse> updateItem(
+        @PathVariable Long itemId,
+        @Valid @RequestBody ItemDtoRequest request) {
+
+        Item item = itemDtoService.dtoConversionItem(request);
+        itemService.update(itemId, item);
+
+        Item findItem = itemService.findOne(itemId);
+        ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
+
+        return ResponseEntity.ok(response);
+    }
 }
