@@ -1,15 +1,10 @@
 package kr.co.gpgp.domain.user.entity;
 
-
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-//import kr.co.gpgp.domain.delivery.entity.Address;
 import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,11 +24,6 @@ public class User {
     private String email;
     private String pw;
 
-//    @OneToMany
-//    private List<Address> address;
-//
-//    @OneToOne
-//    private Seller seller;
 
     @Builder
     public User( String name, String email, String pw) {
