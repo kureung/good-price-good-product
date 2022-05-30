@@ -38,6 +38,7 @@ public class ItemController {
             .path("/{id}")
             .buildAndExpand(findItem.getId())
             .toUri();
+        
         return ResponseEntity.created(location)
             .body(response);
     }
@@ -49,6 +50,7 @@ public class ItemController {
         Item findItem = itemService.findOne(itemId);
         ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
         return ResponseEntity.ok(response);
+
     }
 
     @PostMapping("/{itemId}")
