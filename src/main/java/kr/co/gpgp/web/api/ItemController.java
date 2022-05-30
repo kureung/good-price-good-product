@@ -44,9 +44,9 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     public ResponseEntity<ItemDtoResponse> findOneItem(
-        @PathVariable Long id) {
+        @PathVariable Long itemId) {
 
-        Item findItem = itemService.findOne(id);
+        Item findItem = itemService.findOne(itemId);
         ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
         return ResponseEntity.ok(response);
     }
