@@ -21,7 +21,7 @@ public class UserTest {
             User.builder()
                 .name("abcde_abcde_abcde_a")
                 .email(SUCCESS_EMAIL)
-                .pw(SUCCESS_PW)
+//                .pw(SUCCESS_PW)
                 .build();
         }).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이름이_유효하지_않습니다.");
@@ -35,7 +35,7 @@ public class UserTest {
             User.builder()
                 .name(arg)
                 .email(SUCCESS_EMAIL)
-                .pw(SUCCESS_PW)
+//                .pw(SUCCESS_PW)
                 .build();
         }).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이름은 비어있을 수 없습니다.");
@@ -49,7 +49,7 @@ public class UserTest {
             User.builder()
                 .name(SUCCESS_NAME)
                 .email(arg)
-                .pw(SUCCESS_PW)
+             //   .pw(SUCCESS_PW)
                 .build();
         }).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이메일은 비어있을 수 없습니다");
@@ -62,7 +62,7 @@ public class UserTest {
             User.builder()
                 .name(SUCCESS_NAME)
                 .email(arg)
-                .pw(SUCCESS_PW)
+                //.pw(SUCCESS_PW)
                 .build();
         }).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("알 수 없는 도메인");
@@ -74,7 +74,7 @@ public class UserTest {
             User.builder()
                 .name(SUCCESS_NAME)
                 .email(arg)
-                .pw(SUCCESS_PW)
+                //.pw(SUCCESS_PW)
                 .build();
         }).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이메일이 제한 길이를 벗어났습니다.");
@@ -87,7 +87,7 @@ public class UserTest {
             User.builder()
                 .name(SUCCESS_NAME)
                 .email(SUCCESS_EMAIL)
-                .pw(arg)
+                //.pw(arg)
                 .build();
         }).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("비번의 길이가 맞지 않습니다.");
@@ -101,7 +101,7 @@ public class UserTest {
             User.builder()
                 .name(SUCCESS_NAME)
                 .email(SUCCESS_EMAIL)
-                .pw(arg)
+                //.pw(arg)
                 .build();
         }).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("비번은 비어있을 수 없습니다.");

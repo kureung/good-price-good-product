@@ -2,6 +2,8 @@ package kr.co.gpgp.domain.user.entity;
 
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,32 +26,31 @@ public class User {
     @OneToOne
     private Seller seller;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private String name;
     private String email;
-    private String pw;
-
 
     @Builder
-    public User( String name, String email, String pw) {
+    public User( String name, String email) {
 
-        UserValidator.verifyPw(pw);
         UserValidator.verifyName(name);
         UserValidator.verifyEmail(email);
 
         this.name = name;
         this.email = email;
-        this.pw = pw;
 
     }
 
-    public void updatePw(String pw) {
-        UserValidator.verifyPw(pw);
-        this.pw = pw;
-    }
-    public void updateEmail(String email){
+
+    public User updateEmail(String email){
         UserValidator.verifyEmail(email);
         this.email=email;
+
+        return this;
     }
+
     public void updateName(String name){
         UserValidator.verifyName(name);
         this.name= name;
@@ -63,8 +64,6 @@ public class User {
         private static final int EMAIL_MIN_LEN = 8;
         private static final int NAME_MAX_LEN = 18;
         private static final int NAME_MIN_LEN = 1;
-        private static final int PW_MAX_LEN = 38;
-        private static final int PW_MIN_LEN = 6;
 
         private static final Set<String> ALLOW_DOMAINS = Set.of(
             "naver.com",
@@ -111,21 +110,24 @@ public class User {
             }
         }
 
-        private static void verifyPw(String pw) {
-
-            if (pw == null || pw.isBlank()) {
-                throw new IllegalArgumentException("비번은 비어있을 수 없습니다.");
-            }
-
-            if (!numberBetween(PW_MIN_LEN, PW_MAX_LEN, pw.length())) {
-                throw new IllegalArgumentException("비번의 길이가 맞지 않습니다.");
-            }
-        }
+//        private static void verifyPw(String pw) {
+//
+//            if (pw == null || pw.isBlank()) {
+//                throw new IllegalArgumentException("비번은 비어있을 수 없습니다.");
+//            }
+//
+//            if (!numberBetween(PW_MIN_LEN, PW_MAX_LEN, pw.length())) {
+//                throw new IllegalArgumentException("비번의 길이가 맞지 않습니다.");
+//            }
+//        }
 
         private static boolean numberBetween(int min, int max, int num) {
             return (min <= num && max >= num);
         }
     }
 
+    public String getRoleKey(){
+        return this.role.getKey();
+    }
 
 }
