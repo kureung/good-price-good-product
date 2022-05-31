@@ -1,7 +1,28 @@
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD}
+    bean: jasyptStringEncryptor
+
 spring:
+  profiles:
+    include: oauth
   output:
     ansi.enabled: always
+  datasource:
+    url: jdbc:h2:mem:68546e49-4775-42ea-b52b-8c0bec05dcc1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
 
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
+
