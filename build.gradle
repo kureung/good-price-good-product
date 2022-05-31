@@ -1,41 +1,70 @@
 buildscript {
-    ext {
+  ext {
         queryDslVersion = "5.0.0"
-    }
+        springBootVersion = '2.6.0'
+  }
+  repositories {
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+
 }
 
 
 plugins {
-    id 'org.springframework.boot' version '2.7.0'
+    id 'org.springframework.boot' version '2.6.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 
     //querydsl 추가
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
+repositories {
+    mavenCentral()
+}
 
 group = 'kr.co.gpgp'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-mustache'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.4.RELEASE'
+
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //datebase
+    runtimeOnly 'com.h2database:h2'
 
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    //kakao login oauth
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.4.4'
+    implementation 'io.jsonwebtoken:jjwt:0.5.1'
+
+    //Jsaypt
+    implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '2.1.2'
+    compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.61'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.6.0'
+
+    //test
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
 tasks.named('test') {
