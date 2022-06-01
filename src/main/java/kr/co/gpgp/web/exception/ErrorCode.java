@@ -15,6 +15,7 @@ public enum ErrorCode {
 
     // Item
     STOCK_OUT_OF_RANGE(HttpStatus.BAD_REQUEST, "재고의 범위를 벗어났습니다."),
+    NOT_FOUND_ITEM(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수가 없습니다."),
     ;
 
     private final HttpStatus status;
