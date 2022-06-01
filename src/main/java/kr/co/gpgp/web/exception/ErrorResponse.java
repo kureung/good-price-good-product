@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
 @Getter
 public class ErrorResponse {
 
     private String message;
-    private int status;
+    private HttpStatus status;
     private List<FieldError> errors;
 
 
@@ -48,7 +49,7 @@ public class ErrorResponse {
         private String value;
         private String reason;
 
-        public static List<FieldError> of (String field, String value, String reason) {
+        public static List<FieldError> of(String field, String value, String reason) {
             List<FieldError> fieldErrors = new ArrayList<>();
             fieldErrors.add(new FieldError(field, value, reason));
             return fieldErrors;
@@ -64,4 +65,5 @@ public class ErrorResponse {
                 .collect(Collectors.toList());
         }
     }
+
 }
