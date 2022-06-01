@@ -5,7 +5,8 @@ import javax.validation.Valid;
 import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
 import kr.co.gpgp.domain.item.dto.ItemDtoResponse;
 import kr.co.gpgp.domain.item.entity.Item;
-import kr.co.gpgp.domain.item.service.ItemService;
+import kr.co.gpgp.domain.item.service.ItemCommandService;
+import kr.co.gpgp.domain.item.service.ItemFindService;
 import kr.co.gpgp.domain.item.service.dto.ItemDtoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequiredArgsConstructor
 public class ItemController {
 
-    private final ItemService itemService;
+    private final ItemCommandService itemCommandService;
+    private final ItemFindService itemFindService;
     private final ItemDtoService itemDtoService;
 
     @PostMapping
@@ -30,8 +32,8 @@ public class ItemController {
         @Valid @RequestBody ItemDtoRequest request) {
 
         Item item = itemDtoService.dtoConversionItem(request);
-        Long itemId = itemService.save(item);
-        Item findItem = itemService.findOne(itemId);
+        Long itemId = itemCommandService.save(item);
+        Item findItem = itemFindService.findOne(itemId);
         ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -47,10 +49,9 @@ public class ItemController {
     public ResponseEntity<ItemDtoResponse> findOneItem(
         @PathVariable Long itemId) {
 
-        Item findItem = itemService.findOne(itemId);
+        Item findItem = itemFindService.findOne(itemId);
         ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
         return ResponseEntity.ok(response);
-
     }
 
     @PostMapping("/{itemId}")
@@ -59,9 +60,9 @@ public class ItemController {
         @Valid @RequestBody ItemDtoRequest request) {
 
         Item item = itemDtoService.dtoConversionItem(request);
-        itemService.update(itemId, item);
+        itemCommandService.update(itemId, item);
 
-        Item findItem = itemService.findOne(itemId);
+        Item findItem = itemFindService.findOne(itemId);
         ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
 
         return ResponseEntity.ok(response);
