@@ -3,6 +3,7 @@ package kr.co.gpgp.web.exception;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -13,17 +14,13 @@ import org.springframework.validation.BindingResult;
 @Getter
 public class ErrorResponse {
 
+    private ErrorCode code;
     private String message;
     private HttpStatus status;
     private List<FieldError> errors;
 
-
-    private ErrorResponse(ErrorCode code) {
-        this.status = code.getStatus();
-        this.message = code.getMessage();
-    }
-
     private ErrorResponse(ErrorCode code, List<FieldError> errors) {
+        this.code = code;
         this.status = code.getStatus();
         this.message = code.getMessage();
         this.errors = errors;
@@ -34,7 +31,7 @@ public class ErrorResponse {
     }
 
     public static ErrorResponse of(ErrorCode code) {
-        return new ErrorResponse(code);
+        return new ErrorResponse(code, Collections.emptyList());
     }
 
     public static ErrorResponse of(ErrorCode code, BindingResult bindingResult) {
