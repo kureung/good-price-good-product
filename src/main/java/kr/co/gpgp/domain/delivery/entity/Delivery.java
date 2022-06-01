@@ -44,7 +44,7 @@ public class Delivery {
     @Enumerated(STRING)
     private StatusImpl status;
 
-    protected Delivery() {
+    public Delivery() {
         status = StatusImpl.ACCEPT;
     }
 
