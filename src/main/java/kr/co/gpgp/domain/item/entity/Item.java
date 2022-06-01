@@ -7,6 +7,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import kr.co.gpgp.web.exception.ErrorCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -43,7 +44,7 @@ public class Item {
     private void validationRemoveStock(int quantity) {
         int restStock = stockQuantity - quantity;
         if (restStock < 0) {
-            throw new IllegalStateException("재고가 부족합니다.");
+            throw new IllegalStateException(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
         }
     }
 
@@ -55,7 +56,7 @@ public class Item {
     private void validationAddStock(int quantity) {
         int restStock = stockQuantity + quantity;
         if (restStock > 1_000_000_000) {
-            throw new IllegalStateException("재고는 1억개를 넘을 수 없습니다.");
+            throw new IllegalStateException(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
         }
     }
 
