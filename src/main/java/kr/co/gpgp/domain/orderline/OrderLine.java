@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import kr.co.gpgp.domain.item.entity.Item;
+import kr.co.gpgp.domain.order.entity.Order;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,10 @@ public class OrderLine {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     private int price;
     private int count;
@@ -49,4 +54,9 @@ public class OrderLine {
     public int getTotalPrice() {
         return price * count;
     }
+
+    public void designateOrder(Order order) {
+        this.order = order;
+    }
+
 }
