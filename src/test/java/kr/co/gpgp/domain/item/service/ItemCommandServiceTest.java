@@ -1,6 +1,7 @@
 package kr.co.gpgp.domain.item.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.stream.Stream;
@@ -16,20 +17,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class ItemServiceTest {
+class ItemCommandServiceTest {
 
     @Autowired
     private ItemRepository itemRepository;
 
     @Autowired
-    private ItemService itemService;
+    private ItemCommandService itemCommandService;
+
 
     @ParameterizedTest
     @MethodSource("toSaveProvideItem")
     void 상품_등록_테스트(Item item) {
 
         // when
-        Long itemId = itemService.save(item);
+        Long itemId = itemCommandService.save(item);
         Item findItem = itemRepository.findById(itemId)
             .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
 
@@ -79,67 +81,6 @@ class ItemServiceTest {
 
 
     @ParameterizedTest
-    @MethodSource("toFindOneProvideItem")
-    void 상품_조회_테스트(Item item) {
-
-        // given
-        Item savedItem = itemRepository.save(item);
-        Long itemId = savedItem.getId();
-
-        // when
-        Item findItem = itemService.findOne(itemId);
-
-        // then
-        assertThat(item).usingRecursiveComparison()
-            .ignoringFields("id")
-            .isEqualTo(findItem);
-    }
-
-    private static Stream<Arguments> toFindOneProvideItem() {
-        return Stream.of(
-            Arguments.of(
-                Item.of(
-                    1000,
-                    100,
-                    ItemInfo.of(
-                        "item1",
-                        500,
-                        "123",
-                        LocalDate.now(),
-                        "www.naver.com"
-                    ))
-            ),
-
-            Arguments.of(
-                Item.of(
-                    2000,
-                    300,
-                    ItemInfo.of(
-                        "item2",
-                        600,
-                        "456",
-                        LocalDate.now().minusMonths(1),
-                        "www.google.co.kr"
-                    ))
-            ),
-
-            Arguments.of(
-                Item.of(
-                    3000,
-                    200,
-                    ItemInfo.of(
-                        "item3",
-                        700,
-                        "789",
-                        LocalDate.now().minusDays(2),
-                        "www.daum.net"
-                    )
-                )
-            )
-        );
-    }
-
-    @ParameterizedTest
     @MethodSource("toUpdateProvideItem")
     void 상품_수정_테스트(Item item, Item newItem) {
 
@@ -148,7 +89,7 @@ class ItemServiceTest {
         Long itemId = savedItem.getId();
 
         // when
-        itemService.update(itemId, newItem);
+        itemCommandService.update(itemId, newItem);
         Item findItem = itemRepository.findById(itemId)
             .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
 
@@ -227,7 +168,8 @@ class ItemServiceTest {
                         LocalDate.now().minusMonths(1),
                         "www.google.co.kr"
                     ))
-                )
+            )
         );
     }
+
 }

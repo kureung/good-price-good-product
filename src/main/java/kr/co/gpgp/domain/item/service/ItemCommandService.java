@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.item.service;
 
-import java.util.NoSuchElementException;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,29 +7,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService{
+public class ItemCommandService {
 
     private final ItemRepository itemRepository;
+    private final ItemFindService itemFindService;
 
-    @Override
-    @Transactional
     public Long save(Item item) {
         Item savedItem = itemRepository.save(item);
         return savedItem.getId();
     }
 
-    @Override
-    @Transactional
     public void update(Long itemId, Item item) {
-        Item findItem = findOne(itemId);
+        Item findItem = itemFindService.findOne(itemId);
         findItem.update(item.getPrice(), item.getStockQuantity(), item.getInfo());
-    }
-
-    @Override
-    public Item findOne(Long itemId) {
-        return itemRepository.findById(itemId)
-            .orElseThrow(() -> new NoSuchElementException("회원을 찾을 수 없습니다."));
     }
 }
