@@ -36,8 +36,7 @@ public class Delivery {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToOne
-    @JoinColumn(name = "order_id")
+    @OneToOne(fetch = FetchType.LAZY , mappedBy = "delivery")
     private Order order;
 
 
