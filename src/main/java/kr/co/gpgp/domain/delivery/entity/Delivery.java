@@ -2,6 +2,7 @@ package kr.co.gpgp.domain.delivery.entity;
 
 import static javax.persistence.EnumType.STRING;
 
+import com.querydsl.core.types.Order;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -35,10 +36,9 @@ public class Delivery {
     @JoinColumn(name = "address_id")
     private Address address;
 
-//    // ⬇ 아직 만들어 지지 않는 entity
-//    @OneToOne
-//    @JoinColumn(name = "order_id")
-//    private Order order;
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
 
     @Enumerated(STRING)
