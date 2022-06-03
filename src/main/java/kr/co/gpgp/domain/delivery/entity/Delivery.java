@@ -2,7 +2,6 @@ package kr.co.gpgp.domain.delivery.entity;
 
 import static javax.persistence.EnumType.STRING;
 
-import com.querydsl.core.types.Order;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -13,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.delivery.entity.enums.StatusImpl;
+import kr.co.gpgp.domain.order.entity.Order;
 import kr.co.gpgp.domain.user.entity.User;
 import lombok.Getter;
 
