@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.delivery.entity.enums.StatusImpl;
 import kr.co.gpgp.domain.order.entity.Order;
 import kr.co.gpgp.domain.user.entity.User;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -39,6 +40,14 @@ public class Delivery {
     @OneToOne(fetch = FetchType.LAZY , mappedBy = "delivery")
     private Order order;
 
+
+    @Builder
+    public Delivery(Requirement requirement, User user, Address address) {
+        this.requirement = requirement;
+        this.user = user;
+        this.address = address;
+        this.status = StatusImpl.ACCEPT;;
+    }
 
     @Enumerated(STRING)
     private StatusImpl status;
