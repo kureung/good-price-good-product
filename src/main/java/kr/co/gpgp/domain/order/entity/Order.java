@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.delivery.entity.enums.StatusImpl;
 import kr.co.gpgp.domain.order.enums.OrderStatus;
-import kr.co.gpgp.domain.orderline.OrderLine;
+import kr.co.gpgp.domain.orderline.entity.OrderLine;
 import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.web.exception.ErrorCode;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.orderline;
+package kr.co.gpgp.domain.orderline.entity;
 
 
 import static org.assertj.core.api.Assertions.assertThat;

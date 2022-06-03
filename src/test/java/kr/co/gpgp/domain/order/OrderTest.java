@@ -10,7 +10,7 @@ import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import kr.co.gpgp.domain.order.entity.Order;
-import kr.co.gpgp.domain.orderline.OrderLine;
+import kr.co.gpgp.domain.orderline.entity.OrderLine;
 import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
