@@ -9,28 +9,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
     private Seller seller;
     @Enumerated(EnumType.STRING)
-    private Role role;
-
+    private Role role; //oauth2 login
     private String name;
     private String email;
 
-    @Builder
-    public User( String name, String email,Role role) {
+
+    private User( String name, String email,Role role) {
 
         UserValidator.verifyName(name);
         UserValidator.verifyEmail(email);
@@ -38,9 +39,10 @@ public class User {
         this.name = name;
         this.email = email;
         this.role = role;
-
     }
-
+    public static User of(String name,String email, Role role){
+        return new User(name,email,role);
+    }
 
     public User updateEmail(String email){
         UserValidator.verifyEmail(email);
