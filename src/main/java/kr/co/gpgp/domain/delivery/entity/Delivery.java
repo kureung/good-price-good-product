@@ -1,6 +1,7 @@
 package kr.co.gpgp.domain.delivery.entity;
 
 import static javax.persistence.EnumType.STRING;
+import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -11,14 +12,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import kr.co.gpgp.domain.delivery.entity.enums.StatusImpl;
+import kr.co.gpgp.domain.address.entity.Address;
+import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatusImpl;
 import kr.co.gpgp.domain.order.entity.Order;
 import kr.co.gpgp.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = PROTECTED)
 public class Delivery {
 
     @Id
@@ -37,23 +42,22 @@ public class Delivery {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToOne(fetch = FetchType.LAZY , mappedBy = "delivery")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "delivery")
     private Order order;
 
+    @Enumerated(STRING)
+    private DeliveryStatusImpl status;
 
-    @Builder
-    public Delivery(Requirement requirement, User user, Address address) {
+    private Delivery(Requirement requirement, User user, Address address, Order order) {
         this.requirement = requirement;
         this.user = user;
         this.address = address;
-        this.status = StatusImpl.ACCEPT;;
+        this.order = order;
+        this.status = DeliveryStatusImpl.ACCEPT;
     }
 
-    @Enumerated(STRING)
-    private StatusImpl status;
-
-    public Delivery() {
-        status = StatusImpl.ACCEPT;
+    public static Delivery of(Requirement requirement, User user, Address address, Order order) {
+        return new Delivery(requirement, user, address, order);
     }
 
     public void next() {
@@ -61,6 +65,11 @@ public class Delivery {
     }
 
     public String getStatus() {
+        return status.name();
+    }
+
+    public String getStatuesMessage() {
         return status.get();
     }
+
 }
