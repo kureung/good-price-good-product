@@ -1,5 +1,6 @@
 package kr.co.gpgp.auth.dto;
 
+import kr.co.gpgp.domain.user.entity.Role;
 import kr.co.gpgp.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,6 +51,6 @@ public class OAuthAttributes {
             .build();
     }
     public User toEntity(){
-        return User.builder().name(name).email(email).build();
+        return User.of(name,email, Role.USER);
     }
 }
