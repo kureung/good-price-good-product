@@ -47,11 +47,5 @@ public class Seller {
         }
     }
 
-    public void deleteSeller(){
-
-    }
-    public void renew(){
-
-    }
 }
 
