@@ -30,7 +30,7 @@ public class OrderTest {
         // given
         User user = User.of("name", "abc@naver.com", Role.USER);
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
         // when
@@ -67,7 +67,7 @@ public class OrderTest {
         // given
         User user = User.of("name", "abc@naver.com", Role.USER);
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
         OrderLine[] defaultOrderLines = new OrderLine[]{};
@@ -87,7 +87,7 @@ public class OrderTest {
         // given
         User user = User.of("name", "abc@naver.com", Role.USER);
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
         OrderLine[] defaultOrderLines = new OrderLine[]{};
@@ -107,7 +107,7 @@ public class OrderTest {
         // given
         User user = User.of("name", "abc@naver.com", Role.USER);
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
         OrderLine[] defaultOrderLines = new OrderLine[]{};
@@ -130,7 +130,7 @@ public class OrderTest {
         // given
         User user = User.of("name", "abc@naver.com", Role.USER);
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
         OrderLine[] defaultOrderLines = new OrderLine[]{};
@@ -154,7 +154,7 @@ public class OrderTest {
         // given
         User user = User.of("name", "abc@naver.com", Role.USER);
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
         OrderLine[] defaultOrderLines = new OrderLine[]{};
