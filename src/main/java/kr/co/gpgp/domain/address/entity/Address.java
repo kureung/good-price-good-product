@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.delivery.entity;
+package kr.co.gpgp.domain.address.entity;
 
 import java.util.regex.Pattern;
 import javax.persistence.Entity;
@@ -28,7 +28,7 @@ public class Address {
 
     private String roadName;        //도로명
     private String zipCode;         //우편번호
-    private String name;            //이름
+    private String name;            //주소이름(닉네임)
     private String detailed;        //상세주소
 
 

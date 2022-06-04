@@ -18,14 +18,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @OneToOne
     private Seller seller;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -33,13 +30,14 @@ public class User {
     private String email;
 
     @Builder
-    public User( String name, String email) {
+    public User( String name, String email,Role role) {
 
         UserValidator.verifyName(name);
         UserValidator.verifyEmail(email);
 
         this.name = name;
         this.email = email;
+        this.role = role;
 
     }
 
@@ -68,14 +66,9 @@ public class User {
         private static final Set<String> ALLOW_DOMAINS = Set.of(
             "naver.com",
             "gmail.com",
-            "daum.net",
-            "narasarang.or.kr",
-            "kakao.com",
-            "nate.com",
-            "citizen.seoul.kr",
-            "newwebmail.chol.com",
-            "korea.com"
+            "kakao.com"
         );
+
 
         private static void verifyName(String name) {
 
@@ -110,16 +103,6 @@ public class User {
             }
         }
 
-//        private static void verifyPw(String pw) {
-//
-//            if (pw == null || pw.isBlank()) {
-//                throw new IllegalArgumentException("비번은 비어있을 수 없습니다.");
-//            }
-//
-//            if (!numberBetween(PW_MIN_LEN, PW_MAX_LEN, pw.length())) {
-//                throw new IllegalArgumentException("비번의 길이가 맞지 않습니다.");
-//            }
-//        }
 
         private static boolean numberBetween(int min, int max, int num) {
             return (min <= num && max >= num);
