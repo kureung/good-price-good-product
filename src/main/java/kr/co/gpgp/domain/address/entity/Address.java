@@ -1,5 +1,7 @@
 package kr.co.gpgp.domain.address.entity;
 
+import static lombok.AccessLevel.PROTECTED;
+
 import java.util.regex.Pattern;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class Address {
 
@@ -32,18 +34,22 @@ public class Address {
     private String detailed;        //상세주소
 
 
-    @Builder
-    public Address(String roadName, String detailed, String zipCode, String name
+    private Address(User user, String roadName, String zipCode, String name, String detailed) {
+        this.user = user;
+        this.roadName = roadName;
+        this.zipCode = zipCode;
+        this.name = name;
+        this.detailed = detailed;
+    }
+
+    public static Address of(User user, String roadName, String zipCode, String name, String detailed
     ) {
         AddressValidator.verifyZipCodes(zipCode);
         AddressValidator.verifyRoadName(roadName);
         AddressValidator.verifyName(name);
         AddressValidator.verifyDetailed(detailed);
 
-        this.roadName = roadName;
-        this.zipCode = zipCode;
-        this.name = name;
-        this.detailed = detailed;
+        return new Address( user,  roadName,  zipCode,  name,  detailed);
     }
 
     protected static class AddressValidator {
@@ -91,8 +97,6 @@ public class Address {
                 throw new IllegalArgumentException("주소에_자세한_설명은17자를 넘을수 업습니다.");
             }
         }
-
-
         private static boolean numberBetween(int min, int max, int number) {
             return number >= min && number <= max;
         }
