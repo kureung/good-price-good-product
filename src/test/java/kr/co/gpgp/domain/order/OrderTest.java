@@ -6,11 +6,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 import java.util.stream.Stream;
+import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import kr.co.gpgp.domain.order.entity.Order;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
+import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.user.entity.Role;
 import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
@@ -25,11 +28,10 @@ public class OrderTest {
     void 전체_주문_가격_조회_테스트(OrderLine[] orderLines, int result) {
 
         // given
-        User user = User.builder()
-                .name("name")
-                .email("abc@naver.com")
-                .build();
-        Delivery delivery = new Delivery();
+        User user = User.of("name", "abc@naver.com", Role.USER);
+        Requirement requirement = new Requirement("요청사항");
+        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Delivery delivery = Delivery.of(requirement, address);
 
         // when
         Order order = Order.of(user, delivery, orderLines);
@@ -63,11 +65,11 @@ public class OrderTest {
     void 결제완료_단계에서_주문취소시_예외가_발생하지_않는다() {
 
         // given
-        User user = User.builder()
-                .name("name")
-                .email("abc@naver.com")
-                .build();
-        Delivery delivery = new Delivery();
+        User user = User.of("name", "abc@naver.com", Role.USER);
+        Requirement requirement = new Requirement("요청사항");
+        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Delivery delivery = Delivery.of(requirement, address);
+
         OrderLine[] defaultOrderLines = new OrderLine[]{};
 
         // when
@@ -83,11 +85,11 @@ public class OrderTest {
     void 상품준비중_단계에서_주문취소시_예외가_발생하지_않는다() {
 
         // given
-        User user = User.builder()
-                .name("name")
-                .email("abc@naver.com")
-                .build();
-        Delivery delivery = new Delivery();
+        User user = User.of("name", "abc@naver.com", Role.USER);
+        Requirement requirement = new Requirement("요청사항");
+        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Delivery delivery = Delivery.of(requirement, address);
+
         OrderLine[] defaultOrderLines = new OrderLine[]{};
 
         // when
@@ -103,11 +105,11 @@ public class OrderTest {
     void 배송지시_단계에서_주문취소시_예외가_발생한다() {
 
         // given
-        User user = User.builder()
-                .name("name")
-                .email("abc@naver.com")
-                .build();
-        Delivery delivery = new Delivery();
+        User user = User.of("name", "abc@naver.com", Role.USER);
+        Requirement requirement = new Requirement("요청사항");
+        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Delivery delivery = Delivery.of(requirement, address);
+
         OrderLine[] defaultOrderLines = new OrderLine[]{};
 
         // when
@@ -126,11 +128,11 @@ public class OrderTest {
     void 배송중_단계에서_주문취소시_예외가_발생한다() {
 
         // given
-        User user = User.builder()
-                .name("name")
-                .email("abc@naver.com")
-                .build();
-        Delivery delivery = new Delivery();
+        User user = User.of("name", "abc@naver.com", Role.USER);
+        Requirement requirement = new Requirement("요청사항");
+        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Delivery delivery = Delivery.of(requirement, address);
+
         OrderLine[] defaultOrderLines = new OrderLine[]{};
 
         // when
@@ -150,11 +152,11 @@ public class OrderTest {
     void 배송완료_단계에서_주문취소시_예외가_발생한다() {
 
         // given
-        User user = User.builder()
-                .name("name")
-                .email("abc@naver.com")
-                .build();
-        Delivery delivery = new Delivery();
+        User user = User.of("name", "abc@naver.com", Role.USER);
+        Requirement requirement = new Requirement("요청사항");
+        Address address = Address.of(user, "roadName", "1234", "name", "detailAddress");
+        Delivery delivery = Delivery.of(requirement, address);
+
         OrderLine[] defaultOrderLines = new OrderLine[]{};
 
         // when
