@@ -72,4 +72,8 @@ public class Delivery {
         return status.get();
     }
 
+    public void designateOrder(Order order){
+        this.order =order;
+    }
+
 }
