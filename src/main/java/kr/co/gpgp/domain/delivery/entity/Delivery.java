@@ -35,45 +35,24 @@ public class Delivery {
     private Requirement requirement;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "delivery")
-    private Order order;
 
     @Enumerated(STRING)
     private DeliveryStatusImpl status;
 
-    private Delivery(Requirement requirement, User user, Address address, Order order) {
+    private Delivery(Requirement requirement, Address address) {
         this.requirement = requirement;
-        this.user = user;
         this.address = address;
-        this.order = order;
         this.status = DeliveryStatusImpl.ACCEPT;
     }
 
-    public static Delivery of(Requirement requirement, User user, Address address, Order order) {
-        return new Delivery(requirement, user, address, order);
+    public static Delivery of(Requirement requirement, Address address) {
+        return new Delivery(requirement, address);
     }
 
     public void next() {
         status = status.next();
-    }
-
-    public String getStatus() {
-        return status.name();
-    }
-
-    public String getStatuesMessage() {
-        return status.get();
-    }
-
-    public void designateOrder(Order order){
-        this.order =order;
     }
 
 }

@@ -30,7 +30,6 @@ public class Requirement {
     @JoinColumn(name = "user_id")
     private User user;
 
-
     private String message;
 
     public Requirement(String message) {

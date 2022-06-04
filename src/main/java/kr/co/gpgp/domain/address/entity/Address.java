@@ -97,8 +97,6 @@ public class Address {
                 throw new IllegalArgumentException("주소에_자세한_설명은17자를 넘을수 업습니다.");
             }
         }
-
-
         private static boolean numberBetween(int min, int max, int number) {
             return number >= min && number <= max;
         }
