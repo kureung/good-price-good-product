@@ -7,7 +7,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -57,11 +56,9 @@ public class Order {
         this.orderStatus = OrderStatus.ORDER;
     }
 
-    public static Order of(User user, Delivery delivery, OrderLine... orderLines) {
+    public static Order of(User user, Delivery delivery, List<OrderLine> orderLines) {
         Order order = new Order(user, delivery);
-
-        Arrays.stream(orderLines)
-                .forEach(order::addOrderLine);
+        orderLines.forEach(order::addOrderLine);
         return order;
     }
 
