@@ -36,8 +36,8 @@ public class OrderTest {
 
         // when
         Order order = Order.of(user, delivery, orderLines);
-        // then
 
+        // then
         assertThat(order.getTotalPrice()).isEqualTo(result);
     }
 
@@ -47,19 +47,9 @@ public class OrderTest {
         var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
 
         return Stream.of(
-                Arguments.of(
-                        List.of(
-                                OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10),
-                                OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20),
-                                OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30)),
-                        1000 * 10 + 2000 * 20 + 3000 * 30),
+                Arguments.of(List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30)), 1000 * 10 + 2000 * 20 + 3000 * 30),
 
-                Arguments.of(
-                        List.of(
-                                OrderLine.of(Item.of(4000, defaultStockQuantity, defaultItemInfo), 40),
-                                OrderLine.of(Item.of(5000, defaultStockQuantity, defaultItemInfo), 50),
-                                OrderLine.of(Item.of(6000, defaultStockQuantity, defaultItemInfo), 60)),
-                        4000 * 40 + 5000 * 50 + 6000 * 60));
+                Arguments.of(List.of(OrderLine.of(Item.of(4000, defaultStockQuantity, defaultItemInfo), 40), OrderLine.of(Item.of(5000, defaultStockQuantity, defaultItemInfo), 50), OrderLine.of(Item.of(6000, defaultStockQuantity, defaultItemInfo), 60)), 4000 * 40 + 5000 * 50 + 6000 * 60));
     }
 
     @Test
@@ -74,17 +64,13 @@ public class OrderTest {
         var defaultStockQuantity = 999;
         var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
 
-        List<OrderLine> defaultOrderLines = List.of(
-                OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10),
-                OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20),
-                OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
 
         // then
-        assertThatCode(() -> order.cancel())
-                .doesNotThrowAnyException();
+        assertThatCode(order::cancel).doesNotThrowAnyException();
 
     }
 
@@ -100,18 +86,14 @@ public class OrderTest {
         var defaultStockQuantity = 999;
         var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
 
-        List<OrderLine> defaultOrderLines = List.of(
-                OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10),
-                OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20),
-                OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
         delivery.next();
 
         // then
-        assertThatCode(() -> order.cancel())
-                .doesNotThrowAnyException();
+        assertThatCode(order::cancel).doesNotThrowAnyException();
     }
 
     @Test
@@ -126,10 +108,7 @@ public class OrderTest {
         var defaultStockQuantity = 999;
         var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
 
-        List<OrderLine> defaultOrderLines = List.of(
-                OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10),
-                OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20),
-                OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
@@ -137,10 +116,7 @@ public class OrderTest {
         delivery.next();
 
         // then
-        assertThatThrownBy(() ->
-                order.cancel())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
+        assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
     }
 
     @Test
@@ -155,10 +131,7 @@ public class OrderTest {
         var defaultStockQuantity = 999;
         var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
 
-        List<OrderLine> defaultOrderLines = List.of(
-                OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10),
-                OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20),
-                OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
@@ -167,10 +140,7 @@ public class OrderTest {
         delivery.next();
 
         // then
-        assertThatThrownBy(() ->
-                order.cancel())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
+        assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
     }
 
     @Test
@@ -185,10 +155,7 @@ public class OrderTest {
         var defaultStockQuantity = 999;
         var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
 
-        List<OrderLine> defaultOrderLines = List.of(
-                OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10),
-                OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20),
-                OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
@@ -198,9 +165,6 @@ public class OrderTest {
         delivery.next();
 
         // then
-        assertThatThrownBy(() ->
-                order.cancel())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
+        assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
     }
 }

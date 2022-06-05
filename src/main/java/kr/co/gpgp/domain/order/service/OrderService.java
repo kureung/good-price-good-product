@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class OrderService {
+
     private final OrderLineDtoService orderLineDtoService;
     private final OrderRepository orderRepository;
     private final UserService userService;
@@ -42,14 +43,15 @@ public class OrderService {
 
         return order.getId();
     }
+
     @Transactional
     public void cancelOrder(Long orderId) {
         Order order = findOne(orderId);
         order.cancel();
     }
+
     public Order findOne(Long orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("해당 주문을 찾을 수 없습니다."));
     }
-
 }
