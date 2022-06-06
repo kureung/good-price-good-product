@@ -19,7 +19,7 @@ public class OrderLineDtoService {
         return orderLines.stream()
                 .map(orderLine -> OrderLineResponse.builder()
                         .itemName(orderLine.getItemName())
-                        .itemCode(orderLine.getItem().getInfo().getCode())
+                        .itemCode(orderLine.getItemCode())
                         .itemPrice(orderLine.getPrice())
                         .itemQuantity(orderLine.getCount())
                         .build())
