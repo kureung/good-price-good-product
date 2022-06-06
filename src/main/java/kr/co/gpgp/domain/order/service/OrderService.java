@@ -28,7 +28,7 @@ public class OrderService {
     @Transactional
     public Long order(Long userId, Requirement requirement, Address address, List<OrderLineRequest> orderLineRequests) {
 
-        if (orderLineRequests.size() == 0) {
+        if (orderLineRequests.isEmpty()) {
             throw new IllegalArgumentException("주문하려는 상품을 입력해주세요.");
         }
 
