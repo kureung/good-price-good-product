@@ -59,4 +59,7 @@ public class OrderLine {
         this.order = order;
     }
 
+    public String getItemName() {
+        return getItem().getName();
+    }
 }
