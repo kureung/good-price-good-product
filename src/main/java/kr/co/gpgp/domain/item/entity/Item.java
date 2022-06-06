@@ -69,4 +69,8 @@ public class Item {
     public String getName() {
         return info.getName();
     }
+
+    public String getCode() {
+        return info.getCode();
+    }
 }
