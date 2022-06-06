@@ -1,7 +1,8 @@
 package kr.co.gpgp.domain.orderline.service;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
-import java.util.stream.Collectors;
 import kr.co.gpgp.domain.item.service.ItemFindService;
 import kr.co.gpgp.domain.orderline.dto.OrderLineRequest;
 import kr.co.gpgp.domain.orderline.dto.OrderLineResponse;
@@ -23,7 +24,7 @@ public class OrderLineDtoService {
                         .itemPrice(orderLine.getPrice())
                         .itemQuantity(orderLine.getCount())
                         .build())
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public List<OrderLine> toEntity(List<OrderLineRequest> orderLineRequests) {
@@ -31,6 +32,6 @@ public class OrderLineDtoService {
                 .map(orderLineRequest -> OrderLine.of(
                         itemFindService.findOne(orderLineRequest.getItemCode()),
                         orderLineRequest.getItemQuantity()))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 }
