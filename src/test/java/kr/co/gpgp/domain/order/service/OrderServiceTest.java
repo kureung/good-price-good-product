@@ -52,7 +52,7 @@ class OrderServiceTest {
 
     @ParameterizedTest
     @MethodSource("provideOrderParam")
-    void 상품_주문_테스트(User user, Requirement requirement, Address address, Delivery delivery, Item item) {
+    void 상품_주문_테스트(User user, Delivery delivery, Item item) {
 
         // given
         User savedUser = userRepository.save(user);
@@ -68,8 +68,7 @@ class OrderServiceTest {
         // when
         Long orderId = orderService.order(
                 savedUser.getId(),
-                requirement,
-                address,
+                delivery,
                 orderLineRequests);
 
         // then
@@ -111,12 +110,12 @@ class OrderServiceTest {
                         "www.naver.com"));
 
         return Stream.of(
-                Arguments.of(user, requirement, address, delivery, item));
+                Arguments.of(user, delivery, item));
     }
 
     @ParameterizedTest
     @MethodSource("provideOrderExceptionTestParam")
-    void 상품_주문시_재고수량을_초과하면_예외가_발생한다(User user, Requirement requirement, Address address, Item item) {
+    void 상품_주문시_재고수량을_초과하면_예외가_발생한다(User user, Delivery delivery, Item item) {
 
         // given
         User savedUser = userRepository.save(user);
@@ -131,8 +130,7 @@ class OrderServiceTest {
         // then
         assertThatThrownBy(() -> orderService.order(
                 savedUser.getId(),
-                requirement,
-                address,
+                delivery,
                 lineRequests))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
@@ -144,6 +142,7 @@ class OrderServiceTest {
 
         Requirement requirement = new Requirement("요청사항");
         Address address = Address.of(user, "123456789", "12345", "주소", "주소주소");
+        Delivery delivery = Delivery.of(requirement, address);
 
         Item item = Item.of(
                 1000,
@@ -156,16 +155,14 @@ class OrderServiceTest {
                         "www.naver.com"));
 
         return Stream.of(
-                Arguments.of(user, requirement, address, item));
+                Arguments.of(user, delivery, item));
     }
 
     @ParameterizedTest
     @MethodSource("provideOrderCancelParam")
-    void 결제완료_단계에서_주문취소시_상품_재고가_채워진다(User user, Requirement requirement, Address address, Item item) {
-
+    void 결제완료_단계에서_주문취소시_상품_재고가_채워진다(User user, Delivery delivery, Item item) {
         // given
         int beforeOrderItemQuantity = item.getStockQuantity();
-
         User savedUser = userRepository.save(user);
         itemRepository.save(item);
 
@@ -178,8 +175,7 @@ class OrderServiceTest {
 
         Long orderId = orderService.order(
                 savedUser.getId(),
-                requirement,
-                address,
+                delivery,
                 orderLineRequests);
 
         // when
@@ -197,14 +193,14 @@ class OrderServiceTest {
     }
 
     private static Stream<Arguments> provideOrderCancelParam() {
-
         User user = User.of("name", "abc@naver.com", Role.USER);
 
         Requirement requirement = new Requirement("요청사항");
         Address address = Address.of(user, "123456789", "12345", "주소", "주소주소");
+        Delivery delivery = Delivery.of(requirement, address);
+
 
         int itemQuantity = 30;
-
         Item item = Item.of(
                 1000,
                 itemQuantity,
@@ -215,13 +211,13 @@ class OrderServiceTest {
                         LocalDate.now(),
                         "www.naver.com"));
 
-        return Stream.of(Arguments.of(user, requirement, address, item));
+        return Stream.of(Arguments.of(user, delivery, item));
 
     }
 
     @ParameterizedTest
     @MethodSource("provideOrderCancelParam")
-    void 상품준비중_단계에서_주문취소시_상품_재고가_채워진다(User user, Requirement requirement, Address address, Item item) {
+        void 상품준비중_단계에서_주문취소시_상품_재고가_채워진다(User user, Delivery delivery, Item item) {
 
         // given
         int beforeOrderItemQuantity = item.getStockQuantity();
@@ -238,8 +234,7 @@ class OrderServiceTest {
 
         Long orderId = orderService.order(
                 savedUser.getId(),
-                requirement,
-                address,
+                delivery,
                 orderLineRequests);
 
         // when
