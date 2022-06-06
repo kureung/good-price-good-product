@@ -62,4 +62,8 @@ public class OrderLine {
     public String getItemName() {
         return getItem().getName();
     }
+
+    public String getItemCode() {
+        return getItem().getCode();
+    }
 }
