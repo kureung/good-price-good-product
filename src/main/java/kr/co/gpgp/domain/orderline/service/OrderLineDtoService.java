@@ -18,7 +18,7 @@ public class OrderLineDtoService {
     public List<OrderLineResponse> toDto(List<OrderLine> orderLines) {
         return orderLines.stream()
                 .map(orderLine -> OrderLineResponse.builder()
-                        .itemName(orderLine.getItem().getInfo().getName())
+                        .itemName(orderLine.getItemName())
                         .itemCode(orderLine.getItem().getInfo().getCode())
                         .itemPrice(orderLine.getPrice())
                         .itemQuantity(orderLine.getCount())
