@@ -19,12 +19,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 @ExtendWith(SpringExtension.class)    // 테스트 실행 방법
-@DataJpaTest                            //JPA 테스트
+@DataJpaTest                          // JPA 테스트
 public class AddressServiceTest {
 
     @SpyBean
@@ -41,7 +40,6 @@ public class AddressServiceTest {
 
 
     @BeforeEach
-    @Rollback(value = false)
     void setups() {
         user = User.of("asdf", "kgh22@gmail.com", Role.USER);
         address = Address.of(user, "12345667899", "12345", "1번째", "detailed");
@@ -51,9 +49,6 @@ public class AddressServiceTest {
 
     @Test
     void 주소_생성_성공() {
-//        user = User.of("asd32f", "kgh322@gmail.com", Role.USER);
-//        userRepository.save(user);
-
         AddressRequest addressRequest = AddressRequest
                 .of(address.getRoadName(),
                         address.getZipCode(),
@@ -110,7 +105,7 @@ public class AddressServiceTest {
         addressRepository.save(address1);
         addressRepository.save(address2);
 
-        List<Address> list = addressService.select(1L);
+        List<AddressResponse> list = addressService.select(1L);
 
         Assertions.assertAll(
                 () -> assertThat(list).isNotNull(),
@@ -156,12 +151,11 @@ public class AddressServiceTest {
     void 주소_수정_성공() {
         address = addressRepository.save(address);
         AddressRequest addressRequest = AddressRequest.of("경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
-        AddressResponse addressResponse = AddressResponse.of(addressRequest);
 
-        addressService.update(address.getId(), addressResponse);
+        addressService.update(address.getId(), addressRequest);
 
         Mockito.verify(addressService)
-                .update(address.getId(), addressResponse);
+                .update(address.getId(), addressRequest);
     }
 
     @Test
@@ -169,12 +163,10 @@ public class AddressServiceTest {
 
         address = addressRepository.save(address);
         AddressRequest addressRequest = AddressRequest.of("경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
-        AddressResponse addressResponse = AddressResponse.of(addressRequest);
 
-        assertThatThrownBy(() ->  addressService.update(Long.MAX_VALUE,addressResponse))
+        assertThatThrownBy(() -> addressService.update(Long.MAX_VALUE, addressRequest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다.");
-
     }
 
 
