@@ -53,7 +53,7 @@ class OrderLineDtoServiceTests {
                 () -> assertThat(response.getItemCode()).isEqualTo(orderLine.getItem().getInfo().getCode()),
                 () -> assertThat(response.getItemName()).isEqualTo(orderLine.getItem().getInfo().getName()),
                 () -> assertThat(response.getItemPrice()).isEqualTo(orderLine.getItem().getPrice()),
-                () -> assertThat(response.getItemQuantity()).isEqualTo(orderLine.getOrderQuantity())
+                () -> assertThat(response.getOrderQuantity()).isEqualTo(orderLine.getOrderQuantity())
         );
     }
 

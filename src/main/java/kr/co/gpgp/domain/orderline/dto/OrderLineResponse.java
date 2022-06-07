@@ -26,6 +26,6 @@ public class OrderLineResponse {
     private final int itemPrice;
 
     @Range(min = 0, max = 10_000)
-    private final int itemQuantity;
+    private final int orderQuantity;
 
 }

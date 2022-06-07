@@ -12,7 +12,6 @@ import kr.co.gpgp.domain.order.repository.OrderRepository;
 import kr.co.gpgp.domain.orderline.dto.OrderLineRequest;
 import kr.co.gpgp.domain.orderline.dto.OrderLineResponse;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
-import kr.co.gpgp.domain.orderline.service.OrderLineDtoService;
 import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -68,21 +67,16 @@ public class OrderService {
 
     public List<OrderLineResponse> toDtos(List<OrderLine> orderLines) {
         return orderLines.stream()
-                .map(orderLine -> OrderLineResponse.builder()
-                        .itemName(orderLine.getItemName())
-                        .itemCode(orderLine.getItemCode())
-                        .itemPrice(orderLine.getPrice())
-                        .orderQuantity(orderLine.getOrderQuantity())
-                        .build())
+                .map(this::toDto)
                 .collect(toList());
     }
 
     private OrderLineResponse toDto(OrderLine orderLine) {
         return OrderLineResponse.builder()
-                .itemCode()
-                .itemPrice()
-                .orderQuantity()
-                .itemName()
-                .build()
+                .itemCode(orderLine.getItemCode())
+                .itemPrice(orderLine.getPrice())
+                .orderQuantity(orderLine.getOrderQuantity())
+                .itemName(orderLine.getItemName())
+                .build();
     }
 }
