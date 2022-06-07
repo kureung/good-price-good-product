@@ -20,23 +20,28 @@ public class AddressService {
 
     private final UserRepository userRepository;
 
-    // 1 . 주소는 생성할수 있다. ㅕ
+
+    /** 주소는 생성할수 있다.
+     *
+     * @param userId 주소를 생성할 유저 ID 값
+     * @param addressRequest 생성할 주소 값
+     * @return Long
+     */
     public Long create(Long userId, AddressRequest addressRequest) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 주소를 생성할수 없습니다."));
 
-        Address address = addressRepository.save(
-                Address.of(user,
-                        addressRequest.getRoadName(),
-                        addressRequest.getZipCode(),
-                        addressRequest.getName(),
-                        addressRequest.getDetailed()));
+        Address address =addressRepository.save(
+                addressRequest.toEntity(user));
 
         return address.getId();
     }
 
-    // 2.  주소는 삭제할수 있다.
+    /** 주소는 삭제할수 있다.
+     *
+     * @param addressId 주소 ID 값을 가져온다
+     */
     public void delete(Long addressId) {
 
         Address address = addressRepository.findById(addressId)
@@ -46,22 +51,29 @@ public class AddressService {
     }
 
 
-    // 3. 주소는 수정할수 있다.
-    public void update(Long addressBeforeId,  AddressResponse addressResponse) {
+    /**  주소는 수정할수 있다.
+     *
+     * @param addressBeforeId adress_id 수정할 주소 Id값이다
+     * @param addressRequest  수정된 address 값을 가져온다.
+     */
+    public void update(Long addressBeforeId,  AddressRequest addressRequest) {
 
         Address addressBefore = addressRepository.findById(addressBeforeId)
                 .orElseThrow(() -> new IllegalArgumentException("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다."));
 
-        addressBefore.update(addressResponse.toEntity(addressBefore.getUser()));
+        addressBefore.update(addressRequest.toEntity(addressBefore.getUser()));
     }
 
-    //4. 주소는 조회가 가능하다.
-    public List<Address> select(Long userId) {
+    /** 주소는 조회가 가능하다.
+     *
+     * @param userId
+     * @return List&lt;AddressResponse>
+     */
+    public List<AddressResponse> select(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("조회하려는 User ID 값이 조회할수 없습니다."));
 
         return addressRepository.findByUserId(userId);
-
     }
 
 }
