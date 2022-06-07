@@ -30,9 +30,9 @@ public class ItemCommandService {
     }
 
     public ItemDtoResponse register(ItemDtoRequest request) {
-        Item item = itemDtoService.dtoConversionItem(request);
+        Item item = itemDtoService.toEntity(request);
         Long itemId = save(item);
         Item findItem = itemFindService.findOne(itemId);
-        return itemDtoService.itemConversionDto(findItem);
+        return itemDtoService.toDto(findItem);
     }
 }
