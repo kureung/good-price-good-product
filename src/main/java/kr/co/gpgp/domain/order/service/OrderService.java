@@ -1,11 +1,16 @@
 package kr.co.gpgp.domain.order.service;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
+import kr.co.gpgp.domain.item.entity.Item;
+import kr.co.gpgp.domain.item.service.ItemFindService;
 import kr.co.gpgp.domain.order.entity.Order;
 import kr.co.gpgp.domain.order.repository.OrderRepository;
 import kr.co.gpgp.domain.orderline.dto.OrderLineRequest;
+import kr.co.gpgp.domain.orderline.dto.OrderLineResponse;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
 import kr.co.gpgp.domain.orderline.service.OrderLineDtoService;
 import kr.co.gpgp.domain.user.entity.User;
@@ -22,6 +27,8 @@ public class OrderService {
     private final OrderLineDtoService orderLineDtoService;
     private final OrderRepository orderRepository;
     private final UserService userService;
+
+    private final ItemFindService itemFindService;
 
     @Transactional
     public Long order(Long userId, Delivery delivery, List<OrderLineRequest> orderLineRequests) {
@@ -45,5 +52,37 @@ public class OrderService {
     public Order findOne(Long orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("해당 주문을 찾을 수 없습니다."));
+    }
+
+    public List<OrderLine> toEntities(List<OrderLineRequest> requests) {
+        return requests.stream()
+                .map(this::toEntity)
+                .collect(toList());
+    }
+
+    private OrderLine toEntity(OrderLineRequest request) {
+        String itemCode = request.getItemCode();
+        Item findItem = itemFindService.findOne(itemCode);
+        return OrderLine.of(findItem, request.getItemQuantity());
+    }
+
+    public List<OrderLineResponse> toDtos(List<OrderLine> orderLines) {
+        return orderLines.stream()
+                .map(orderLine -> OrderLineResponse.builder()
+                        .itemName(orderLine.getItemName())
+                        .itemCode(orderLine.getItemCode())
+                        .itemPrice(orderLine.getPrice())
+                        .orderQuantity(orderLine.getOrderQuantity())
+                        .build())
+                .collect(toList());
+    }
+
+    private OrderLineResponse toDto(OrderLine orderLine) {
+        return OrderLineResponse.builder()
+                .itemCode()
+                .itemPrice()
+                .orderQuantity()
+                .itemName()
+                .build()
     }
 }
