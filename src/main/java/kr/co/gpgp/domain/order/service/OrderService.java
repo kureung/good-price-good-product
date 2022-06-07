@@ -25,17 +25,15 @@ public class OrderService {
 
     @Transactional
     public Long order(Long userId, Delivery delivery, List<OrderLineRequest> orderLineRequests) {
-
         if (orderLineRequests.isEmpty()) {
             throw new IllegalArgumentException("주문하려는 상품을 입력해주세요.");
         }
 
         User user = userService.findOne(userId);
         List<OrderLine> orderLines = orderLineDtoService.toEntity(orderLineRequests);
-        Order order = Order.of(user, delivery, orderLines);
-        orderRepository.save(order);
 
-        return order.getId();
+        Order order = Order.of(user, delivery, orderLines);
+        return orderRepository.save(order).getId();
     }
 
     @Transactional
