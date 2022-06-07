@@ -32,31 +32,38 @@ public class OrderLine {
     private Order order;
 
     private int price;
-    private int count;
+    private int orderQuantity;
 
-    private OrderLine(Item item, int price, int count) {
+    private OrderLine(Item item, int price, int orderQuantity) {
         this.item = item;
         this.price = price;
-        this.count = count;
+        this.orderQuantity = orderQuantity;
     }
 
-    public static OrderLine of(Item item, int count) {
-        item.minusStock(count);
-        return new OrderLine(item, item.getPrice(), count);
+    public static OrderLine of(Item item, int orderQuantity) {
+        item.minusStock(orderQuantity);
+        return new OrderLine(item, item.getPrice(), orderQuantity);
     }
 
 
     public void cancel() {
-        getItem().plusStock(count);
+        getItem().plusStock(orderQuantity);
     }
 
 
     public int getTotalPrice() {
-        return price * count;
+        return price * orderQuantity;
     }
 
     public void designateOrder(Order order) {
         this.order = order;
     }
 
+    public String getItemName() {
+        return getItem().getName();
+    }
+
+    public String getItemCode() {
+        return getItem().getCode();
+    }
 }

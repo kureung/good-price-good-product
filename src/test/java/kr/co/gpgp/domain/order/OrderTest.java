@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Stream;
 import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
@@ -25,7 +26,7 @@ public class OrderTest {
 
     @ParameterizedTest
     @MethodSource("주문_가격_조회_테스트_용도")
-    void 전체_주문_가격_조회_테스트(OrderLine[] orderLines, int result) {
+    void 전체_주문_가격_조회_테스트(List<OrderLine> orderLines, int result) {
 
         // given
         User user = User.of("name", "abc@naver.com", Role.USER);
@@ -35,8 +36,8 @@ public class OrderTest {
 
         // when
         Order order = Order.of(user, delivery, orderLines);
-        // then
 
+        // then
         assertThat(order.getTotalPrice()).isEqualTo(result);
     }
 
@@ -46,19 +47,9 @@ public class OrderTest {
         var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
 
         return Stream.of(
-                Arguments.of(
-                        (Object[]) new OrderLine[]{
-                                OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10),
-                                OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20),
-                                OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30)},
-                        1000 * 10 + 2000 * 20 + 3000 * 30),
+                Arguments.of(List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30)), 1000 * 10 + 2000 * 20 + 3000 * 30),
 
-                Arguments.of(
-                        (Object[]) new OrderLine[]{
-                                OrderLine.of(Item.of(4000, defaultStockQuantity, defaultItemInfo), 40),
-                                OrderLine.of(Item.of(5000, defaultStockQuantity, defaultItemInfo), 50),
-                                OrderLine.of(Item.of(6000, defaultStockQuantity, defaultItemInfo), 60)},
-                        4000 * 40 + 5000 * 50 + 6000 * 60));
+                Arguments.of(List.of(OrderLine.of(Item.of(4000, defaultStockQuantity, defaultItemInfo), 40), OrderLine.of(Item.of(5000, defaultStockQuantity, defaultItemInfo), 50), OrderLine.of(Item.of(6000, defaultStockQuantity, defaultItemInfo), 60)), 4000 * 40 + 5000 * 50 + 6000 * 60));
     }
 
     @Test
@@ -70,14 +61,16 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        OrderLine[] defaultOrderLines = new OrderLine[]{};
+        var defaultStockQuantity = 999;
+        var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
+
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
 
         // then
-        assertThatCode(() -> order.cancel())
-                .doesNotThrowAnyException();
+        assertThatCode(order::cancel).doesNotThrowAnyException();
 
     }
 
@@ -90,15 +83,17 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        OrderLine[] defaultOrderLines = new OrderLine[]{};
+        var defaultStockQuantity = 999;
+        var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
+
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
         delivery.next();
 
         // then
-        assertThatCode(() -> order.cancel())
-                .doesNotThrowAnyException();
+        assertThatCode(order::cancel).doesNotThrowAnyException();
     }
 
     @Test
@@ -110,7 +105,10 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        OrderLine[] defaultOrderLines = new OrderLine[]{};
+        var defaultStockQuantity = 999;
+        var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
+
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
@@ -118,10 +116,7 @@ public class OrderTest {
         delivery.next();
 
         // then
-        assertThatThrownBy(() ->
-                order.cancel())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
+        assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
     }
 
     @Test
@@ -133,7 +128,10 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        OrderLine[] defaultOrderLines = new OrderLine[]{};
+        var defaultStockQuantity = 999;
+        var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
+
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
@@ -142,10 +140,7 @@ public class OrderTest {
         delivery.next();
 
         // then
-        assertThatThrownBy(() ->
-                order.cancel())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
+        assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
     }
 
     @Test
@@ -157,7 +152,10 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        OrderLine[] defaultOrderLines = new OrderLine[]{};
+        var defaultStockQuantity = 999;
+        var defaultItemInfo = ItemInfo.of("item1", 10, "123", LocalDate.now(), "www.naver.com");
+
+        List<OrderLine> defaultOrderLines = List.of(OrderLine.of(Item.of(1000, defaultStockQuantity, defaultItemInfo), 10), OrderLine.of(Item.of(2000, defaultStockQuantity, defaultItemInfo), 20), OrderLine.of(Item.of(3000, defaultStockQuantity, defaultItemInfo), 30));
 
         // when
         Order order = Order.of(user, delivery, defaultOrderLines);
@@ -167,9 +165,6 @@ public class OrderTest {
         delivery.next();
 
         // then
-        assertThatThrownBy(() ->
-                order.cancel())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
+        assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
     }
 }

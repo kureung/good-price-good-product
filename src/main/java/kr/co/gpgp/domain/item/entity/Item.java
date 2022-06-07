@@ -65,4 +65,12 @@ public class Item {
         this.stockQuantity = stockQuantity;
         this.info = info;
     }
+
+    public String getName() {
+        return info.getName();
+    }
+
+    public String getCode() {
+        return info.getCode();
+    }
 }
