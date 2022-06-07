@@ -23,9 +23,10 @@ public class ItemCommandService {
         return savedItem.getId();
     }
 
-    public void update(Long itemId, Item item) {
+    public Long update(Long itemId, Item item) {
         Item findItem = itemFindService.findOne(itemId);
         findItem.update(item.getPrice(), item.getStockQuantity(), item.getInfo());
+        return findItem.getId();
     }
 
     public ItemDtoResponse register(ItemDtoRequest request) {
