@@ -13,11 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatusImpl;
-import kr.co.gpgp.domain.order.entity.Order;
-import kr.co.gpgp.domain.user.entity.User;
-import lombok.Builder;
+import kr.co.gpgp.domain.requirement.entity.Requirement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -45,6 +42,8 @@ public class Delivery {
         this.requirement = requirement;
         this.address = address;
         this.status = DeliveryStatusImpl.ACCEPT;
+        status.statusMessageInit();
+        status.sequenceInit();
     }
 
     public static Delivery of(Requirement requirement, Address address) {
@@ -54,5 +53,6 @@ public class Delivery {
     public void next() {
         status = status.next();
     }
+
 
 }
