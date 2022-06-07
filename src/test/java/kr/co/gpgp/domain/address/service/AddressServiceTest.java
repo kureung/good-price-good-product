@@ -105,8 +105,15 @@ public class AddressServiceTest {
         addressRepository.save(address1);
         addressRepository.save(address2);
 
+        //queryDSL - 특정 회원의 주소 조회 조건
+        User user2 = User.of("select ", "kgh2222222@gmail.com", Role.USER);
+        Address address3 = Address.of(user2, "22222222222222", "33333", "4번쨰", "B");
+        userRepository.save(user2);
+        addressRepository.save(address3);
+
         List<AddressResponse> list = addressService.select(1L);
 
+        org.assertj.core.api.Assertions.assertThat(list.stream().count()).isIn(2L);
         Assertions.assertAll(
                 () -> assertThat(list).isNotNull(),
                 () -> assertThat(list.get(0).getDetailed()).isEqualTo(address1.getDetailed()),
