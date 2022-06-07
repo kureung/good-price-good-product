@@ -1,11 +1,15 @@
 package kr.co.gpgp.domain.item.dto;
 
+import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import javax.validation.Valid;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Range;
 
 @Getter
 public class ItemDtoResponse {
+
+    @JsonIgnore
+    private Long id;
 
     @Range(min = 0, max = 1_000_000_000)
     private int price;
