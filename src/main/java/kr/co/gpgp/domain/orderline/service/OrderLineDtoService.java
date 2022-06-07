@@ -22,7 +22,7 @@ public class OrderLineDtoService {
                         .itemName(orderLine.getItemName())
                         .itemCode(orderLine.getItemCode())
                         .itemPrice(orderLine.getPrice())
-                        .itemQuantity(orderLine.getCount())
+                        .itemQuantity(orderLine.getOrderQuantity())
                         .build())
                 .collect(toList());
     }
