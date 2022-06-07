@@ -12,29 +12,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class AddressService {
-
 
     private final AddressRepository addressRepository;
 
     private final UserRepository userRepository;
 
     // 1 . 주소는 생성할수 있다. ㅕ
-    public Address create(Long userId, AddressResponse addressResponse) {
+    public Long create(Long userId, AddressRequest addressRequest) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 주소를 생성할수 없습니다."));
 
         Address address = addressRepository.save(
                 Address.of(user,
-                        addressResponse.getRoadName(),
-                        addressResponse.getZipCode(),
-                        addressResponse.getName(),
-                        addressResponse.getDetailed()));
+                        addressRequest.getRoadName(),
+                        addressRequest.getZipCode(),
+                        addressRequest.getName(),
+                        addressRequest.getDetailed()));
 
-        return address;
+        return address.getId();
     }
 
     // 2.  주소는 삭제할수 있다.
@@ -58,11 +57,10 @@ public class AddressService {
 
     //4. 주소는 조회가 가능하다.
     public List<Address> select(Long userId) {
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("조회하려는 User ID 값이 조회할수 없습니다."));
 
-        return addressRepository.findByUser(userId);
+        return addressRepository.findByUserId(userId);
 
     }
 
