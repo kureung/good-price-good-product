@@ -17,12 +17,14 @@ import kr.co.gpgp.domain.order.entity.Order;
 import kr.co.gpgp.domain.order.enums.OrderStatus;
 import kr.co.gpgp.domain.order.repository.OrderRepository;
 import kr.co.gpgp.domain.orderline.dto.OrderLineRequest;
+import kr.co.gpgp.domain.orderline.dto.OrderLineResponse;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.Role;
 import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.domain.user.repository.UserRepository;
 import kr.co.gpgp.web.exception.ErrorCode;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -45,9 +47,6 @@ class OrderServiceTest {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private OrderLineDtoService orderLineDtoService;
 
     @ParameterizedTest
     @MethodSource("provideOrderParam")
@@ -294,4 +293,74 @@ class OrderServiceTest {
 
         return Stream.of(Arguments.of(user, delivery, item));
     }
+
+      @Test
+      void 엔티티를_dto로_변환_테스트() {
+
+          // given
+          Item item = Item.of(
+                  1000,
+                  30,
+                  ItemInfo.of(
+                          "item1",
+                          10,
+                          "123",
+                          LocalDate.now(),
+                          "www.naver.com"));
+
+          OrderLine orderLine = OrderLine.of(item, 10);
+          List<OrderLine> orderLines = List.of(orderLine);
+
+          //when
+          List<OrderLineResponse> responses = orderService.toDtos(orderLines);
+          OrderLineResponse response = responses.get(0);
+
+          // then
+          assertAll(
+                  () -> assertThat(responses.size()).isEqualTo(orderLines.size()),
+                  () -> assertThat(response.getItemCode()).isEqualTo(orderLine.getItem().getInfo().getCode()),
+                  () -> assertThat(response.getItemName()).isEqualTo(orderLine.getItem().getInfo().getName()),
+                  () -> assertThat(response.getItemPrice()).isEqualTo(orderLine.getItem().getPrice()),
+                  () -> assertThat(response.getOrderQuantity()).isEqualTo(orderLine.getOrderQuantity())
+          );
+      }
+
+      @Test
+      void dto를_엔티티로_변환_테스트() {
+
+          // given
+
+          String itemCode = "123";
+
+          Item item = Item.of(
+                  1000,
+                  30,
+                  ItemInfo.of(
+                          "item1",
+                          10,
+                          itemCode,
+                          LocalDate.now(),
+                          "www.naver.com"));
+
+          itemRepository.save(item);
+
+          OrderLineRequest request = OrderLineRequest.builder()
+                  .itemCode(itemCode)
+                  .itemQuantity(10)
+                  .build();
+
+          List<OrderLineRequest> requests = List.of(request);
+
+          // when
+          List<OrderLine> orderLines = orderService.toEntities(requests);
+          OrderLine orderLine = orderLines.get(0);
+
+          //then
+          assertAll(
+                  () -> assertThat(requests.size()).isEqualTo(orderLines.size()),
+                  () -> assertThat(request.getItemCode()).isEqualTo(orderLine.getItem().getInfo().getCode()),
+                  () -> assertThat(request.getItemQuantity()).isEqualTo(orderLine.getOrderQuantity())
+          );
+      }
+
 }

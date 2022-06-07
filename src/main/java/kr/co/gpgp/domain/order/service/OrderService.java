@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderLineDtoService orderLineDtoService;
     private final OrderRepository orderRepository;
     private final UserService userService;
 
@@ -36,7 +35,7 @@ public class OrderService {
         }
 
         User user = userService.findOne(userId);
-        List<OrderLine> orderLines = orderLineDtoService.toEntity(orderLineRequests);
+        List<OrderLine> orderLines = this.toEntities(orderLineRequests);
 
         Order order = Order.of(user, delivery, orderLines);
         return orderRepository.save(order).getId();
