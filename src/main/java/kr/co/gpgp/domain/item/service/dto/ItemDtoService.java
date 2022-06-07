@@ -5,15 +5,46 @@ import kr.co.gpgp.domain.item.dto.ItemDtoResponse;
 import kr.co.gpgp.domain.item.dto.ItemInfoDto;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
+import org.springframework.stereotype.Service;
 
-public interface ItemDtoService {
+@Service
+public class ItemDtoService{
 
-    ItemDtoResponse itemConversionDto(Item item);
+    public ItemDtoResponse itemConversionDto(Item item) {
+        ItemInfoDto infoDto = itemInfoConversionDto(item.getInfo());
+        return ItemDtoResponse.of(
+            item.getPrice(),
+            item.getStockQuantity(),
+            infoDto
+        );
+    }
 
-    Item dtoConversionItem(ItemDtoRequest request);
+    public Item dtoConversionItem(ItemDtoRequest request) {
+        ItemInfo info = dtoConversionItemInfo(request.getItemInfoDto());
+        return Item.of(
+            request.getPrice(),
+            request.getStockQuantity(),
+            info
+        );
+    }
 
-    ItemInfo dtoConversionItemInfo(ItemInfoDto infoDto);
+    public ItemInfo dtoConversionItemInfo(ItemInfoDto infoDto) {
+        return ItemInfo.of(
+            infoDto.getName(),
+            infoDto.getWeight(),
+            infoDto.getCode(),
+            infoDto.getReleaseDate(),
+            infoDto.getImageUrl()
+        );
+    }
 
-    ItemInfoDto itemInfoConversionDto(ItemInfo info);
-
+    public ItemInfoDto itemInfoConversionDto(ItemInfo info) {
+        return ItemInfoDto.of(
+            info.getName(),
+            info.getWeight(),
+            info.getCode(),
+            info.getImageUrl(),
+            info.getReleaseDate()
+        );
+    }
 }
