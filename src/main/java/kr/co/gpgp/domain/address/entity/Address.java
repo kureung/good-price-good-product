@@ -10,14 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import kr.co.gpgp.domain.user.entity.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = PROTECTED)
 @Entity
+@NoArgsConstructor(access = PROTECTED)
 public class Address {
 
     @Id
@@ -49,27 +49,37 @@ public class Address {
         AddressValidator.verifyName(name);
         AddressValidator.verifyDetailed(detailed);
 
-        return new Address( user,  roadName,  zipCode,  name,  detailed);
+        return new Address(user, roadName, zipCode, name, detailed);
     }
 
+
+    @Transient
+    private static final int NAME_MAX_LEN = 20;
+    @Transient
+    private static final int NAME_MIN_LEN = 1;
+    @Transient
+    private static final int ROADNAME_MAX_LEN = 40;
+    @Transient
+    private static final int ROADNAME_MIN_LEN = 9;
+
+    @Transient
+    private static final Pattern OLD_ZIP_CODE = Pattern.compile("^\\d{3}-\\d{3}$");
+    @Transient
+    private static final Pattern NEW_ZIP_CODE = Pattern.compile("^\\d{5}$");
+
+
     protected static class AddressValidator {
-
-        private static final int NAME_MAX_LEN = 20;
-        private static final int NAME_MIN_LEN = 1;
-        private static final int ROADNAME_MAX_LEN = 40;
-        private static final int ROADNAME_MIN_LEN = 9;
-
-        private static final Pattern OLD_ZIP_CODE = Pattern.compile("^\\d{3}-\\d{3}$");
-        private static final Pattern NEW_ZIP_CODE = Pattern.compile("^\\d{5}$");
 
 
         private static void verifyZipCodes(String zipCode) {
             if (zipCode == null || zipCode.isBlank()) {
                 throw new IllegalArgumentException("우편번호는 비어있을 수 없습니다.");
             }
-            if (!(OLD_ZIP_CODE.matcher(zipCode).matches() ||
-                NEW_ZIP_CODE.matcher(zipCode).matches())
-            ) {
+
+            boolean OldZipCode = OLD_ZIP_CODE.matcher(zipCode).matches();
+            boolean NewZipCode = NEW_ZIP_CODE.matcher(zipCode).matches();
+
+            if (! (OldZipCode || NewZipCode)) {
                 throw new IllegalArgumentException("우편번호 형식이 맞지 않습니다.");
             }
         }
@@ -78,7 +88,7 @@ public class Address {
             if (roadName == null || roadName.isBlank()) {
                 throw new IllegalArgumentException("도로명은 비어있을 수 없습니다.");
             }
-            if (!(numberBetween(ROADNAME_MIN_LEN, ROADNAME_MAX_LEN, roadName.length()))) {
+            if (! (numberBetween(ROADNAME_MIN_LEN, ROADNAME_MAX_LEN, roadName.length()))) {
                 throw new IllegalArgumentException("도로명 길이가 맞지 않습니다.");
             }
         }
@@ -97,10 +107,37 @@ public class Address {
                 throw new IllegalArgumentException("주소에_자세한_설명은17자를 넘을수 업습니다.");
             }
         }
+
         private static boolean numberBetween(int min, int max, int number) {
             return number >= min && number <= max;
         }
 
     }
 
+    public void update(Address address){
+        setRoadName(address.roadName);
+        setZipCode(address.zipCode);
+        setName(address.name);
+        setDetailed(address.detailed);
+    }
+
+    private void setRoadName(String roadName) {
+        AddressValidator.verifyRoadName(roadName);
+        this.roadName = roadName;
+    }
+
+    private void setZipCode(String zipCode) {
+        AddressValidator.verifyZipCodes(zipCode);
+        this.zipCode = zipCode;
+    }
+
+    private void setName(String name) {
+        AddressValidator.verifyName(name);
+        this.name = name;
+    }
+
+    private void setDetailed(String detailed) {
+        AddressValidator.verifyDetailed(detailed);
+        this.detailed = detailed;
+    }
 }
