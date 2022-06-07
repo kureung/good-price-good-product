@@ -1,219 +1,181 @@
 package kr.co.gpgp.domain.address.service;
 
-import java.util.Optional;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+
+import java.util.List;
+import kr.co.gpgp.domain.address.dto.AddressRequest;
+import kr.co.gpgp.domain.address.dto.AddressResponse;
 import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.address.repository.AddressRepository;
 import kr.co.gpgp.domain.user.entity.Role;
 import kr.co.gpgp.domain.user.entity.User;
-
-import static org.assertj.core.api.Assertions.*;
-
+import kr.co.gpgp.domain.user.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
-@Transactional
+
+@ExtendWith(SpringExtension.class)    // 테스트 실행 방법
+@DataJpaTest                            //JPA 테스트
 public class AddressServiceTest {
 
+    @SpyBean
+    AddressService addressService;
+
     @Autowired
-    private AddressService addressService;
+    AddressRepository addressRepository;
+
     @Autowired
-    private AddressRepository addressRepository;
+    UserRepository userRepository;
+
+    private User user;
+    private Address address;
 
 
-    private static User SUCCESS_USER =
-            User.of("kang", "kgh22522252@gmail.com", Role.USER);
-    private static String SUCCESS_ROADNAME = "경기도_광주시_회덕동_회덕길111";
-    private static String SUCCESS_ZIPCODE = "12345";
-    private static String SUCCESS_NAME = "나메이크성";
-    private static String SUCCESS_DETAILED = "111동111호";
+    @BeforeEach
+    @Rollback(value = false)
+    void setups() {
+        user = User.of("asdf", "kgh22@gmail.com", Role.USER);
+        address = Address.of(user, "12345667899", "12345", "1번째", "detailed");
+
+        userRepository.save(user);
+    }
+
     @Test
-    public void 주소생성후_변경후_삭제를_할수있다면_예외는_발생되지_않습니다() {
-        Address address = addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
+    void 주소_생성_성공() {
+//        user = User.of("asd32f", "kgh322@gmail.com", Role.USER);
+//        userRepository.save(user);
 
-        address.updateRoadName("경기도 광주시 탄번동 00-00");
+        AddressRequest addressRequest = AddressRequest
+                .of(address.getRoadName(),
+                        address.getZipCode(),
+                        address.getName(),
+                        address.getDetailed());
+
+        addressService.create(user.getId(), addressRequest);
+
+        Assertions.assertAll(
+                () -> assertThat(address).isNotNull(),
+                () -> assertThat(address.getDetailed()).isEqualTo(addressRequest.getDetailed()),
+                () -> assertThat(address.getName()).isEqualTo(addressRequest.getName()),
+                () -> assertThat(address.getRoadName()).isEqualTo(addressRequest.getRoadName()),
+                () -> assertThat(address.getZipCode()).isEqualTo(addressRequest.getZipCode())
+        );
+    }
+
+    @Test
+    void 주소_생성시_유저가_없다면_테스트가_실패한다() {
+
+        AddressRequest addressRequest = AddressRequest
+                .of(address.getRoadName(),
+                        address.getZipCode(),
+                        address.getName(),
+                        address.getDetailed());
+
+        assertThatThrownBy(() -> addressService.create(Long.MAX_VALUE, addressRequest))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("user ID를 조회할수 없어 주소를 생성할수 없습니다.");
+    }
+
+    @Test
+    void 주소_삭제_성공() {
+        Address address = Address.of(user, "12345667899", "123-345", "2name", "delete Detailed");
+        address = addressRepository.save(address);
 
         addressService.delete(address.getId());
+
+        Mockito.verify(addressService).delete(address.getId());
     }
 
     @Test
-    public void 주소생성후_삭제를_할수있다면_예외는_발생되지_않습니다() {
-        Address address = addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
-
-        addressService.delete(address.getId());
-    }
-
-    @Test
-    public void 주소조회후_변경후_삭제를_할수있다면_예되는_발생되지_않습니다() {
-        Address address = addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
-
-        Optional<Address> getAddress = addressRepository.findById(address.getId());
-
-        addressService.delete(getAddress.get().getId());
-    }
-
-
-    @Test
-    public void 주소생성이_정상적으로_처리되었으면_예외는_발생되지_않는다() {
-        assertThat(addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED))
-                .isNotInstanceOf(IllegalArgumentException.class)
-                .isNotNull();
-    }
-
-    @Test
-    public void 주소생성중_zipCode가_유효하지_않은_값이_들어올떄_예외가_발생됨니다() {
-
-        assertThatThrownBy(() -> addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                "123",
-                SUCCESS_NAME,
-                SUCCESS_DETAILED))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("우편번호 형식이 맞지 않습니다.");
-
-    }
-
-    @Test
-    public void 주소생성중_name이_유효하지_않은_값이_들어올떄_예외가_발생됨니다() {
-
-        assertThatThrownBy(() -> addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                "",
-                SUCCESS_DETAILED))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("주소 이름은 비어있을 수 없습니다.");
-
-    }
-
-    @Test
-    public void 주소생성중_roadName이_유효하지_않은_값이_들어올떄_예외가_발생됨니다() {
-
-        assertThatThrownBy(() -> addressService.create(SUCCESS_USER,
-                "도로명최소9글자",
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("도로명 길이가 맞지 않습니다.");
-
-    }
-
-    @Test
-    public void 주소생성중_detailed가_유효하지_않은_값이_들어올떄_예외가_발생됨니다() {
-
-        assertThatThrownBy(() -> addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                "12345_12345_12345_12345"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("주소에_자세한_설명은17자를 넘을수 업습니다.");
-
-    }
-
-    @Test
-    public void 주소삭제는_조회되는_ID가_없다면_예외가_발생_됩니다() {
-        Address address = addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
-
+    void 주소_삭제_테스트를_실패한다() {
         assertThatThrownBy(() -> addressService.delete(Long.MAX_VALUE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[AddressService] 주소 ID 가 없어 주소를 삭제할수 없습니다.");
-    }
-
-    @Test
-    public void 주소삭제가_정상적으로_처리되어_예외가_발생되지_않습니다() {
-        Address address = addressService.create(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
-
-        assertThat(address)
-                .isNotInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
 
     @Test
-    public void roadName_을_수정할때_유효하지_않은_값이_들어갈때_예외가_발생한다() {
-        Address address = Address.of(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
+    void 주소_조회_성공() {
 
-        assertThatThrownBy(() ->
-                addressService.updateRoadName(address,
-                        "9글자이상"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("도로명 길이가 맞지 않습니다.");
+        Address address1 = Address.of(user, "11111111111111", "22222", "2번쨰", "A");
+        Address address2 = Address.of(user, "22222222222222", "33333", "3번쨰", "B");
+        addressRepository.save(address1);
+        addressRepository.save(address2);
+
+        List<Address> list = addressService.select(1L);
+
+        Assertions.assertAll(
+                () -> assertThat(list).isNotNull(),
+                () -> assertThat(list.get(0).getDetailed()).isEqualTo(address1.getDetailed()),
+                () -> assertThat(list.get(0).getName()).isEqualTo(address1.getName()),
+                () -> assertThat(list.get(0).getRoadName()).isEqualTo(address1.getRoadName()),
+                () -> assertThat(list.get(0).getZipCode()).isEqualTo(address1.getZipCode())
+        );
+        Assertions.assertAll(
+                () -> assertThat(list).isNotNull(),
+                () -> assertThat(list.get(1).getDetailed()).isEqualTo(address2.getDetailed()),
+                () -> assertThat(list.get(1).getName()).isEqualTo(address2.getName()),
+                () -> assertThat(list.get(1).getRoadName()).isEqualTo(address2.getRoadName()),
+                () -> assertThat(list.get(1).getZipCode()).isEqualTo(address2.getZipCode())
+        );
     }
 
     @Test
-    public void zipCode_을_수정할때_유효하지_않은_값이_들어갈때_예외가_발생한다() {
-        Address address = Address.of(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
+    void 주소_조회_회원ID가없어_실패() {
+        Address address1 = Address.of(user, "11111111111111", "22222", "2번쨰", "A");
+        Address address2 = Address.of(user, "22222222222222", "33333", "3번쨰", "B");
+        addressRepository.save(address1);
+        addressRepository.save(address2);
 
-        assertThatThrownBy(() ->
-                addressService.updateZipCode(address,
-                        "1239123"))
+        assertThatThrownBy(() -> addressService.select(Long.MAX_VALUE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("우편번호 형식이 맞지 않습니다.");
+                .hasMessage("조회하려는 User ID 값이 조회할수 없습니다.");
     }
 
     @Test
-    public void name_을_수정할때_유효하지_않은_값이_들어갈때_예외가_발생한다() {
-        Address address = Address.of(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
+    void 등록된_주소를_찾을수없어_실패() {
+        Address address1 = Address.of(user, "11111111111111", "22222", "2번쨰", "A");
+        Address address2 = Address.of(user, "22222222222222", "33333", "3번쨰", "B");
+        addressRepository.save(address1);
+        addressRepository.save(address2);
 
-        assertThatThrownBy(() ->
-                addressService.updateName(address,
-                        ""))
+        assertThatThrownBy(() -> addressService.select(Long.MAX_VALUE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("주소 이름은 비어있을 수 없습니다.");
+                .hasMessage("조회하려는 User ID 값이 조회할수 없습니다.");
     }
 
     @Test
-    public void datailed_을_수정할때_유효하지_않은_값이_들어갈때_예외가_발생한다() {
-        Address address = Address.of(SUCCESS_USER,
-                SUCCESS_ROADNAME,
-                SUCCESS_ZIPCODE,
-                SUCCESS_NAME,
-                SUCCESS_DETAILED);
+    void 주소_수정_성공() {
+        address = addressRepository.save(address);
+        AddressRequest addressRequest = AddressRequest.of("경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
+        AddressResponse addressResponse = AddressResponse.of(addressRequest);
 
-        assertThatThrownBy(() ->
-                addressService.updateDetailed(address,
-                        "17글자이상_17글자이상_17글자이상"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("주소에_자세한_설명은17자를 넘을수 업습니다.");
+        addressService.update(address.getId(), addressResponse);
+
+        Mockito.verify(addressService)
+                .update(address.getId(), addressResponse);
     }
+
+    @Test
+    void 주소_수정할_주소_ID가_존재하지않아_수정_실패() {
+
+        address = addressRepository.save(address);
+        AddressRequest addressRequest = AddressRequest.of("경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
+        AddressResponse addressResponse = AddressResponse.of(addressRequest);
+
+        assertThatThrownBy(() ->  addressService.update(Long.MAX_VALUE,addressResponse))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다.");
+
+    }
+
 
 }
