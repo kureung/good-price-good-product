@@ -26,6 +26,7 @@ public class AddressRepositoryCustomImpl implements AddressRepositoryCustom{
                         qAddress.name,
                         qAddress.detailed))
                 .from(qAddress)
+                .where(qAddress.user.id.eq(userId))
                 .fetch();
         return list;
     }
