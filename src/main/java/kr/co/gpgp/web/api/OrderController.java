@@ -7,6 +7,8 @@ import kr.co.gpgp.domain.order.dto.OrderResponse;
 import kr.co.gpgp.domain.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +36,12 @@ public class OrderController {
 
         return ResponseEntity.created(location)
                 .body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponse> findOne(@PathVariable Long id) {
+        OrderResponse response = orderService.findOneToDto(id);
+
+        return ResponseEntity.ok(response);
     }
 }

@@ -82,6 +82,21 @@ public class OrderService {
                 .orElseThrow(() -> new NoSuchElementException("해당 주문을 찾을 수 없습니다."));
     }
 
+    public OrderResponse findOneToDto(Long orderId) {
+        Order order = findOne(orderId);
+
+        return OrderResponse.builder()
+                .id(orderId)
+                .roadName(order.getAddressRoadName())
+                .requirement(order.getRequirementMessage())
+                .detailedAddress(order.getDetailedAddress())
+                .zipCode(order.getAddressZipCode())
+                .addressName(order.getAddressName())
+                .orderLines(toDtos(order.getOrderLines()))
+                .build();
+
+    }
+
     public List<OrderLine> toEntities(List<OrderLineRequest> requests) {
         return requests.stream()
                 .map(this::toEntity)
