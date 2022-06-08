@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.delivery.entity;
+package kr.co.gpgp.domain.requirement.entity;
 
 import static org.assertj.core.api.Assertions.*;
 
