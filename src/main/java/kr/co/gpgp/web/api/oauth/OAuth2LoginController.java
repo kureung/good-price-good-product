@@ -28,18 +28,20 @@ public class OAuth2LoginController {
     public String index(){
         return "";
     }
-    @GetMapping("/login/oauth2/code")
+    @GetMapping("/login/oauth2/code/kakao")
     public String index(Model model, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient,
         @AuthenticationPrincipal OAuth2User oauth2User) {
         model.addAttribute("userName", oauth2User.getName());
         model.addAttribute("clientName", authorizedClient.getClientRegistration().getClientName());
         model.addAttribute("userAttributes", oauth2User.getAttributes());
-        return "index";
+        return "/index";
     }
 
     @GetMapping("/user")
     public String user(Principal principal){
-        return "user";
+        return "/user";
     }
+
+
 
 }
