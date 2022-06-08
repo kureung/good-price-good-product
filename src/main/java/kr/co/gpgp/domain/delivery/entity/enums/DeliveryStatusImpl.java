@@ -31,7 +31,8 @@ public enum DeliveryStatusImpl implements DeliveryStatus {
     private static final EnumMap<DeliveryStatusImpl, DeliveryStatusImpl> sequence = new EnumMap<>(DeliveryStatusImpl.class);
     private static final EnumMap<DeliveryStatusImpl, String> statusMessage = new EnumMap<>(DeliveryStatusImpl.class);
 
-    /** 배송 상태 순서 불멸 저장<br>
+    /** 배송 상태별 다음 상태 저장
+     *
      * <br>
      * put(현재상태,다음상태)<br>
      * get(현재상태) -> 다음 상태 값 블러오기 <br>
@@ -43,6 +44,13 @@ public enum DeliveryStatusImpl implements DeliveryStatus {
         sequence.put(DEPARTURE, FINAL_DELIVERY);
         sequence.put(FINAL_DELIVERY, NONE_TRACKING);
     }
+
+    /** 상태별 메시지
+     *
+     * <br>
+     * put(상태,상태메시지) -   > 상태 마다 메시지를 저장함
+     * get(상태)             -> 상태 마다 메시지를 나타냄
+     */
     public static final void statusMessageInit() {
         statusMessage.put(ACCEPT, "결제완료");
         statusMessage.put(INSTRUCT, "상품준비중");
