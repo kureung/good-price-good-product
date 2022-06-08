@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
-import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatusImpl;
 import kr.co.gpgp.domain.order.enums.OrderStatus;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
 import kr.co.gpgp.domain.user.entity.User;
@@ -69,18 +68,15 @@ public class Order {
     }
 
     public void cancel() {
-        if (getDelivery().getStatus()
-                .equals(DeliveryStatusImpl.DEPARTURE)) {
+        if (delivery.isAccept()) {
             throw new IllegalStateException(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
         }
 
-        if (getDelivery().getStatus()
-                .equals(DeliveryStatusImpl.FINAL_DELIVERY)) {
+        if (delivery.isFinalDelivery()) {
             throw new IllegalStateException(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
         }
 
-        if (getDelivery().getStatus()
-                .equals(DeliveryStatusImpl.NONE_TRACKING)) {
+        if (delivery.isNoneTracking()) {
             throw new IllegalStateException(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
         }
 
