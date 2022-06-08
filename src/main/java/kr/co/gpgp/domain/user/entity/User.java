@@ -9,8 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,7 +31,7 @@ public class User {
     private String email;
 
 
-    private User( String name, String email,Role role) {
+    private User(String name, String email, Role role) {
 
         UserValidator.verifyName(name);
         UserValidator.verifyEmail(email);
@@ -40,41 +40,47 @@ public class User {
         this.email = email;
         this.role = role;
     }
-    public static User of(String name,String email, Role role){
-        return new User(name,email,role);
+
+    public static User of(String name, String email, Role role) {
+        return new User(name, email, role);
     }
 
-    public User updateEmail(String email){
+    public User updateEmail(String email) {
         UserValidator.verifyEmail(email);
-        this.email=email;
+        this.email = email;
 
         return this;
     }
 
-    public void updateName(String name){
+    public User updateName(String name) {
         UserValidator.verifyName(name);
-        this.name= name;
+        this.name = name;
+
+        return this;
     }
 
+    @Transient
+    private static final int EMAIL_MAX_LEN = 38;
+    @Transient
+    private static final int EMAIL_MIN_LEN = 8;
+    @Transient
+    private static final int NAME_MAX_LEN = 18;
+    @Transient
+    private static final int NAME_MIN_LEN = 1;
+    @Transient
+    private static final Set<String> ALLOW_DOMAINS = Set.of(
+            "naver.com",
+            "gmail.com",
+            "kakao.com"
+    );
 
     //@Builder override 재정의 하고픔
     private static class UserValidator {
 
-        private static final int EMAIL_MAX_LEN = 38;
-        private static final int EMAIL_MIN_LEN = 8;
-        private static final int NAME_MAX_LEN = 18;
-        private static final int NAME_MIN_LEN = 1;
-
-        private static final Set<String> ALLOW_DOMAINS = Set.of(
-            "naver.com",
-            "gmail.com",
-            "kakao.com"
-        );
-
 
         private static void verifyName(String name) {
 
-            if (name == null || name.isBlank()) {
+            if (name==null || name.isBlank()) {
                 throw new IllegalArgumentException("이름은 비어있을 수 없습니다.");
             }
 
@@ -84,7 +90,7 @@ public class User {
         }
 
         private static void verifyEmail(String email) {
-            if (email == null || email.isBlank()) {
+            if (email==null || email.isBlank()) {
                 throw new IllegalArgumentException("이메일은 비어있을 수 없습니다");
             }
             if (!numberBetween(EMAIL_MIN_LEN, EMAIL_MAX_LEN, email.length())) {
@@ -111,7 +117,7 @@ public class User {
         }
     }
 
-    public String getRoleKey(){
+    public String getRoleKey() {
         return this.role.getKey();
     }
 
