@@ -68,7 +68,7 @@ public class Order {
     }
 
     public void cancel() {
-        if (delivery.isAccept()) {
+        if (delivery.isDeparture()) {
             throw new IllegalStateException(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
         }
 
