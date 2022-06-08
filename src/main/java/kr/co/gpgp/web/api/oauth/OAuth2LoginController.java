@@ -34,12 +34,12 @@ public class OAuth2LoginController {
         model.addAttribute("userName", oauth2User.getName());
         model.addAttribute("clientName", authorizedClient.getClientRegistration().getClientName());
         model.addAttribute("userAttributes", oauth2User.getAttributes());
-        return "index";
+        return "/index";
     }
 
     @GetMapping("/user")
     public String user(Principal principal){
-        return "user";
+        return "/user";
     }
 
 
