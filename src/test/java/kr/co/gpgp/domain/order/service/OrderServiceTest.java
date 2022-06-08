@@ -11,7 +11,6 @@ import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import kr.co.gpgp.domain.item.repository.ItemRepository;
-import kr.co.gpgp.domain.order.repository.OrderRepository;
 import kr.co.gpgp.domain.orderline.dto.OrderLineRequest;
 import kr.co.gpgp.domain.orderline.dto.OrderLineResponse;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
@@ -31,9 +30,6 @@ class OrderServiceTest {
 
     @Autowired
     private OrderService sut;
-
-    @Autowired
-    private OrderRepository orderRepository;
 
     @Autowired
     private ItemRepository itemRepository;
