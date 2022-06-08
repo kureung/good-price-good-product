@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatusImpl;
+import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
 import kr.co.gpgp.domain.delivery.exception.DeliveryStatusOverflowException;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.Role;
@@ -36,15 +36,15 @@ public class DeliveryTest {
     void 배송순서가_정상적으로_돌아가면_예외는_발생되지_않는다() {
         Delivery delivery = Delivery.of(requirement, address);
 
-        assertThat(delivery.getStatus().get()).isEqualTo(DeliveryStatusImpl.ACCEPT.get());
+        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.ACCEPT);
         delivery.next();
-        assertThat(delivery.getStatus().get()).isEqualTo(DeliveryStatusImpl.INSTRUCT.get());
+        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.INSTRUCT);
         delivery.next();
-        assertThat(delivery.getStatus().get()).isEqualTo(DeliveryStatusImpl.DEPARTURE.get());
+        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.DEPARTURE);
         delivery.next();
-        assertThat(delivery.getStatus().get()).isEqualTo(DeliveryStatusImpl.FINAL_DELIVERY.get());
+        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.FINAL_DELIVERY);
         delivery.next();
-        assertThat(delivery.getStatus().get()).isEqualTo(DeliveryStatusImpl.NONE_TRACKING.get());
+        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.NONE_TRACKING);
 
         assertThat(delivery)
                 .isNotInstanceOf(DeliveryStatusOverflowException.class);

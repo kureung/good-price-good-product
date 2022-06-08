@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatusImpl;
+import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,14 +36,12 @@ public class Delivery {
     private Address address;
 
     @Enumerated(STRING)
-    private DeliveryStatusImpl status;
+    private DeliveryStatus status;
 
     private Delivery(Requirement requirement, Address address) {
         this.requirement = requirement;
         this.address = address;
-        this.status = DeliveryStatusImpl.ACCEPT;
-        status.statusMessageInit();
-        status.sequenceInit();
+        this.status = status.init(); // 배송 상태 초기화
     }
 
     public static Delivery of(Requirement requirement, Address address) {
@@ -54,23 +52,49 @@ public class Delivery {
         status = status.next();
     }
 
-    public String getStausMessage(){
-        return getStatus().get();
+    public String getStatusMessage() {
+        return status.getMessage();
     }
-    public String getRequirementMessage(){
+
+    public String getRequirementMessage() {
         return getRequirement().getMessage();
     }
-    public String getAddressRoadName(){
+
+    public String getAddressRoadName() {
         return getAddress().getRoadName();
     }
-    public String getAddressZipCode(){
+
+    public String getAddressZipCode() {
         return getAddress().getZipCode();
     }
-    public String getAddressName(){
+
+    public String getAddressName() {
         return getAddress().getName();
     }
-    public String getAddressDetailed(){
+
+    public String getAddressDetailed() {
         return getAddress().getDetailed();
     }
+
+    public boolean isAccept() {
+        return getStatus()==DeliveryStatus.ACCEPT;
+    }
+
+    public boolean isInstruct() {
+        return getStatus()==DeliveryStatus.INSTRUCT;
+    }
+
+    public boolean isDeparture() {
+        return getStatus()==DeliveryStatus.DEPARTURE;
+    }
+
+    public boolean isFinalDelivery() {
+        return getStatus()==DeliveryStatus.FINAL_DELIVERY;
+    }
+
+    public boolean isNoneTracking() {
+        return getStatus()==DeliveryStatus.NONE_TRACKING;
+    }
+
 
 }
