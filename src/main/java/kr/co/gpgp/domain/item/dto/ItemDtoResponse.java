@@ -1,33 +1,36 @@
 package kr.co.gpgp.domain.item.dto;
 
-import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
-import javax.validation.Valid;
+import java.time.LocalDate;
+import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.validator.constraints.Range;
 
 @Getter
 public class ItemDtoResponse {
 
-    @JsonIgnore
     private Long id;
 
-    @Range(min = 0, max = 1_000_000_000)
     private int price;
 
-    @Range(min = 0, max = 10_000)
     private int stockQuantity;
 
-    @Valid
-    private ItemInfoDto itemInfoDto;
+    private String name;
 
-    private ItemDtoResponse(int price, int stockQuantity, ItemInfoDto itemInfoDto) {
+    private int weight;
+
+    private String code;
+
+    private String imageUrl;
+
+    private LocalDate releaseDate;
+
+    @Builder
+    private ItemDtoResponse(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
         this.price = price;
         this.stockQuantity = stockQuantity;
-        this.itemInfoDto = itemInfoDto;
+        this.name = name;
+        this.weight = weight;
+        this.code = code;
+        this.imageUrl = imageUrl;
+        this.releaseDate = releaseDate;
     }
-
-    public static ItemDtoResponse of(int price, int stockQuantity, ItemInfoDto itemInfoDto) {
-        return new ItemDtoResponse(price, stockQuantity, itemInfoDto);
-    }
-
 }
