@@ -1,16 +1,13 @@
 package kr.co.gpgp.domain.item.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.time.LocalDate;
-import java.util.stream.Stream;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import kr.co.gpgp.domain.item.repository.ItemRepository;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,66 +20,23 @@ class ItemFindServiceTest {
     private ItemRepository itemRepository;
 
     @Autowired
-    private ItemFindService itemFindService;
+    private ItemFindService sut;
 
-    @ParameterizedTest
-    @MethodSource("toFindOneProvideItem")
-    void 상품_조회_테스트(Item item) {
-
+    @Test
+    void 상품_조회_테스트() {
         // given
+        ItemInfo info = ItemInfo.builder()
+                .weight(10)
+                .build();
+        Item item = Item.builder()
+                .info(info)
+                .build();
         Item savedItem = itemRepository.save(item);
         Long itemId = savedItem.getId();
 
-        // when
-        Item findItem = itemFindService.findOne(itemId);
-
-        // then
-        assertThat(item).usingRecursiveComparison()
-            .ignoringFields("id")
-            .isEqualTo(findItem);
-    }
-
-    private static Stream<Arguments> toFindOneProvideItem() {
-        return Stream.of(
-            Arguments.of(
-                Item.of(
-                    1000,
-                    100,
-                    ItemInfo.of(
-                        "item1",
-                        500,
-                        "123",
-                        LocalDate.now(),
-                        "www.naver.com"
-                    ))
-            ),
-
-            Arguments.of(
-                Item.of(
-                    2000,
-                    300,
-                    ItemInfo.of(
-                        "item2",
-                        600,
-                        "456",
-                        LocalDate.now().minusMonths(1),
-                        "www.google.co.kr"
-                    ))
-            ),
-
-            Arguments.of(
-                Item.of(
-                    3000,
-                    200,
-                    ItemInfo.of(
-                        "item3",
-                        700,
-                        "789",
-                        LocalDate.now().minusDays(2),
-                        "www.daum.net"
-                    )
-                )
-            )
-        );
+        // when, then
+        Item findItem = assertDoesNotThrow(() -> sut.findOne(itemId));
+        assertNotNull(findItem);
+        assertInstanceOf(Item.class, findItem);
     }
 }
