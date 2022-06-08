@@ -2,7 +2,6 @@ package kr.co.gpgp.domain.item.service.dto;
 
 import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
 import kr.co.gpgp.domain.item.dto.ItemDtoResponse;
-import kr.co.gpgp.domain.item.dto.ItemInfoDto;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import org.springframework.stereotype.Service;
@@ -10,41 +9,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItemDtoService{
 
-    public ItemDtoResponse itemConversionDto(Item item) {
-        ItemInfoDto infoDto = itemInfoConversionDto(item.getInfo());
-        return ItemDtoResponse.of(
-            item.getPrice(),
-            item.getStockQuantity(),
-            infoDto
-        );
+    public ItemDtoResponse toDto(Item item) {
+        return ItemDtoResponse.builder()
+                .code(item.getCode())
+                .imageUrl(item.getImageUrl())
+                .name(item.getName())
+                .price(item.getPrice())
+                .releaseDate(item.getReleaseDate())
+                .stockQuantity(item.getStockQuantity())
+                .weight(item.getWeight())
+                .build();
     }
 
-    public Item dtoConversionItem(ItemDtoRequest request) {
-        ItemInfo info = dtoConversionItemInfo(request.getItemInfoDto());
-        return Item.of(
-            request.getPrice(),
-            request.getStockQuantity(),
-            info
-        );
-    }
+    public Item toEntity(ItemDtoRequest request) {
+        ItemInfo info = ItemInfo.builder()
+                .code(request.getCode())
+                .imageUrl(request.getImageUrl())
+                .name(request.getName())
+                .releaseDate(request.getReleaseDate())
+                .weight(request.getWeight())
+                .build();
 
-    public ItemInfo dtoConversionItemInfo(ItemInfoDto infoDto) {
-        return ItemInfo.of(
-            infoDto.getName(),
-            infoDto.getWeight(),
-            infoDto.getCode(),
-            infoDto.getReleaseDate(),
-            infoDto.getImageUrl()
-        );
-    }
-
-    public ItemInfoDto itemInfoConversionDto(ItemInfo info) {
-        return ItemInfoDto.of(
-            info.getName(),
-            info.getWeight(),
-            info.getCode(),
-            info.getImageUrl(),
-            info.getReleaseDate()
-        );
+        return Item.builder()
+                .price(request.getPrice())
+                .info(info)
+                .stockQuantity(request.getStockQuantity())
+                .build();
     }
 }
