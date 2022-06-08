@@ -149,7 +149,7 @@ class OrderServiceTest {
                 orderLineRequests);
 
         // when, then
-        assertDoesNotThrow(() -> sut.cancelOrder(orderId));
+        assertDoesNotThrow(() -> sut.cancel(orderId));
     }
 
     @Test
@@ -187,7 +187,7 @@ class OrderServiceTest {
                 orderLineRequests);
 
         // when, then
-        assertDoesNotThrow(() -> sut.cancelOrder(orderId));
+        assertDoesNotThrow(() -> sut.cancel(orderId));
     }
 
     @Test

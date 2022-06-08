@@ -97,4 +97,24 @@ public class Order {
                 .mapToInt(OrderLine::getTotalPrice)
                 .sum();
     }
+
+    public String getRequirementMessage() {
+        return getDelivery().getRequirementMessage();
+    }
+
+    public String getAddressRoadName() {
+        return getDelivery().getAddressRoadName();
+    }
+
+    public String getAddressZipCode() {
+        return getDelivery().getAddressZipCode();
+    }
+
+    public String getAddressName() {
+        return getDelivery().getAddressName();
+    }
+
+    public String getDetailedAddress() {
+        return getDelivery().getAddressDetailed();
+    }
 }
