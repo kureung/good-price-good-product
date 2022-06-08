@@ -19,7 +19,7 @@ class ItemCommandServiceTest {
     private ItemRepository itemRepository;
 
     @Autowired
-    private ItemCommandService itemCommandService;
+    private ItemCommandService sut;
 
     @Test
     void 상품_등록_테스트() {
@@ -49,87 +49,9 @@ class ItemCommandServiceTest {
         Long itemId = savedItem.getId();
 
         // when
-        itemCommandService.update(itemId, newItem);
-        Item findItem = itemRepository.findById(itemId)
-            .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
+        Long updatedItemId = sut.update(itemId, newItem);
 
         // then
-        assertThat(findItem).usingRecursiveComparison()
-            .ignoringFields("id")
-            .isEqualTo(newItem);
+        assertNotNull(itemRepository.findById(updatedItemId));
     }
-
-    private static Stream<Arguments> toUpdateProvideItem() {
-        return Stream.of(
-            Arguments.of(
-                Item.of(
-                    1000,
-                    100,
-                    ItemInfo.of(
-                        "item1",
-                        500,
-                        "123",
-                        LocalDate.now(),
-                        "www.naver.com"
-                    )),
-                Item.of(
-                    2000,
-                    300,
-                    ItemInfo.of(
-                        "item2",
-                        600,
-                        "456",
-                        LocalDate.now().minusMonths(1),
-                        "www.google.co.kr"
-                    ))
-            ),
-
-            Arguments.of(
-                Item.of(
-                    2000,
-                    300,
-                    ItemInfo.of(
-                        "item2",
-                        600,
-                        "456",
-                        LocalDate.now().minusMonths(1),
-                        "www.google.co.kr"
-                    )),
-                Item.of(
-                    1000,
-                    100,
-                    ItemInfo.of(
-                        "item1",
-                        500,
-                        "123",
-                        LocalDate.now(),
-                        "www.naver.com"
-                    ))
-            ),
-
-            Arguments.of(
-                Item.of(
-                    3000,
-                    200,
-                    ItemInfo.of(
-                        "item3",
-                        700,
-                        "789",
-                        LocalDate.now().minusDays(2),
-                        "www.daum.net"
-                    )),
-                Item.of(
-                    2000,
-                    300,
-                    ItemInfo.of(
-                        "item2",
-                        600,
-                        "456",
-                        LocalDate.now().minusMonths(1),
-                        "www.google.co.kr"
-                    ))
-            )
-        );
-    }
-
 }
