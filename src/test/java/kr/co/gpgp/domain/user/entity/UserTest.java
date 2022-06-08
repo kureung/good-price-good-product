@@ -15,7 +15,7 @@ public class UserTest {
     @Test
     void 회원_이름이_유효하지_않아_예외가_발생했다() {
         assertThatThrownBy(() -> {
-            User.of("", SUCCESS_EMAIL, Role.USER);
+            User.of("123412561435_123412561435123412561435123412561435123412561435", SUCCESS_EMAIL, Role.USER);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름이_유효하지_않습니다.");
     }
