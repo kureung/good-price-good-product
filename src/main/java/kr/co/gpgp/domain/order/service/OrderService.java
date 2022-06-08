@@ -72,7 +72,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void cancelOrder(Long orderId) {
+    public void cancel(Long orderId) {
         Order order = findOne(orderId);
         order.cancel();
     }

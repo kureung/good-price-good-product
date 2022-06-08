@@ -44,4 +44,10 @@ public class OrderController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<String> orderCancel(@PathVariable Long id) {
+        orderService.cancel(id);
+        return ResponseEntity.ok("주문 취소 완료");
+    }
 }
