@@ -18,7 +18,7 @@ public class OrderLineRequest {
     @Length(max = 30)
     private final String itemCode;
 
-    @Range(min = 0, max = 10_000)
-    private final int itemQuantity;
+    @Range(min = 1, max = 10_000)
+    private final int orderQuantity;
 
 }

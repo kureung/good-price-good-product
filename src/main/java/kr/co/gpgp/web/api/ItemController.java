@@ -31,14 +31,11 @@ public class ItemController {
     public ResponseEntity<ItemDtoResponse> register(
         @Valid @RequestBody ItemDtoRequest request) {
 
-        Item item = itemDtoService.dtoConversionItem(request);
-        Long itemId = itemCommandService.save(item);
-        Item findItem = itemFindService.findOne(itemId);
-        ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
+        ItemDtoResponse response = itemCommandService.register(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(findItem.getId())
+            .buildAndExpand(response.getId())
             .toUri();
         
         return ResponseEntity.created(location)
@@ -50,7 +47,7 @@ public class ItemController {
         @PathVariable Long itemId) {
 
         Item findItem = itemFindService.findOne(itemId);
-        ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
+        ItemDtoResponse response = itemDtoService.toDto(findItem);
         return ResponseEntity.ok(response);
     }
 
@@ -59,11 +56,11 @@ public class ItemController {
         @PathVariable Long itemId,
         @Valid @RequestBody ItemDtoRequest request) {
 
-        Item item = itemDtoService.dtoConversionItem(request);
+        Item item = itemDtoService.toEntity(request);
         itemCommandService.update(itemId, item);
 
         Item findItem = itemFindService.findOne(itemId);
-        ItemDtoResponse response = itemDtoService.itemConversionDto(findItem);
+        ItemDtoResponse response = itemDtoService.toDto(findItem);
 
         return ResponseEntity.ok(response);
     }

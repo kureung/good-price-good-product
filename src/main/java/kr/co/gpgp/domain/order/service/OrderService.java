@@ -25,7 +25,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final UserService userService;
-
     private final ItemFindService itemFindService;
 
     @Transactional
@@ -61,7 +60,7 @@ public class OrderService {
     private OrderLine toEntity(OrderLineRequest request) {
         String itemCode = request.getItemCode();
         Item findItem = itemFindService.findOne(itemCode);
-        return OrderLine.of(findItem, request.getItemQuantity());
+        return OrderLine.of(findItem, request.getOrderQuantity());
     }
 
     public List<OrderLineResponse> toDtos(List<OrderLine> orderLines) {

@@ -2,18 +2,38 @@ package kr.co.gpgp.domain.item.service.dto;
 
 import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
 import kr.co.gpgp.domain.item.dto.ItemDtoResponse;
-import kr.co.gpgp.domain.item.dto.ItemInfoDto;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
+import org.springframework.stereotype.Service;
 
-public interface ItemDtoService {
+@Service
+public class ItemDtoService{
 
-    ItemDtoResponse itemConversionDto(Item item);
+    public ItemDtoResponse toDto(Item item) {
+        return ItemDtoResponse.builder()
+                .code(item.getCode())
+                .imageUrl(item.getImageUrl())
+                .name(item.getName())
+                .price(item.getPrice())
+                .releaseDate(item.getReleaseDate())
+                .stockQuantity(item.getStockQuantity())
+                .weight(item.getWeight())
+                .build();
+    }
 
-    Item dtoConversionItem(ItemDtoRequest request);
+    public Item toEntity(ItemDtoRequest request) {
+        ItemInfo info = ItemInfo.builder()
+                .code(request.getCode())
+                .imageUrl(request.getImageUrl())
+                .name(request.getName())
+                .releaseDate(request.getReleaseDate())
+                .weight(request.getWeight())
+                .build();
 
-    ItemInfo dtoConversionItemInfo(ItemInfoDto infoDto);
-
-    ItemInfoDto itemInfoConversionDto(ItemInfo info);
-
+        return Item.builder()
+                .price(request.getPrice())
+                .info(info)
+                .stockQuantity(request.getStockQuantity())
+                .build();
+    }
 }

@@ -4,6 +4,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 import java.time.LocalDate;
 import javax.persistence.Embeddable;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,27 +19,12 @@ public class ItemInfo {
     private LocalDate releaseDate;
     private String imageUrl;
 
-    private ItemInfo(
-        String name,
-        int weight,
-        String code,
-        LocalDate releaseDate,
-        String imageUrl) {
-
+    @Builder
+    public ItemInfo(String name, int weight, String code, LocalDate releaseDate, String imageUrl) {
         this.name = name;
         this.weight = weight;
         this.code = code;
         this.releaseDate = releaseDate;
         this.imageUrl = imageUrl;
-    }
-
-    public static ItemInfo of(
-        String name,
-        int weight,
-        String code,
-        LocalDate releaseDate,
-        String imageUrl) {
-
-        return new ItemInfo(name, weight, code, releaseDate, imageUrl);
     }
 }
