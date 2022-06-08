@@ -54,5 +54,23 @@ public class Delivery {
         status = status.next();
     }
 
+    public String getStausMessage(){
+        return getStatus().get();
+    }
+    public String getRequirementMessage(){
+        return getRequirement().getMessage();
+    }
+    public String getAddressRoadName(){
+        return getAddress().getRoadName();
+    }
+    public String getAddressZipCode(){
+        return getAddress().getZipCode();
+    }
+    public String getAddressName(){
+        return getAddress().getName();
+    }
+    public String getAddressDetailed(){
+        return getAddress().getDetailed();
+    }
 
 }
