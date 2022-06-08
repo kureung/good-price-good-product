@@ -7,7 +7,7 @@ spring:
             authorization-grant-type: authorization_code
             client-id: ENC(e7k+7Mv0iNLWe6xZV/0NFdyNFjkuZ9y3TEGtTtSSodeFwmU+yN6fMTa0/Vu2Y5d8)
             client-secret: ENC(DWDRIXvmmv9n65Y+9PxzQRkaeibuY/qQArOxKBD1fi7V92X5RzpAZGTRmU+9MNA+)
-            redirect-uri: "https://localhost:8080/login/oauth2/code"
+            redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
             client-authentication-method: POST
             client-name: Kakao
         provider:
