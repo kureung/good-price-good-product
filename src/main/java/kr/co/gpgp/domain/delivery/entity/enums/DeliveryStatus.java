@@ -2,7 +2,9 @@ package kr.co.gpgp.domain.delivery.entity.enums;
 
 
 import java.util.EnumMap;
+import kr.co.gpgp.domain.delivery.exception.DeliveryStatusAuthException;
 import kr.co.gpgp.domain.delivery.exception.DeliveryStatusOverflowException;
+import kr.co.gpgp.domain.user.entity.Role;
 
 public enum DeliveryStatus {
     ACCEPT,
@@ -11,7 +13,7 @@ public enum DeliveryStatus {
     FINAL_DELIVERY,
     NONE_TRACKING{
         @Override
-        public DeliveryStatus next()  { //  - endPoint
+        public DeliveryStatus next(Role role)  { //  - endPoint
             throw new DeliveryStatusOverflowException("이미 완료된 배송입니다.");
         }
     };
@@ -45,6 +47,22 @@ public enum DeliveryStatus {
         statusMessage.put(NONE_TRACKING, "배송완료");
     }
 
+    /** next() 배송 상태 변경 권한
+      *
+      */
+    private static void authInit() {
+        // 회원의 권한
+        auth.put(ACCEPT, Role.USER);
+
+        // 판매자의 권한
+        auth.put(INSTRUCT, Role.SELLER);
+        auth.put(DEPARTURE, Role.SELLER);
+
+        // 택배원의 권한
+        auth.put(FINAL_DELIVERY, Role.COURIER);
+        auth.put(NONE_TRACKING,  Role.COURIER);
+    }
+
 
     /** 현재 상태를 메시지로 리턴
      *
@@ -58,17 +76,22 @@ public enum DeliveryStatus {
      *
      * @return
      */
-    public DeliveryStatus next() {
-        return sequence.get(this);
+    public DeliveryStatus next(Role role) {
+        if( auth.get(this) == role){
+            return sequence.get(this);
+        }
+        throw new DeliveryStatusAuthException("권한이 없어 배송상태를 변경하지 못합니다.");
     }
 
     private static final EnumMap<DeliveryStatus, DeliveryStatus> sequence = new EnumMap<>(DeliveryStatus.class);
     private static final EnumMap<DeliveryStatus, String> statusMessage = new EnumMap<>(DeliveryStatus.class);
+    private static final EnumMap<DeliveryStatus, Role> auth = new EnumMap<>(DeliveryStatus.class);
 
 
     public static DeliveryStatus init() {
         sequenceInit();
         statusMessageInit();
+        authInit();
         return DeliveryStatus.ACCEPT;
     }
 
