@@ -50,11 +50,6 @@ public class Delivery {
         return new Delivery(requirement, address);
     }
 
-    public void next() {
-        Role role = Role.USER;// 임시 조치
-        status = status.next(role);
-    }
-
     public void next(Role role) {
         status = status.next(role);
     }
@@ -88,23 +83,23 @@ public class Delivery {
     }
 
     public boolean isAccept() {
-        return getStatus() == DeliveryStatus.ACCEPT;
+        return getStatus()==DeliveryStatus.ACCEPT;
     }
 
     public boolean isInstruct() {
-        return getStatus() == DeliveryStatus.INSTRUCT;
+        return getStatus()==DeliveryStatus.INSTRUCT;
     }
 
     public boolean isDeparture() {
-        return getStatus() == DeliveryStatus.DEPARTURE;
+        return getStatus()==DeliveryStatus.DEPARTURE;
     }
 
     public boolean isFinalDelivery() {
-        return getStatus() == DeliveryStatus.FINAL_DELIVERY;
+        return getStatus()==DeliveryStatus.FINAL_DELIVERY;
     }
 
     public boolean isNoneTracking() {
-        return getStatus() == DeliveryStatus.NONE_TRACKING;
+        return getStatus()==DeliveryStatus.NONE_TRACKING;
     }
 
 
