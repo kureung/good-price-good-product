@@ -8,6 +8,7 @@ import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
 import kr.co.gpgp.domain.delivery.exception.DeliveryStatusOverflowException;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.Role;
+import kr.co.gpgp.domain.user.entity.Role.*;
 import kr.co.gpgp.domain.user.entity.User;
 import org.junit.jupiter.api.Test;
 
@@ -23,12 +24,12 @@ public class DeliveryTest {
 
         assertThatThrownBy(() -> {
             Delivery delivery = Delivery.of(requirement, address);
-            delivery.next();
-            delivery.next();
-            delivery.next();
-            delivery.next();
-            delivery.next();
-            delivery.next();
+            delivery.next(Role.SELLER);
+            delivery.next(Role.SELLER);
+            delivery.next(Role.COURIER);
+            delivery.next(Role.COURIER);
+            delivery.next(Role.COURIER);
+            delivery.next(Role.COURIER);
         }).hasMessage("이미 완료된 배송입니다.");
     }
 
@@ -37,13 +38,14 @@ public class DeliveryTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.ACCEPT);
-        delivery.next();
+        delivery.next(Role.SELLER);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.INSTRUCT);
-        delivery.next();
+        delivery.next(Role.SELLER);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.DEPARTURE);
-        delivery.next();
+
+        delivery.next(Role.COURIER);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.FINAL_DELIVERY);
-        delivery.next();
+        delivery.next(Role.COURIER);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.NONE_TRACKING);
 
         assertThat(delivery)
