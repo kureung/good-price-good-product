@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @NoArgsConstructor
-public class ItemDtoRequest {
+public class ItemRequest {
 
     @Range(min = 0, max = 1_000_000_000)
     private int price;
@@ -36,10 +37,11 @@ public class ItemDtoRequest {
 
     @NotBlank
     @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
 
     @Builder
-    private ItemDtoRequest(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
+    private ItemRequest(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.name = name;

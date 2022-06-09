@@ -1,11 +1,12 @@
 package kr.co.gpgp.domain.item.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ItemDtoResponse {
+public class ItemResponse {
 
     private Long id;
 
@@ -21,10 +22,11 @@ public class ItemDtoResponse {
 
     private String imageUrl;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate releaseDate;
 
     @Builder
-    private ItemDtoResponse(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
+    private ItemResponse(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.name = name;

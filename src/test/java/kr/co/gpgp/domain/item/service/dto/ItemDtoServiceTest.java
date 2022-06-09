@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
-import kr.co.gpgp.domain.item.dto.ItemDtoResponse;
+import kr.co.gpgp.domain.item.dto.ItemRequest;
+import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import org.junit.jupiter.api.Test;
@@ -31,14 +31,14 @@ class ItemDtoServiceTest {
                 .stockQuantity(10)
                 .build();
 
-        ItemDtoResponse response = assertDoesNotThrow(() -> sut.toDto(item));
+        ItemResponse response = assertDoesNotThrow(() -> sut.toDto(item));
         assertNotNull(response);
-        assertInstanceOf(ItemDtoResponse.class, response);
+        assertInstanceOf(ItemResponse.class, response);
     }
 
     @Test
     void itemDtoRequest를_item으로_변환_테스트() {
-        ItemDtoRequest request = ItemDtoRequest.builder().build();
+        ItemRequest request = ItemRequest.builder().build();
         Item item = assertDoesNotThrow(() -> sut.toEntity(request));
         assertNotNull(item);
         assertInstanceOf(Item.class, item);
