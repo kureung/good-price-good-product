@@ -3,6 +3,7 @@ package kr.co.gpgp.domain.delivery.entity;
 import static javax.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.user.entity.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +29,7 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "requirement_id")
     private Requirement requirement;
 
@@ -49,7 +51,16 @@ public class Delivery {
     }
 
     public void next() {
-        status = status.next();
+        Role role = Role.USER;// 임시 조치
+        status = status.next(role);
+    }
+
+    public void next(Role role) {
+        status = status.next(role);
+    }
+
+    public Long getUserId() {
+        return getAddress().getUser().getId();
     }
 
     public String getStatusMessage() {
@@ -77,23 +88,23 @@ public class Delivery {
     }
 
     public boolean isAccept() {
-        return getStatus()==DeliveryStatus.ACCEPT;
+        return getStatus() == DeliveryStatus.ACCEPT;
     }
 
     public boolean isInstruct() {
-        return getStatus()==DeliveryStatus.INSTRUCT;
+        return getStatus() == DeliveryStatus.INSTRUCT;
     }
 
     public boolean isDeparture() {
-        return getStatus()==DeliveryStatus.DEPARTURE;
+        return getStatus() == DeliveryStatus.DEPARTURE;
     }
 
     public boolean isFinalDelivery() {
-        return getStatus()==DeliveryStatus.FINAL_DELIVERY;
+        return getStatus() == DeliveryStatus.FINAL_DELIVERY;
     }
 
     public boolean isNoneTracking() {
-        return getStatus()==DeliveryStatus.NONE_TRACKING;
+        return getStatus() == DeliveryStatus.NONE_TRACKING;
     }
 
 
