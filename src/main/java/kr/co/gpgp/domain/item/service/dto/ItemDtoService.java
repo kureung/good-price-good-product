@@ -11,6 +11,7 @@ public class ItemDtoService{
 
     public ItemResponse toDto(Item item) {
         return ItemResponse.builder()
+                .id(item.getId())
                 .code(item.getCode())
                 .imageUrl(item.getImageUrl())
                 .name(item.getName())
