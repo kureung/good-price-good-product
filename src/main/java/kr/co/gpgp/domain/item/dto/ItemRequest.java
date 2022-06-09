@@ -33,7 +33,6 @@ public class ItemRequest {
 
     private String imageUrl;
 
-    @NotBlank
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
