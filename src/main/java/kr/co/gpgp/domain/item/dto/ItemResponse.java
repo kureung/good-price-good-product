@@ -1,6 +1,7 @@
 package kr.co.gpgp.domain.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class ItemResponse {
 
+    @JsonIgnore
     private Long id;
 
     private int price;
