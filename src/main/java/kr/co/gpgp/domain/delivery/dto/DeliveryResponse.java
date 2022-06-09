@@ -1,5 +1,7 @@
 package kr.co.gpgp.domain.delivery.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
+import java.util.Optional;
 import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
@@ -11,13 +13,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeliveryResponse {
 
+    private Long id;
     private String requirement;
     private String roadName;
     private String zipCode;
     private String addressName;
     private String detailedAddress;
 
-    private DeliveryResponse(String requirement, String roadName, String zipCode, String addressName, String detailedAddress) {
+    @QueryProjection
+    public DeliveryResponse(Long id, String requirement, String roadName, String zipCode, String addressName, String detailedAddress) {
+        this.id = id;
         this.requirement = requirement;
         this.roadName = roadName;
         this.zipCode = zipCode;
@@ -25,8 +30,12 @@ public class DeliveryResponse {
         this.detailedAddress = detailedAddress;
     }
 
-    private static DeliveryResponse of(String requirement, String roadName, String zipCode, String addressName, String detailedAddress) {
-        return new DeliveryResponse(requirement, roadName, zipCode, addressName, detailedAddress);
+    public static DeliveryResponse of(Long id, String requirement, String roadName, String zipCode, String addressName, String detailedAddress) {
+        return new DeliveryResponse(id, requirement, roadName, zipCode, addressName, detailedAddress);
+    }
+
+    public static DeliveryResponse of(Optional<Delivery> optional) {
+        return new DeliveryResponse(optional.get().getId(), optional.get().getRequirementMessage(), optional.get().getAddressRoadName(), optional.get().getAddressZipCode(), optional.get().getAddressName(), optional.get().getAddressDetailed());
     }
 
 
