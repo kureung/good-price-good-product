@@ -5,6 +5,7 @@ import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.repository.ItemRepository;
 import kr.co.gpgp.domain.item.service.dto.ItemDtoService;
+import kr.co.gpgp.web.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class ItemCommandService {
 
     public Long save(Item item) {
         if (itemRepository.existsByInfoCode(item.getCode())) {
-            throw new IllegalStateException("이미 등록된 상품입니다.");
+            throw new IllegalStateException(ErrorCode.ITEM_DUPLICATE_CHECK_ERROR.getMessage());
         }
 
         Item savedItem = itemRepository.save(item);
