@@ -8,5 +8,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Optional<Item> findByInfoCode(String code);
 
-    boolean existsByInfoCode(String code);
+    boolean existByInfoCode(String code);
 }
