@@ -1,13 +1,18 @@
 package kr.co.gpgp.domain.order.dto;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import kr.co.gpgp.domain.orderline.dto.OrderLineRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 @Getter
 @NoArgsConstructor
@@ -51,5 +56,17 @@ public class OrderRequest {
         this.addressName = addressName;
         this.detailedAddress = detailedAddress;
         this.orderLines = orderLines;
+    }
+
+    @Getter
+    @RequiredArgsConstructor(access = PRIVATE)
+    @Builder
+    public static class OrderLineRequest {
+        @NotBlank
+        @Length(max = 30)
+        private final String itemCode;
+
+        @Range(min = 1, max = 10_000)
+        private final int orderQuantity;
     }
 }
