@@ -1,6 +1,6 @@
 package kr.co.gpgp.domain.item.service;
 
-import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
+import kr.co.gpgp.domain.item.dto.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.repository.ItemRepository;
@@ -29,7 +29,7 @@ public class ItemCommandService {
         return findItem.getId();
     }
 
-    public ItemResponse register(ItemDtoRequest request) {
+    public ItemResponse register(ItemRequest request) {
         Item item = itemDtoService.toEntity(request);
         Long itemId = save(item);
         Item findItem = itemFindService.findOne(itemId);

@@ -1,6 +1,6 @@
 package kr.co.gpgp.domain.item.service.dto;
 
-import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
+import kr.co.gpgp.domain.item.dto.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
@@ -21,7 +21,7 @@ public class ItemDtoService{
                 .build();
     }
 
-    public Item toEntity(ItemDtoRequest request) {
+    public Item toEntity(ItemRequest request) {
         ItemInfo info = ItemInfo.builder()
                 .code(request.getCode())
                 .imageUrl(request.getImageUrl())

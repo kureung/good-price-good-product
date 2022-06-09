@@ -2,7 +2,7 @@ package kr.co.gpgp.web.api;
 
 import java.net.URI;
 import javax.validation.Valid;
-import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
+import kr.co.gpgp.domain.item.dto.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.service.ItemCommandService;
@@ -29,7 +29,7 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemResponse> register(
-        @Valid @RequestBody ItemDtoRequest request) {
+        @Valid @RequestBody ItemRequest request) {
 
         ItemResponse response = itemCommandService.register(request);
 
@@ -54,7 +54,7 @@ public class ItemController {
     @PostMapping("/{itemId}")
     public ResponseEntity<ItemResponse> updateItem(
         @PathVariable Long itemId,
-        @Valid @RequestBody ItemDtoRequest request) {
+        @Valid @RequestBody ItemRequest request) {
 
         Item item = itemDtoService.toEntity(request);
         itemCommandService.update(itemId, item);

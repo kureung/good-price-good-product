@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.URL;
 
 @Getter
 @NoArgsConstructor
-public class ItemDtoRequest {
+public class ItemRequest {
 
     @Range(min = 0, max = 1_000_000_000)
     private int price;
@@ -39,7 +39,7 @@ public class ItemDtoRequest {
     private LocalDate releaseDate;
 
     @Builder
-    private ItemDtoRequest(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
+    private ItemRequest(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.name = name;
