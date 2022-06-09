@@ -1,5 +1,6 @@
 package kr.co.gpgp.domain.item.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class ItemResponse {
 
     private String imageUrl;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate releaseDate;
 
     @Builder
