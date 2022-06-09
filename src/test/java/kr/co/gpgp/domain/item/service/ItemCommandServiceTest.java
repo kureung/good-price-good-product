@@ -1,5 +1,6 @@
 package kr.co.gpgp.domain.item.service;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -30,6 +31,27 @@ class ItemCommandServiceTest {
                 .info(info)
                 .build();
         assertNotNull(assertDoesNotThrow(() -> sut.save(item)));
+    }
+
+    @Test
+    void 상품_중복_등록시_예외가_발생한다() {
+        ItemInfo info = ItemInfo.builder()
+                .weight(10)
+                .code("123")
+                .build();
+        Item item1 = Item.builder()
+                .info(info)
+                .build();
+
+        sut.save(item1);
+
+        Item item2 = Item.builder()
+                .info(info)
+                .build();
+
+        assertThatThrownBy(() -> sut.save(item2))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("이미 등록된 상품입니다.");
     }
 
     @Test
