@@ -32,7 +32,6 @@ public class ItemRequest {
     @Length(max = 30)
     private String code;
 
-    @URL
     private String imageUrl;
 
     @NotBlank
