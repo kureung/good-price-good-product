@@ -19,6 +19,10 @@ public class ItemCommandService {
     private final ItemDtoService itemDtoService;
 
     public Long save(Item item) {
+        if (itemRepository.existsByInfoCode(item.getCode())) {
+            throw new IllegalStateException("이미 등록된 상품입니다.");
+        }
+
         Item savedItem = itemRepository.save(item);
         return savedItem.getId();
     }
