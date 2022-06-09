@@ -5,7 +5,6 @@ import kr.co.gpgp.web.exception.ErrorResponse.FieldError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -26,18 +25,6 @@ public class GlobalExceptionController {
         }
 
         final ErrorResponse response = ErrorResponse.of(errorCode);
-        return ResponseEntity
-            .status(response.getStatus())
-            .body(response);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> methodArgumentNotValidExHandler(
-        MethodArgumentNotValidException e) {
-
-        log.error(e.getMessage(), e);
-
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
         return ResponseEntity
             .status(response.getStatus())
             .body(response);
