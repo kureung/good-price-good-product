@@ -1,13 +1,10 @@
 package kr.co.gpgp.domain.order.dto;
 
-import static lombok.AccessLevel.PRIVATE;
-
 import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @NoArgsConstructor
 @Getter
@@ -48,8 +45,6 @@ public class OrderResponse {
     }
 
     @Getter
-    @RequiredArgsConstructor(access = PRIVATE)
-    @Builder
     public static class OrderLineResponse {
 
         private final String itemName;
@@ -59,5 +54,13 @@ public class OrderResponse {
         private final int itemPrice;
 
         private final int orderQuantity;
+
+        @Builder
+        private OrderLineResponse(String itemName, String itemCode, int itemPrice, int orderQuantity) {
+            this.itemName = itemName;
+            this.itemCode = itemCode;
+            this.itemPrice = itemPrice;
+            this.orderQuantity = orderQuantity;
+        }
     }
 }
