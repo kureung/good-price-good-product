@@ -11,9 +11,9 @@ public enum DeliveryStatus {
     INSTRUCT,
     DEPARTURE,
     FINAL_DELIVERY,
-    NONE_TRACKING{
+    NONE_TRACKING {
         @Override
-        public DeliveryStatus next(Role role)  { //  - endPoint
+        public DeliveryStatus next(Role role) { //  - endPoint
             throw new DeliveryStatusOverflowException("이미 완료된 배송입니다.");
         }
     };
@@ -47,24 +47,23 @@ public enum DeliveryStatus {
         statusMessage.put(NONE_TRACKING, "배송완료");
     }
 
-    /** next() 배송 상태 변경 권한
-      *
-      */
+    /**
+     * next() 배송 상태 변경 권한
+     */
     private static void authInit() {
-        // 회원의 권한
-        auth.put(ACCEPT, Role.USER);
-
         // 판매자의 권한
+        auth.put(ACCEPT, Role.SELLER);
         auth.put(INSTRUCT, Role.SELLER);
-        auth.put(DEPARTURE, Role.SELLER);
 
         // 택배원의 권한
+        auth.put(DEPARTURE, Role.COURIER);
         auth.put(FINAL_DELIVERY, Role.COURIER);
-        auth.put(NONE_TRACKING,  Role.COURIER);
+        auth.put(NONE_TRACKING, Role.COURIER);
     }
 
 
-    /** 현재 상태를 메시지로 리턴
+    /**
+     * 현재 상태를 메시지로 리턴
      *
      * @return
      */
@@ -72,12 +71,13 @@ public enum DeliveryStatus {
         return statusMessage.get(this);
     }
 
-    /** 현재 상태를 다음 상태로 변경함
+    /**
+     * 현재 상태를 다음 상태로 변경함
      *
      * @return
      */
     public DeliveryStatus next(Role role) {
-        if( auth.get(this) == role){
+        if (auth.get(this)==role) {
             return sequence.get(this);
         }
         throw new DeliveryStatusAuthException("권한이 없어 배송상태를 변경하지 못합니다.");
