@@ -16,6 +16,8 @@ public enum ErrorCode {
     // Item
     STOCK_OUT_OF_RANGE(HttpStatus.BAD_REQUEST, "재고의 범위를 벗어났습니다."),
     NOT_FOUND_ITEM(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수가 없습니다."),
+    ITEM_DUPLICATE_CHECK_ERROR(HttpStatus.BAD_REQUEST, "이미 등록된 상품입니다."),
+
 
     // Delivery
     UNABLE_TO_CANCEL_ORDER(HttpStatus.BAD_REQUEST, "주문을 취소할 수 없습니다."),
