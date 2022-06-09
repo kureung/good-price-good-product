@@ -1,7 +1,7 @@
 package kr.co.gpgp.domain.item.service.dto;
 
 import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
-import kr.co.gpgp.domain.item.dto.ItemDtoResponse;
+import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import org.springframework.stereotype.Service;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItemDtoService{
 
-    public ItemDtoResponse toDto(Item item) {
-        return ItemDtoResponse.builder()
+    public ItemResponse toDto(Item item) {
+        return ItemResponse.builder()
                 .code(item.getCode())
                 .imageUrl(item.getImageUrl())
                 .name(item.getName())

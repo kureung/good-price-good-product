@@ -3,7 +3,7 @@ package kr.co.gpgp.web.api;
 import java.net.URI;
 import javax.validation.Valid;
 import kr.co.gpgp.domain.item.dto.ItemDtoRequest;
-import kr.co.gpgp.domain.item.dto.ItemDtoResponse;
+import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.service.ItemCommandService;
 import kr.co.gpgp.domain.item.service.ItemFindService;
@@ -28,10 +28,10 @@ public class ItemController {
     private final ItemDtoService itemDtoService;
 
     @PostMapping
-    public ResponseEntity<ItemDtoResponse> register(
+    public ResponseEntity<ItemResponse> register(
         @Valid @RequestBody ItemDtoRequest request) {
 
-        ItemDtoResponse response = itemCommandService.register(request);
+        ItemResponse response = itemCommandService.register(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
@@ -43,16 +43,16 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ResponseEntity<ItemDtoResponse> findOneItem(
+    public ResponseEntity<ItemResponse> findOneItem(
         @PathVariable Long itemId) {
 
         Item findItem = itemFindService.findOne(itemId);
-        ItemDtoResponse response = itemDtoService.toDto(findItem);
+        ItemResponse response = itemDtoService.toDto(findItem);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{itemId}")
-    public ResponseEntity<ItemDtoResponse> updateItem(
+    public ResponseEntity<ItemResponse> updateItem(
         @PathVariable Long itemId,
         @Valid @RequestBody ItemDtoRequest request) {
 
@@ -60,7 +60,7 @@ public class ItemController {
         itemCommandService.update(itemId, item);
 
         Item findItem = itemFindService.findOne(itemId);
-        ItemDtoResponse response = itemDtoService.toDto(findItem);
+        ItemResponse response = itemDtoService.toDto(findItem);
 
         return ResponseEntity.ok(response);
     }

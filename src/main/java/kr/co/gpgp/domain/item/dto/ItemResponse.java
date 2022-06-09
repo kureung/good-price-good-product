@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ItemDtoResponse {
+public class ItemResponse {
 
     private Long id;
 
@@ -24,7 +24,7 @@ public class ItemDtoResponse {
     private LocalDate releaseDate;
 
     @Builder
-    private ItemDtoResponse(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
+    private ItemResponse(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.name = name;
