@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import kr.co.gpgp.domain.item.repository.ItemRepository;
+import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,7 +52,7 @@ class ItemCommandServiceTest {
 
         assertThatThrownBy(() -> sut.save(item2))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("이미 등록된 상품입니다.");
+                .hasMessage(ErrorCode.ITEM_DUPLICATE_CHECK_ERROR.getMessage());
     }
 
     @Test
