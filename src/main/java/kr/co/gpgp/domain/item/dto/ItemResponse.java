@@ -2,6 +2,7 @@ package kr.co.gpgp.domain.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,8 +28,9 @@ public class ItemResponse {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate releaseDate;
 
+    @QueryProjection
     @Builder
-    private ItemResponse(Long id, int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
+    public ItemResponse(Long id, int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
         this.id = id;
         this.price = price;
         this.stockQuantity = stockQuantity;
