@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.repository;
+package kr.co.gpgp.repository.order;
 
 import kr.co.gpgp.domain.order.OrderSearchCondition;
 import kr.co.gpgp.domain.order.entity.Order;

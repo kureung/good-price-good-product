@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.repository;
+package kr.co.gpgp.repository.order;
 
 import static java.util.stream.Collectors.toMap;
 import static kr.co.gpgp.domain.address.entity.QAddress.address;

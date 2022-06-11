@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.repository;
+package kr.co.gpgp.repository.order;
 
 import kr.co.gpgp.domain.order.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;

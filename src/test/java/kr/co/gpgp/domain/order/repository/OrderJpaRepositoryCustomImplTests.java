@@ -19,6 +19,8 @@ import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.Role;
 import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.domain.user.repository.UserRepository;
+import kr.co.gpgp.repository.order.OrderJpaRepository;
+import kr.co.gpgp.repository.order.OrderRepositoryCustom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
