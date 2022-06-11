@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.enums;
+package kr.co.gpgp.domain.order;
 
 public enum OrderStatus {
     ORDER("주문 상태"),
