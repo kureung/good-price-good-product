@@ -20,14 +20,14 @@ public class GlobalExceptionController {
 
         ErrorCode errorCode = ErrorCode.fromMessage(e.getMessage());
 
-        if (errorCode == null) {
+        if (errorCode==null) {
             errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
         }
 
         final ErrorResponse response = ErrorResponse.of(errorCode);
         return ResponseEntity
-            .status(response.getStatus())
-            .body(response);
+                .status(response.getStatus())
+                .body(response);
     }
 
     @ExceptionHandler
@@ -36,25 +36,26 @@ public class GlobalExceptionController {
         log.error(e.getMessage(), e);
 
         final ErrorResponse response = ErrorResponse.of(
-            ErrorCode.INVALID_INPUT_VALUE,
-            e.getBindingResult());
+                ErrorCode.INVALID_INPUT_VALUE,
+                e.getBindingResult());
 
         return ResponseEntity
-            .status(response.getStatus())
-            .body(response);
+                .status(response.getStatus())
+                .body(response);
     }
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> methodArgumentTypeMismatchException(
-        MethodArgumentTypeMismatchException e) {
+            MethodArgumentTypeMismatchException e) {
 
         log.error(e.getMessage(), e);
 
-        final String value = e.getValue() == null ? "" : e.getValue().toString();
+        final String value = e.getValue()==null ? "":e.getValue().toString();
         List<FieldError> errors = FieldError.of(e.getName(), value, e.getErrorCode());
         ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_TYPE_VALUE, errors);
 
         return ResponseEntity.status(response.getStatus())
-            .body(response);
+                .body(response);
     }
+
 }

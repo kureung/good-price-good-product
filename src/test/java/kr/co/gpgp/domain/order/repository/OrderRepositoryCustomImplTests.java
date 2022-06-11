@@ -51,7 +51,6 @@ class OrderRepositoryCustomImplTests {
     @Autowired
     private RequirementRepository requirementRepository;
 
-
     @Test
     void 주문_조회_테스트() {
         User user = User.of("name", "abc@naver.com", Role.USER);
@@ -99,7 +98,6 @@ class OrderRepositoryCustomImplTests {
                 .userId(savedUser.getId())
                 .build();
 
-
         int PageSize = 3;
         PageRequest pageRequest = PageRequest.of(0, PageSize);
 
@@ -109,4 +107,5 @@ class OrderRepositoryCustomImplTests {
 
         assertThat(content.size()).isEqualTo(PageSize);
     }
+
 }

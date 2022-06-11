@@ -21,7 +21,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-
 @ExtendWith(SpringExtension.class)    // 테스트 실행 방법
 @DataJpaTest                          // JPA 테스트
 public class AddressServiceTest {
@@ -37,7 +36,6 @@ public class AddressServiceTest {
 
     private User user;
     private Address address;
-
 
     @BeforeEach
     void setups() {
@@ -95,7 +93,6 @@ public class AddressServiceTest {
         assertThatThrownBy(() -> addressService.delete(Long.MAX_VALUE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 
     @Test
     void 주소_조회_성공() {
@@ -175,6 +172,5 @@ public class AddressServiceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다.");
     }
-
 
 }

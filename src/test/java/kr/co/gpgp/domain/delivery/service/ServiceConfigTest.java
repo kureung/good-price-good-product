@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 @DataJpaTest
 public class ServiceConfigTest {
 
-
     @SpyBean
     DeliveryUserService deliveryUserService;
 

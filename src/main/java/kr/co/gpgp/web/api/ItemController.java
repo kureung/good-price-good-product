@@ -29,22 +29,22 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemResponse> register(
-        @Valid @RequestBody ItemRequest request) {
+            @Valid @RequestBody ItemRequest request) {
 
         ItemResponse response = itemCommandService.register(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(response.getId())
-            .toUri();
-        
+                .path("/{id}")
+                .buildAndExpand(response.getId())
+                .toUri();
+
         return ResponseEntity.created(location)
-            .body(response);
+                .body(response);
     }
 
     @GetMapping("/{itemId}")
     public ResponseEntity<ItemResponse> findOneItem(
-        @PathVariable Long itemId) {
+            @PathVariable Long itemId) {
 
         Item findItem = itemFindService.findOne(itemId);
         ItemResponse response = itemDtoService.toDto(findItem);
@@ -53,8 +53,8 @@ public class ItemController {
 
     @PostMapping("/{itemId}")
     public ResponseEntity<ItemResponse> updateItem(
-        @PathVariable Long itemId,
-        @Valid @RequestBody ItemRequest request) {
+            @PathVariable Long itemId,
+            @Valid @RequestBody ItemRequest request) {
 
         Item item = itemDtoService.toEntity(request);
         itemCommandService.update(itemId, item);
@@ -64,4 +64,5 @@ public class ItemController {
 
         return ResponseEntity.ok(response);
     }
+
 }

@@ -40,4 +40,5 @@ public class ItemResponse {
         this.imageUrl = imageUrl;
         this.releaseDate = releaseDate;
     }
+
 }

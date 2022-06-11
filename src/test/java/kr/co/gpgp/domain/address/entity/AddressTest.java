@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.address.entity;
 
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import kr.co.gpgp.domain.user.entity.Role;
@@ -11,7 +10,6 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class AddressTest {
-
 
     private static String SUCCESS_ROADNAME = "성남시 경기도 상대원 2동 1234번지 5층 ";
     private static String SUCCESS_ZIPCODE = "12345";
@@ -61,7 +59,6 @@ public class AddressTest {
                 .hasMessage("도로명은 비어있을 수 없습니다.");
     }
 
-
     @Test
     void 도로명_내용길이가_범위에_벗어나_예외가_발생한다() {
         String roadname = "경기도_성남시_성남시_성남시_성남시_성남시_성남시_성남시_성남시_성남시_성남시_성남시_성남시_성남시_성남시 000-00 000동 000호";    //도로명 12-2
@@ -102,7 +99,6 @@ public class AddressTest {
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("주소 이름 길이가 맞지 않습니다.");
     }
-
 
     @ParameterizedTest
     @ValueSource(strings = {"1234512345_1234512345_1234512345_1234512345_1234512345_ "})

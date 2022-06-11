@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.delivery.service;
 
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -15,9 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 public class DeliveryUserServiceTest extends ServiceConfigTest {
-
 
     private User user;
     private Address address;
@@ -36,7 +33,6 @@ public class DeliveryUserServiceTest extends ServiceConfigTest {
         delivery = deliveryRepository.save(delivery);
 
     }
-
 
     @Test
     void 모든배송_조회_성공() {
@@ -95,7 +91,6 @@ public class DeliveryUserServiceTest extends ServiceConfigTest {
         Requirement pickRequirement = new Requirement("BBB");
         Delivery pickDelivery = Delivery.of(pickRequirement, pickAddress);
 
-
         userRepository.save(pickUser);
         addressRepository.save(pickAddress);
         deliveryRepository.save(pickDelivery);
@@ -120,7 +115,6 @@ public class DeliveryUserServiceTest extends ServiceConfigTest {
                 .hasMessage("유저 ID가 없어 배송을 조회할수 없습니다.");
     }
 
-
     @Test
     void 유저가_선택한_배송이_유저값이_아니라면_예외가_발생한다() {
         User user = User.of("BBB", "BBB@gmail.com", Role.USER);
@@ -134,6 +128,5 @@ public class DeliveryUserServiceTest extends ServiceConfigTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("선택한 배송은 유저가 생성한게 아닙니다.");
     }
-
 
 }

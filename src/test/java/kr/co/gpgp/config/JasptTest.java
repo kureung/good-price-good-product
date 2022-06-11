@@ -4,13 +4,11 @@ import kr.co.gpgp.GpgpApplication;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.test.context.SpringBootTest;
 
 //@SpringBootTest
 public class JasptTest implements CommandLineRunner {
 
-
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         SpringApplication.run(GpgpApplication.class, args);
         System.out.println("=========== Server Start ===========");
     }
@@ -29,4 +27,5 @@ public class JasptTest implements CommandLineRunner {
         String des = pbeEnc.decrypt(enc);
         System.out.println("des = " + des);
     }
+
 }

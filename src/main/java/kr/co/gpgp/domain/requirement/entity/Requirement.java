@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,6 @@ import lombok.NoArgsConstructor;
 // 연관관계 --------------------------------------------------
 // [회원] 1:N [요청사항] 단반향(Requirement)
 // [배송] 1:1 [요청사항] 단반향(Delivery)
-
 
 @Entity
 @Getter

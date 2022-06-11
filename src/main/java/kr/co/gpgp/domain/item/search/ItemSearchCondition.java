@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class ItemSearchCondition {
+
     private String itemName;
     private Integer priceGoe;
     private Integer priceLoe;
@@ -15,4 +16,5 @@ public class ItemSearchCondition {
         this.priceGoe = priceGoe;
         this.priceLoe = priceLoe;
     }
+
 }

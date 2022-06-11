@@ -141,4 +141,5 @@ public class OrderTest {
         // then
         assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
     }
+
 }

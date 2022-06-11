@@ -16,7 +16,7 @@ public class ItemFindService {
 
     public Item findOne(Long itemId) {
         return itemRepository.findById(itemId)
-            .orElseThrow(() -> new NoSuchElementException("해당 상품을 찾을 수 없습니다."));
+                .orElseThrow(() -> new NoSuchElementException("해당 상품을 찾을 수 없습니다."));
     }
 
     public Item findOne(String itemCode) {

@@ -22,13 +22,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-//    @OneToOne
+    //    @OneToOne
 //    private Seller seller;
     @Enumerated(EnumType.STRING)
     private Role role; //oauth2 login
     private String name;
     private String email;
-
 
     private User(String name, String email, Role role) {
 
@@ -76,7 +75,6 @@ public class User {
     //@Builder override 재정의 하고픔
     private static class UserValidator {
 
-
         private static void verifyName(String name) {
 
             if (name==null || name.isBlank()) {
@@ -110,10 +108,10 @@ public class User {
             }
         }
 
-
         private static boolean numberBetween(int min, int max, int num) {
             return (min <= num && max >= num);
         }
+
     }
 
     public String getRoleKey() {

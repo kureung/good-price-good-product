@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.orderline.entity;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -50,4 +49,5 @@ public class OrderLineTest {
         assertThat(item.getStockQuantity())
                 .isEqualTo(quantityBeforePurchase);
     }
+
 }

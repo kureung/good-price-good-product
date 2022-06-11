@@ -7,7 +7,7 @@ import kr.co.gpgp.domain.item.entity.ItemInfo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ItemDtoService{
+public class ItemDtoService {
 
     public ItemResponse toDto(Item item) {
         return ItemResponse.builder()
@@ -37,4 +37,5 @@ public class ItemDtoService{
                 .stockQuantity(request.getStockQuantity())
                 .build();
     }
+
 }

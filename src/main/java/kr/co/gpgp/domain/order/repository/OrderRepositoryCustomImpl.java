@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
+public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
@@ -103,4 +103,5 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
     private BooleanExpression deliveryStatusEq(DeliveryStatus deliveryStatus) {
         return deliveryStatus!=null ? order.delivery.status.eq(deliveryStatus):null;
     }
+
 }

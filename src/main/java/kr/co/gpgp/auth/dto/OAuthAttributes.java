@@ -7,10 +7,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-
 @Getter
 @ToString
 public class OAuthAttributes {
+
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String name;
@@ -46,4 +46,5 @@ public class OAuthAttributes {
     public User toEntity() {
         return User.of(name, email, Role.USER);
     }
+
 }

@@ -113,4 +113,5 @@ public class Order {
     public String getDetailedAddress() {
         return getDelivery().getAddressDetailed();
     }
+
 }

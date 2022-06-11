@@ -9,10 +9,10 @@ import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.address.entity.QAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AddressRepositoryCustomImpl implements AddressRepositoryCustom{
+public class AddressRepositoryCustomImpl implements AddressRepositoryCustom {
 
     @Autowired
-    EntityManager entityManager ;
+    EntityManager entityManager;
 
     @Override
     public List<AddressResponse> findByUserId(Long userId) {
@@ -30,4 +30,5 @@ public class AddressRepositoryCustomImpl implements AddressRepositoryCustom{
                 .fetch();
         return list;
     }
+
 }
