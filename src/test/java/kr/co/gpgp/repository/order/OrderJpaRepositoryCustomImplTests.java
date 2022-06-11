@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.repository;
+package kr.co.gpgp.repository.order;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,17 +10,15 @@ import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.delivery.repository.DeliveryRepository;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemInfo;
-import kr.co.gpgp.repository.item.ItemJpaRepository;
-import kr.co.gpgp.domain.order.OrderSearchCondition;
 import kr.co.gpgp.domain.order.Order;
+import kr.co.gpgp.domain.order.OrderSearchCondition;
 import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.requirement.RequirementRepository;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.Role;
 import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.domain.user.repository.UserRepository;
-import kr.co.gpgp.repository.order.OrderJpaRepository;
-import kr.co.gpgp.repository.order.OrderRepositoryCustom;
+import kr.co.gpgp.repository.item.ItemJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
