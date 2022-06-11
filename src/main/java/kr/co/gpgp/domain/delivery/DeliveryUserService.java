@@ -5,7 +5,7 @@ import java.util.Map;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -5,13 +5,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
-import kr.co.gpgp.domain.delivery.service.ServiceConfigTest;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
-import kr.co.gpgp.domain.user.UserRepository;
 import kr.co.gpgp.repository.address.AddressRepositoryImpl;
 import kr.co.gpgp.repository.delivery.DeliveryRepositoryImpl;
 import kr.co.gpgp.repository.user.UserRepositoryImpl;

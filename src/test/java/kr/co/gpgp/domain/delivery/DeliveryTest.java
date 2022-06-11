@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
 import org.junit.jupiter.api.Test;

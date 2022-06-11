@@ -4,7 +4,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import java.util.Optional;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.delivery.Delivery;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.requirement.Requirement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

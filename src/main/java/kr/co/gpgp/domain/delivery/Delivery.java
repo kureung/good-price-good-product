@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
