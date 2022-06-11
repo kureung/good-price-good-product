@@ -8,7 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.dto.QItemResponse;
-import kr.co.gpgp.domain.item.search.ItemSearchCondition;
+import kr.co.gpgp.domain.item.ItemSearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -6,7 +6,7 @@ import java.util.List;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
-import kr.co.gpgp.domain.item.search.ItemSearchCondition;
+import kr.co.gpgp.domain.item.ItemSearchCondition;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.repository.item.ItemRepositoryCustom;
 import org.junit.jupiter.api.Test;

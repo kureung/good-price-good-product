@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.item.search;
+package kr.co.gpgp.domain.item;
 
 import lombok.Builder;
 import lombok.Getter;
