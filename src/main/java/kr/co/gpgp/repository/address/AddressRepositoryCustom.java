@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.address.repository;
+package kr.co.gpgp.repository.address;
 
 import java.util.List;
 import kr.co.gpgp.domain.address.dto.AddressResponse;

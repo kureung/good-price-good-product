@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.address.entity;
+package kr.co.gpgp.domain.address;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

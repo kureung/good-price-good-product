@@ -1,12 +1,12 @@
-package kr.co.gpgp.domain.address.repository;
+package kr.co.gpgp.repository.address;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import java.util.List;
 import javax.persistence.EntityManager;
+import kr.co.gpgp.domain.address.QAddress;
 import kr.co.gpgp.domain.address.dto.AddressResponse;
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.address.entity.QAddress;
+import kr.co.gpgp.domain.address.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AddressRepositoryCustomImpl implements AddressRepositoryCustom {

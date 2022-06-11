@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.address.service;
+package kr.co.gpgp.domain.address;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -6,11 +6,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import java.util.List;
 import kr.co.gpgp.domain.address.dto.AddressRequest;
 import kr.co.gpgp.domain.address.dto.AddressResponse;
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.address.repository.AddressRepository;
-import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.User;
-import kr.co.gpgp.domain.user.repository.UserRepository;
+import kr.co.gpgp.domain.user.Role;
+import kr.co.gpgp.domain.user.User;
+import kr.co.gpgp.domain.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
