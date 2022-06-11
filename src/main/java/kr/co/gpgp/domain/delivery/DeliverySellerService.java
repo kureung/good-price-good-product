@@ -1,7 +1,6 @@
-package kr.co.gpgp.domain.delivery.service;
+package kr.co.gpgp.domain.delivery;
 
-import kr.co.gpgp.domain.delivery.repository.DeliveryRepository;
-import kr.co.gpgp.domain.user.repository.UserRepository;
+import kr.co.gpgp.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

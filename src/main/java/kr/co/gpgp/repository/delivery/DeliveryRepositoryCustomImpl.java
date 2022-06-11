@@ -1,12 +1,12 @@
-package kr.co.gpgp.domain.delivery.repository;
+package kr.co.gpgp.repository.delivery;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import java.util.List;
 import javax.persistence.EntityManager;
-import kr.co.gpgp.domain.address.entity.Address;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.delivery.QDelivery;
 import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
-import kr.co.gpgp.domain.delivery.entity.QDelivery;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

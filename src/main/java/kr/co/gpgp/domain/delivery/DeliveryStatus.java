@@ -1,11 +1,9 @@
-package kr.co.gpgp.domain.delivery.entity.enums;
+package kr.co.gpgp.domain.delivery;
 
 import java.util.EnumMap;
 import java.util.List;
-import kr.co.gpgp.domain.delivery.exception.DeliveryStatusAuthException;
-import kr.co.gpgp.domain.delivery.exception.DeliveryStatusOverflowException;
-import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.user.Role;
+import kr.co.gpgp.domain.user.User;
 
 public enum DeliveryStatus {
 

@@ -1,14 +1,12 @@
-package kr.co.gpgp.domain.delivery.service;
+package kr.co.gpgp.domain.delivery;
 
 import java.util.List;
 import java.util.Map;
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.address.repository.AddressRepository;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
-import kr.co.gpgp.domain.delivery.entity.Delivery;
-import kr.co.gpgp.domain.delivery.repository.DeliveryRepository;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
-import kr.co.gpgp.domain.user.repository.UserRepository;
+import kr.co.gpgp.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

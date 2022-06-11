@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.delivery.exception;
+package kr.co.gpgp.domain.delivery;
 
 public class DeliveryStatusAuthException extends RuntimeException {
 

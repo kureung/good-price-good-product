@@ -1,28 +1,55 @@
-package kr.co.gpgp.domain.delivery.service;
+package kr.co.gpgp.domain.delivery;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
-import kr.co.gpgp.domain.address.entity.Address;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
-import kr.co.gpgp.domain.delivery.entity.Delivery;
+import kr.co.gpgp.domain.delivery.service.ServiceConfigTest;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
-import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.user.Role;
+import kr.co.gpgp.domain.user.User;
+import kr.co.gpgp.domain.user.UserRepository;
+import kr.co.gpgp.repository.address.AddressRepositoryImpl;
+import kr.co.gpgp.repository.delivery.DeliveryRepositoryImpl;
+import kr.co.gpgp.repository.user.UserRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
-public class DeliveryUserServiceTest extends ServiceConfigTest {
+@ExtendWith(MockitoExtension.class)
+@DataJpaTest
+public class DeliveryUserServiceTest{
 
     private User user;
     private Address address;
     private Requirement requirement;
     private Delivery delivery;
 
+
+    @SpyBean
+    public DeliveryUserService deliveryUserService;
+
+    @Autowired
+    public AddressRepositoryImpl addressRepository;
+
+    @Autowired
+    public DeliveryRepositoryImpl deliveryRepository;
+
+    @Autowired
+    public UserRepositoryImpl userRepository;
+
+
     @BeforeEach
     void setup() {
+
         user = User.of("AAA", "AAA@gmail.com", Role.USER);
         address = Address.of(user, "AAA_AAA_AAA", "12345", "AAAName", "AAA1");
         requirement = new Requirement("AAA");
@@ -30,7 +57,7 @@ public class DeliveryUserServiceTest extends ServiceConfigTest {
 
         user = userRepository.save(user);
         address = addressRepository.save(address);
-        delivery = deliveryRepository.save(delivery);
+        deliveryRepository.save(delivery);
 
     }
 

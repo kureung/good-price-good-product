@@ -1,14 +1,12 @@
-package kr.co.gpgp.domain.delivery.entity;
+package kr.co.gpgp.domain.delivery;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
-import kr.co.gpgp.domain.delivery.exception.DeliveryStatusOverflowException;
+import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
-import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.user.Role;
+import kr.co.gpgp.domain.user.User;
 import org.junit.jupiter.api.Test;
 
 public class DeliveryTest {

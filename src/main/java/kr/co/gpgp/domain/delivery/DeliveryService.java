@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.delivery.service;
+package kr.co.gpgp.domain.delivery;
 
 public interface DeliveryService {
 

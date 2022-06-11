@@ -2,8 +2,8 @@ package kr.co.gpgp.domain.delivery.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import java.util.Optional;
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.delivery.entity.Delivery;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import lombok.AccessLevel;
 import lombok.Getter;
