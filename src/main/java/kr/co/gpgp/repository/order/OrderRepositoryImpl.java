@@ -2,7 +2,7 @@ package kr.co.gpgp.repository.order;
 
 import kr.co.gpgp.domain.order.OrderRepository;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
-import kr.co.gpgp.domain.order.entity.Order;
+import kr.co.gpgp.domain.order.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

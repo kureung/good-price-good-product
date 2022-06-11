@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
-import kr.co.gpgp.domain.order.entity.Order;
+import kr.co.gpgp.domain.order.Order;
 import kr.co.gpgp.domain.order.enums.OrderStatus;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
 import lombok.RequiredArgsConstructor;

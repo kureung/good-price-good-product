@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.entity;
+package kr.co.gpgp.domain.order;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.STRING;
