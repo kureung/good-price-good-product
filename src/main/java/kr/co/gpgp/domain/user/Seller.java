@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.user.entity;
+package kr.co.gpgp.domain.user;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;

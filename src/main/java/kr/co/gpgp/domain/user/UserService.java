@@ -1,7 +1,5 @@
-package kr.co.gpgp.domain.user.service;
+package kr.co.gpgp.domain.user;
 
-import kr.co.gpgp.domain.user.entity.User;
-import kr.co.gpgp.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

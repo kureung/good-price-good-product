@@ -1,5 +1,6 @@
-package kr.co.gpgp.domain.user.repository;
+package kr.co.gpgp.domain.user;
 
+import kr.co.gpgp.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
