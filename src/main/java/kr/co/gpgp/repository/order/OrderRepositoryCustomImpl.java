@@ -19,7 +19,7 @@ import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
 import kr.co.gpgp.domain.order.Order;
 import kr.co.gpgp.domain.order.OrderStatus;
-import kr.co.gpgp.domain.orderline.entity.OrderLine;
+import kr.co.gpgp.domain.orderline.OrderLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

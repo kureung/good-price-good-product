@@ -12,7 +12,7 @@ import kr.co.gpgp.domain.order.dto.OrderRequest;
 import kr.co.gpgp.domain.order.dto.OrderRequest.OrderLineRequest;
 import kr.co.gpgp.domain.order.dto.OrderResponse;
 import kr.co.gpgp.domain.order.dto.OrderResponse.OrderLineResponse;
-import kr.co.gpgp.domain.orderline.entity.OrderLine;
+import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.domain.user.service.UserService;

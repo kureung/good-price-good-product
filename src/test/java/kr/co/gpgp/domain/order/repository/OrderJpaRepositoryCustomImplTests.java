@@ -13,7 +13,7 @@ import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
 import kr.co.gpgp.domain.order.Order;
-import kr.co.gpgp.domain.orderline.entity.OrderLine;
+import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.requirement.RequirementRepository;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.Role;

@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.orderline.entity;
+package kr.co.gpgp.domain.orderline;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
