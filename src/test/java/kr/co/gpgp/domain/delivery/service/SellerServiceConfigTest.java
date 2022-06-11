@@ -1,10 +1,10 @@
 package kr.co.gpgp.domain.delivery.service;
 
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.delivery.entity.Delivery;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
-import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.delivery.Delivery;
+import kr.co.gpgp.domain.requirement.Requirement;
+import kr.co.gpgp.domain.user.Role;
+import kr.co.gpgp.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +24,7 @@ public class SellerServiceConfigTest extends ServiceConfigTest {
 
         user = userRepository.save(user);
         address = addressRepository.save(address);
-        delivery = deliveryRepository.save(delivery);
+        deliveryRepository.save(delivery);
 
     }
 

@@ -1,8 +1,8 @@
 package kr.co.gpgp.auth.dto;
 
 import java.util.Map;
-import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.user.Role;
+import kr.co.gpgp.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

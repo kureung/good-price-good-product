@@ -1,8 +1,8 @@
 package kr.co.gpgp.domain.address.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

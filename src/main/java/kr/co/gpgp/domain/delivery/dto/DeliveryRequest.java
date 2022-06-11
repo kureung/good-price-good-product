@@ -2,9 +2,9 @@ package kr.co.gpgp.domain.delivery.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.delivery.entity.Delivery;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.delivery.Delivery;
+import kr.co.gpgp.domain.requirement.Requirement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

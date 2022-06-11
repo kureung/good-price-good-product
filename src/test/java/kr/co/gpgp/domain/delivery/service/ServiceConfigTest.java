@@ -1,8 +1,9 @@
 package kr.co.gpgp.domain.delivery.service;
 
-import kr.co.gpgp.domain.address.repository.AddressRepository;
-import kr.co.gpgp.domain.delivery.repository.DeliveryRepository;
-import kr.co.gpgp.domain.user.repository.UserRepository;
+import kr.co.gpgp.domain.address.AddressRepository;
+import kr.co.gpgp.domain.delivery.DeliveryRepository;
+import kr.co.gpgp.domain.delivery.DeliveryUserService;
+import kr.co.gpgp.domain.user.UserRepository;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,15 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 public class ServiceConfigTest {
 
     @SpyBean
-    DeliveryUserService deliveryUserService;
+    public DeliveryUserService deliveryUserService;
 
     @Autowired
-    AddressRepository addressRepository;
+    public AddressRepository addressRepository;
 
     @Autowired
-    DeliveryRepository deliveryRepository;
+    public DeliveryRepository deliveryRepository;
 
     @Autowired
-    UserRepository userRepository;
+    public UserRepository userRepository;
 
 }
