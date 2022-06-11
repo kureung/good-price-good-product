@@ -8,15 +8,15 @@ import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
 import kr.co.gpgp.domain.delivery.exception.DeliveryStatusOverflowException;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.Role.*;
 import kr.co.gpgp.domain.user.entity.User;
 import org.junit.jupiter.api.Test;
-
 
 public class DeliveryTest {
 
     Requirement requirement = new Requirement("요청사항");
-    User user = User.of("asdf", "kgh2252@naver.com", Role.USER);
+    User user = User.of("회원", "kgh2252@naver.com", Role.USER);
+    User seller = User.of("판매원", "kgh2252@naver.com", Role.SELLER);
+    User courier = User.of("asdf", "kgh2252@naver.com", Role.COURIER);
     Address address = Address.of(user, "1234567890", "12345", "12345", "12345");
 
     @Test
@@ -24,28 +24,27 @@ public class DeliveryTest {
 
         assertThatThrownBy(() -> {
             Delivery delivery = Delivery.of(requirement, address);
-            delivery.next(Role.SELLER);
-            delivery.next(Role.SELLER);
-            delivery.next(Role.COURIER);
-            delivery.next(Role.COURIER);
-            delivery.next(Role.COURIER);
-            delivery.next(Role.COURIER);
+            delivery.next(seller);
+            delivery.next(seller);
+            delivery.next(courier);
+            delivery.next(courier);
+            delivery.next(user);
         }).hasMessage("이미 완료된 배송입니다.");
     }
 
     @Test
     void 배송순서가_정상적으로_돌아가면_예외는_발생되지_않는다() {
         Delivery delivery = Delivery.of(requirement, address);
-
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.ACCEPT);
-        delivery.next(Role.SELLER);
+
+        delivery.next(seller);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.INSTRUCT);
-        delivery.next(Role.SELLER);
+        delivery.next(seller);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.DEPARTURE);
 
-        delivery.next(Role.COURIER);
+        delivery.next(courier);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.FINAL_DELIVERY);
-        delivery.next(Role.COURIER);
+        delivery.next(courier);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.NONE_TRACKING);
 
         assertThat(delivery)
