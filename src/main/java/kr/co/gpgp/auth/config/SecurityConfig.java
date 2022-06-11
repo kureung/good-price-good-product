@@ -1,7 +1,7 @@
 package kr.co.gpgp.auth.config;
 
 import kr.co.gpgp.auth.service.CustomOAuth2UserService;
-import kr.co.gpgp.domain.user.entity.Role;
+import kr.co.gpgp.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

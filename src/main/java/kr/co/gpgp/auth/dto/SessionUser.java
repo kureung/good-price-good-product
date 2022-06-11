@@ -1,7 +1,7 @@
 package kr.co.gpgp.auth.dto;
 
 import java.io.Serializable;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 
 @Getter
