@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
-import kr.co.gpgp.domain.item.repository.ItemJpaRepository;
+import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

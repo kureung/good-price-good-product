@@ -10,7 +10,7 @@ import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
-import kr.co.gpgp.domain.item.repository.ItemJpaRepository;
+import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.domain.order.dto.OrderRequest.OrderLineRequest;
 import kr.co.gpgp.domain.order.dto.OrderResponse.OrderLineResponse;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;

@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.item.repository;
+package kr.co.gpgp.repository.item;
 
 import static kr.co.gpgp.domain.item.entity.QItem.item;
 

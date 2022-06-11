@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.item.repository;
+package kr.co.gpgp.repository.item;
 
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.search.ItemSearchCondition;

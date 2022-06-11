@@ -2,7 +2,7 @@ package kr.co.gpgp.domain.item.service;
 
 import java.util.NoSuchElementException;
 import kr.co.gpgp.domain.item.entity.Item;
-import kr.co.gpgp.domain.item.repository.ItemJpaRepository;
+import kr.co.gpgp.repository.item.ItemJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

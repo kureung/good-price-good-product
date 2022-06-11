@@ -7,6 +7,8 @@ import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
 import kr.co.gpgp.domain.item.search.ItemSearchCondition;
+import kr.co.gpgp.repository.item.ItemJpaRepository;
+import kr.co.gpgp.repository.item.ItemRepositoryCustom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

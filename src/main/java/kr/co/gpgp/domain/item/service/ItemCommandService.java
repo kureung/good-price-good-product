@@ -3,7 +3,7 @@ package kr.co.gpgp.domain.item.service;
 import kr.co.gpgp.domain.item.dto.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
-import kr.co.gpgp.domain.item.repository.ItemJpaRepository;
+import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.domain.item.service.dto.ItemDtoService;
 import kr.co.gpgp.web.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
