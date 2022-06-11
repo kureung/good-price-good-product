@@ -2,7 +2,7 @@ package kr.co.gpgp.domain.delivery.service;
 
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.delivery.Delivery;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
+import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
