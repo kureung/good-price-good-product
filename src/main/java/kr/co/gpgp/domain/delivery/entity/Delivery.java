@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
-import kr.co.gpgp.domain.user.entity.Role;
+import kr.co.gpgp.domain.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -50,8 +50,8 @@ public class Delivery {
         return new Delivery(requirement, address);
     }
 
-    public void next(Role role) {
-        status = status.next(role);
+    public void next(User user) {
+        status = status.next(user);
     }
 
     public Long getUserId() {
