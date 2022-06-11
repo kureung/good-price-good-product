@@ -2,8 +2,12 @@ package kr.co.gpgp.repository.item;
 
 import java.util.Optional;
 import kr.co.gpgp.domain.item.ItemRepository;
+import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.entity.Item;
+import kr.co.gpgp.domain.item.search.ItemSearchCondition;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,6 +25,11 @@ public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public boolean existsByInfoCode(String code) {
         return jpaRepository.existsByInfoCode(code);
+    }
+
+    @Override
+    public Page<ItemResponse> searchItem(ItemSearchCondition condition, Pageable pageable) {
+        return repositoryCustom.searchItem(condition, pageable);
     }
 
 }
