@@ -3,7 +3,6 @@ package kr.co.gpgp.domain.address.entity;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.user.entity.Role;
 import kr.co.gpgp.domain.user.entity.User;
 import org.junit.jupiter.api.Test;
