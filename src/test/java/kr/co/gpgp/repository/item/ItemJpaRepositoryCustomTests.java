@@ -1,14 +1,12 @@
-package kr.co.gpgp.domain.item.repository;
+package kr.co.gpgp.repository.item;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
-import kr.co.gpgp.repository.item.ItemJpaRepository;
-import kr.co.gpgp.repository.item.ItemRepositoryCustom;
+import kr.co.gpgp.domain.item.dto.ItemResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
