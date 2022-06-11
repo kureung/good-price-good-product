@@ -13,7 +13,7 @@ import kr.co.gpgp.domain.order.dto.OrderRequest.OrderLineRequest;
 import kr.co.gpgp.domain.order.dto.OrderResponse;
 import kr.co.gpgp.domain.order.dto.OrderResponse.OrderLineResponse;
 import kr.co.gpgp.domain.order.entity.Order;
-import kr.co.gpgp.domain.order.repository.OrderRepository;
+import kr.co.gpgp.domain.order.repository.OrderJpaRepository;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
 import kr.co.gpgp.domain.requirement.entity.Requirement;
 import kr.co.gpgp.domain.user.entity.User;
@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderRepository orderRepository;
+    private final OrderJpaRepository orderJpaRepository;
     private final UserService userService;
     private final ItemFindService itemFindService;
 
@@ -41,7 +41,7 @@ public class OrderService {
         List<OrderLine> orderLines = this.toEntities(orderLineRequests);
 
         Order order = Order.of(user, delivery, orderLines);
-        return orderRepository.save(order).getId();
+        return orderJpaRepository.save(order).getId();
     }
 
     @Transactional
@@ -78,7 +78,7 @@ public class OrderService {
     }
 
     public Order findOne(Long orderId) {
-        return orderRepository.findById(orderId)
+        return orderJpaRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("해당 주문을 찾을 수 없습니다."));
     }
 

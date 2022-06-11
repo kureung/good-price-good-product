@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class OrderRepositoryCustomImplTests {
+class OrderJpaRepositoryCustomImplTests {
 
     @Autowired
     private OrderRepositoryCustom sut;
@@ -40,7 +40,7 @@ class OrderRepositoryCustomImplTests {
     private ItemJpaRepository itemJpaRepository;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderJpaRepository orderJpaRepository;
 
     @Autowired
     private AddressRepository addressRepository;
@@ -90,7 +90,7 @@ class OrderRepositoryCustomImplTests {
             }
 
             Order order = Order.of(savedUser, delivery, orderLines);
-            orderRepository.save(order);
+            orderJpaRepository.save(order);
 
         }
 
