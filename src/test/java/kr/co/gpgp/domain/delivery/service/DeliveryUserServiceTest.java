@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-public class DeliveryUserServiceTest extends DeliveryServiceTest {
+public class DeliveryUserServiceTest extends ServiceConfigTest {
 
 
     private User user;

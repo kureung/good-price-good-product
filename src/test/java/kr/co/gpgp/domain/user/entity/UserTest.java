@@ -2,6 +2,8 @@ package kr.co.gpgp.domain.user.entity;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.user.entity.Role;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
