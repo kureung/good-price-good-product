@@ -1,7 +1,8 @@
-package kr.co.gpgp.domain.requirement.entity;
+package kr.co.gpgp.domain.requirement;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import kr.co.gpgp.domain.requirement.Requirement;
 import org.junit.jupiter.api.Test;
 
 public class RequirementTest {
