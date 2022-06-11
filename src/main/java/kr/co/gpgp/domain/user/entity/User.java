@@ -7,7 +7,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.AccessLevel;
@@ -23,8 +22,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
-    private Seller seller;
+//    @OneToOne
+//    private Seller seller;
     @Enumerated(EnumType.STRING)
     private Role role; //oauth2 login
     private String name;
