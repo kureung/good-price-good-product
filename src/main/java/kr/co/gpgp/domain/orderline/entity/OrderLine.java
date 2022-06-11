@@ -66,4 +66,8 @@ public class OrderLine {
     public String getItemCode() {
         return getItem().getCode();
     }
+
+    public Long getOrderId() {
+        return order.getId();
+    }
 }
