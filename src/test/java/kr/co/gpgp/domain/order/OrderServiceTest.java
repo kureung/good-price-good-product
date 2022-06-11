@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.service;
+package kr.co.gpgp.domain.order;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -10,6 +10,7 @@ import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemInfo;
+import kr.co.gpgp.domain.order.OrderService;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.domain.order.dto.OrderRequest.OrderLineRequest;
 import kr.co.gpgp.domain.order.dto.OrderResponse.OrderLineResponse;

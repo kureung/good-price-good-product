@@ -4,7 +4,7 @@ import java.net.URI;
 import javax.validation.Valid;
 import kr.co.gpgp.domain.order.dto.OrderRequest;
 import kr.co.gpgp.domain.order.dto.OrderResponse;
-import kr.co.gpgp.domain.order.service.OrderService;
+import kr.co.gpgp.domain.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
