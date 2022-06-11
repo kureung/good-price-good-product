@@ -10,7 +10,7 @@ import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
-import kr.co.gpgp.domain.item.repository.ItemRepository;
+import kr.co.gpgp.domain.item.repository.ItemJpaRepository;
 import kr.co.gpgp.domain.order.dto.OrderRequest.OrderLineRequest;
 import kr.co.gpgp.domain.order.dto.OrderResponse.OrderLineResponse;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
@@ -32,7 +32,7 @@ class OrderServiceTest {
     private OrderService sut;
 
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemJpaRepository itemJpaRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -57,7 +57,7 @@ class OrderServiceTest {
                 .info(info)
                 .price(1000)
                 .build();
-        itemRepository.save(item);
+        itemJpaRepository.save(item);
 
         List<OrderLineRequest> orderLineRequests = List.of(
                 OrderLineRequest.builder()
@@ -94,7 +94,7 @@ class OrderServiceTest {
                 .info(info)
                 .price(1000)
                 .build();
-        itemRepository.save(item);
+        itemJpaRepository.save(item);
 
         List<OrderLineRequest> orderLineRequests = List.of(
                 OrderLineRequest.builder()
@@ -131,7 +131,7 @@ class OrderServiceTest {
                 .info(info)
                 .price(1000)
                 .build();
-        itemRepository.save(item);
+        itemJpaRepository.save(item);
 
         List<OrderLineRequest> orderLineRequests = List.of(
                 OrderLineRequest.builder()
@@ -169,7 +169,7 @@ class OrderServiceTest {
                 .info(info)
                 .price(1000)
                 .build();
-        itemRepository.save(item);
+        itemJpaRepository.save(item);
 
         List<OrderLineRequest> orderLineRequests = List.of(
                 OrderLineRequest.builder()
@@ -220,7 +220,7 @@ class OrderServiceTest {
                 .info(info)
                 .stockQuantity(11)
                 .build();
-        itemRepository.save(item);
+        itemJpaRepository.save(item);
 
         OrderLineRequest request = OrderLineRequest.builder()
                 .itemCode(itemCode)

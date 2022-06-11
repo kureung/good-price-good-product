@@ -10,7 +10,7 @@ import kr.co.gpgp.domain.delivery.entity.Delivery;
 import kr.co.gpgp.domain.delivery.repository.DeliveryRepository;
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
-import kr.co.gpgp.domain.item.repository.ItemRepository;
+import kr.co.gpgp.domain.item.repository.ItemJpaRepository;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
 import kr.co.gpgp.domain.order.entity.Order;
 import kr.co.gpgp.domain.orderline.entity.OrderLine;
@@ -37,7 +37,7 @@ class OrderRepositoryCustomImplTests {
     private UserRepository userRepository;
 
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemJpaRepository itemJpaRepository;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -82,7 +82,7 @@ class OrderRepositoryCustomImplTests {
                         .info(info)
                         .build();
 
-                itemRepository.save(item);
+                itemJpaRepository.save(item);
 
                 OrderLine orderLine = OrderLine.of(item, k + 50);
                 orderLines.add(orderLine);

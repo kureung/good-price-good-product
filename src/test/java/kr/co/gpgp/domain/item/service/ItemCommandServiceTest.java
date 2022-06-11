@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import kr.co.gpgp.domain.item.entity.Item;
 import kr.co.gpgp.domain.item.entity.ItemInfo;
-import kr.co.gpgp.domain.item.repository.ItemRepository;
+import kr.co.gpgp.domain.item.repository.ItemJpaRepository;
 import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 class ItemCommandServiceTest {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemJpaRepository itemJpaRepository;
 
     @Autowired
     private ItemCommandService sut;
@@ -68,14 +68,14 @@ class ItemCommandServiceTest {
                 .build();
 
         // given
-        Item savedItem = itemRepository.save(item);
+        Item savedItem = itemJpaRepository.save(item);
         Long itemId = savedItem.getId();
 
         // when
         Long updatedItemId = sut.update(itemId, newItem);
 
         // then
-        assertNotNull(itemRepository.findById(updatedItemId));
+        assertNotNull(itemJpaRepository.findById(updatedItemId));
     }
 
 }

@@ -16,13 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class ItemRepositoryCustomTests {
+class ItemJpaRepositoryCustomTests {
 
     @Autowired
     private ItemRepositoryCustom sut;
 
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemJpaRepository itemJpaRepository;
 
     @Test
     void 상품_검색_기능_테스트() {
@@ -40,7 +40,7 @@ class ItemRepositoryCustomTests {
                     .stockQuantity(100)
                     .build();
 
-            itemRepository.save(item);
+            itemJpaRepository.save(item);
         }
 
         ItemSearchCondition condition = ItemSearchCondition.builder()
