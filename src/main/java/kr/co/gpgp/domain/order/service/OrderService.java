@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.delivery.entity.Delivery;
-import kr.co.gpgp.domain.item.entity.Item;
+import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.service.ItemFindService;
 import kr.co.gpgp.domain.order.dto.OrderRequest;
 import kr.co.gpgp.domain.order.dto.OrderRequest.OrderLineRequest;

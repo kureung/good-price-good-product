@@ -3,7 +3,7 @@ package kr.co.gpgp.repository.item;
 import java.util.Optional;
 import kr.co.gpgp.domain.item.ItemRepository;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
-import kr.co.gpgp.domain.item.entity.Item;
+import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

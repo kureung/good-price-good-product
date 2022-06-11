@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import kr.co.gpgp.domain.item.entity.Item;
-import kr.co.gpgp.domain.item.entity.ItemInfo;
+import kr.co.gpgp.domain.item.Item;
+import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

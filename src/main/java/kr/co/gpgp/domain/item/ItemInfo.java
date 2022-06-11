@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.item.entity;
+package kr.co.gpgp.domain.item;
 
 import static lombok.AccessLevel.PROTECTED;
 

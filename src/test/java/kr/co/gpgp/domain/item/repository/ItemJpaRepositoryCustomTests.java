@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
-import kr.co.gpgp.domain.item.entity.Item;
-import kr.co.gpgp.domain.item.entity.ItemInfo;
+import kr.co.gpgp.domain.item.Item;
+import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.repository.item.ItemRepositoryCustom;

@@ -4,7 +4,7 @@ import java.net.URI;
 import javax.validation.Valid;
 import kr.co.gpgp.domain.item.dto.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
-import kr.co.gpgp.domain.item.entity.Item;
+import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.service.ItemCommandService;
 import kr.co.gpgp.domain.item.service.ItemFindService;
 import kr.co.gpgp.domain.item.service.dto.ItemDtoService;
