@@ -1,9 +1,10 @@
-package kr.co.gpgp.domain.item.service.dto;
+package kr.co.gpgp.domain.item;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import kr.co.gpgp.domain.item.ItemDtoService;
 import kr.co.gpgp.domain.item.dto.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.Item;

@@ -1,10 +1,11 @@
-package kr.co.gpgp.domain.item.service;
+package kr.co.gpgp.domain.item;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import kr.co.gpgp.domain.item.Item;
+import kr.co.gpgp.domain.item.ItemFindService;
 import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import org.junit.jupiter.api.Test;

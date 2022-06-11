@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.item.service.dto;
+package kr.co.gpgp.domain.item;
 
 import kr.co.gpgp.domain.item.dto.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
