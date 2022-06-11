@@ -14,7 +14,6 @@ public class DeliveryRepositoryCustomImpl implements DeliveryRepositoryCustom {
 
     private final EntityManager entityManager;
 
-
     @Override
     public List<DeliveryResponse> findByUserId(Long userId) {
         JPAQuery<Address> query = new JPAQuery<>(entityManager);

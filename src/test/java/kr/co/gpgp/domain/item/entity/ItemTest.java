@@ -90,4 +90,5 @@ public class ItemTest {
                 .usingRecursiveComparison()
                 .isEqualTo(newItem);
     }
+
 }

@@ -45,11 +45,9 @@ public class OrderLine {
         return new OrderLine(item, item.getPrice(), orderQuantity);
     }
 
-
     public void cancel() {
         getItem().plusStock(orderQuantity);
     }
-
 
     public int getTotalPrice() {
         return price * orderQuantity;
@@ -70,4 +68,5 @@ public class OrderLine {
     public Long getOrderId() {
         return order.getId();
     }
+
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 
 @Getter
 public class OrderSearchCondition {
+
     private Long userId;
     private OrderStatus orderStatus;
     private DeliveryStatus deliveryStatus;
@@ -17,4 +18,5 @@ public class OrderSearchCondition {
         this.orderStatus = orderStatus;
         this.deliveryStatus = deliveryStatus;
     }
+
 }

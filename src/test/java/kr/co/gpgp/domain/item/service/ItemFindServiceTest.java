@@ -39,4 +39,5 @@ class ItemFindServiceTest {
         assertNotNull(findItem);
         assertInstanceOf(Item.class, findItem);
     }
+
 }

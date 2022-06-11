@@ -55,12 +55,13 @@ public class ErrorResponse {
         public static List<FieldError> of(BindingResult bindingResult) {
             List<org.springframework.validation.FieldError> fieldErrors = bindingResult.getFieldErrors();
             return fieldErrors.stream()
-                .map(error -> new FieldError(
-                    error.getField(),
-                    error.getRejectedValue() == null ? "" : error.getRejectedValue().toString(),
-                    error.getDefaultMessage()))
-                .collect(Collectors.toList());
+                    .map(error -> new FieldError(
+                            error.getField(),
+                            error.getRejectedValue()==null ? "":error.getRejectedValue().toString(),
+                            error.getDefaultMessage()))
+                    .collect(Collectors.toList());
         }
+
     }
 
 }

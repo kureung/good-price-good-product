@@ -72,4 +72,5 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     private BooleanExpression priceLoe(Integer priceLoe) {
         return priceLoe!=null ? item.price.loe(priceLoe):null;
     }
+
 }

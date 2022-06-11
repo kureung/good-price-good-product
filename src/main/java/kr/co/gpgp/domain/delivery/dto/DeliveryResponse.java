@@ -38,7 +38,6 @@ public class DeliveryResponse {
         return new DeliveryResponse(optional.get().getId(), optional.get().getRequirementMessage(), optional.get().getAddressRoadName(), optional.get().getAddressZipCode(), optional.get().getAddressName(), optional.get().getAddressDetailed());
     }
 
-
     public Delivery toEntity(Requirement requirement, Address address) {
         return Delivery.of(requirement, address);
     }

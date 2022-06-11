@@ -47,4 +47,5 @@ public class ItemRequest {
         this.imageUrl = imageUrl;
         this.releaseDate = releaseDate;
     }
+
 }

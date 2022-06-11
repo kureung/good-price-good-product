@@ -15,9 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class Seller {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id;
     private int totalPrice;      //총 금액
     private LocalDateTime field; //정산 날짜
 
@@ -33,18 +34,21 @@ public class Seller {
         this.field = field;
     }
 
-    private static class  SellerValidator{
-        private static void verifyTotalPrice(int totalPrice){
-            if(totalPrice < 0){
+    private static class SellerValidator {
+
+        private static void verifyTotalPrice(int totalPrice) {
+            if (totalPrice < 0) {
                 throw new IllegalArgumentException("총 금액은 음수가 나올수 없습니다.");
             }
         }
-        private static void verifyField(LocalDateTime field){
-            if(field == null ){
+
+        private static void verifyField(LocalDateTime field) {
+            if (field==null) {
                 throw new IllegalArgumentException("정산 금액은 null 을 받을수 없습니다.");
 
             }
         }
+
     }
 
 }

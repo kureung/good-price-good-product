@@ -62,5 +62,7 @@ public class OrderResponse {
             this.itemPrice = itemPrice;
             this.orderQuantity = orderQuantity;
         }
+
     }
+
 }

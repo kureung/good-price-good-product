@@ -102,5 +102,4 @@ public class Delivery {
         return getStatus()==DeliveryStatus.NONE_TRACKING;
     }
 
-
 }

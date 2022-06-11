@@ -49,9 +49,9 @@ public class DeliveryUserService implements DeliveryService {
     }
     //////////////////////////////////////
 
-    private Delivery toEntity(Object o ) {
-        Map<String,Object> map = (Map<String, Object>) o;
-        return Delivery.of((Requirement) map.get("requirement"),(Address) map.get("address"));
+    private Delivery toEntity(Object o) {
+        Map<String, Object> map = (Map<String, Object>) o;
+        return Delivery.of((Requirement) map.get("requirement"), (Address) map.get("address"));
 
     }
 

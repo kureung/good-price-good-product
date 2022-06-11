@@ -77,4 +77,5 @@ class ItemCommandServiceTest {
         // then
         assertNotNull(itemRepository.findById(updatedItemId));
     }
+
 }

@@ -58,6 +58,7 @@ public class OrderRequest {
     @Getter
     @NoArgsConstructor
     public static class OrderLineRequest {
+
         @NotBlank
         @Length(max = 30)
         private String itemCode;
@@ -70,8 +71,7 @@ public class OrderRequest {
             this.itemCode = itemCode;
             this.orderQuantity = orderQuantity;
         }
+
     }
-
-
 
 }

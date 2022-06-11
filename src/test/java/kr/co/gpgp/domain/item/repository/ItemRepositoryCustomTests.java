@@ -56,4 +56,5 @@ class ItemRepositoryCustomTests {
         // then
         assertThat(content.size()).isEqualTo(PageSize);
     }
+
 }

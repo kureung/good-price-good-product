@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class QuerydslConfig {
+
     @Autowired
     private EntityManager em;
 
@@ -15,4 +16,5 @@ public class QuerydslConfig {
     public JPAQueryFactory queryFactory(EntityManager em) {
         return new JPAQueryFactory(em);
     }
+
 }

@@ -27,4 +27,5 @@ public class ItemInfo {
         this.releaseDate = releaseDate;
         this.imageUrl = imageUrl;
     }
+
 }

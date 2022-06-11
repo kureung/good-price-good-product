@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.address.dto;
 
-
 import com.querydsl.core.annotations.QueryProjection;
 import kr.co.gpgp.domain.address.entity.Address;
 import kr.co.gpgp.domain.user.entity.User;
@@ -17,7 +16,6 @@ public class AddressResponse {
     private String name;            //주소이름(닉네임)
     private String detailed;        //상세주소
 
-
     @QueryProjection
     public AddressResponse(Long id, String roadName, String zipCode, String name, String detailed) {
         this.id = id;
@@ -26,7 +24,6 @@ public class AddressResponse {
         this.name = name;
         this.detailed = detailed;
     }
-
 
     public static AddressResponse of(Address address) {
         return new AddressResponse(address.getId(),
@@ -39,4 +36,5 @@ public class AddressResponse {
     public Address toEntity(User user) {
         return Address.of(user, roadName, zipCode, name, detailed);
     }
+
 }

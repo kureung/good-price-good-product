@@ -1,14 +1,13 @@
 package kr.co.gpgp.domain.delivery.service;
 
 import kr.co.gpgp.domain.delivery.repository.DeliveryRepository;
-import kr.co.gpgp.domain.user.entity.User;
 import kr.co.gpgp.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DeliverySellerService  implements  DeliveryService{
+public class DeliverySellerService implements DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
     private final UserRepository userRepository;
@@ -28,12 +27,9 @@ public class DeliverySellerService  implements  DeliveryService{
     // 5. (택배원 시점 ) 인계받은 회원 의 배송상태를 "배송중" -> "배송완료" 으로 변경할수 있다.
     //  5-1 (택배원 시점) "배송완료" 부터 상태 변경을 할수 없다.
 
-
     // TODO : 상태 취소 서비스
     // TODO : 다음 상태 로 값 변경 서비스
     //[결제완료,상품준비중] 단계에서 배송은 취소 될수있다.
-
-
 
     @Override
     public void cancelStatus() {
@@ -44,6 +40,5 @@ public class DeliverySellerService  implements  DeliveryService{
     public void sequenceNextStatus() {
 
     }
-
 
 }

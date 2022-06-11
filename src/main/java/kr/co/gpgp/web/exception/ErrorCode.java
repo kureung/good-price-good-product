@@ -18,7 +18,6 @@ public enum ErrorCode {
     NOT_FOUND_ITEM(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수가 없습니다."),
     ITEM_DUPLICATE_CHECK_ERROR(HttpStatus.BAD_REQUEST, "이미 등록된 상품입니다."),
 
-
     // Delivery
     UNABLE_TO_CANCEL_ORDER(HttpStatus.BAD_REQUEST, "주문을 취소할 수 없습니다."),
 
@@ -34,8 +33,8 @@ public enum ErrorCode {
 
     public static ErrorCode fromMessage(String message) {
         return Arrays.stream(ErrorCode.values())
-            .filter(errorCode -> errorCode.getMessage().equals(message))
-            .findFirst()
-            .orElse(null);
+                .filter(errorCode -> errorCode.getMessage().equals(message))
+                .findFirst()
+                .orElse(null);
     }
 }

@@ -1,6 +1,5 @@
 package kr.co.gpgp.auth.service;
 
-
 import java.util.Collections;
 import javax.servlet.http.HttpSession;
 import kr.co.gpgp.auth.dto.OAuthAttributes;
@@ -36,7 +35,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-
         // OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담을 클래스
         OAuthAttributes attributes = OAuthAttributes.of(oAuth2User.getAttributes());
 
@@ -58,7 +56,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .map(entity -> entity.updateName(attributes.getName()))
                 .orElse(attributes.toEntity());
 
-
         return userRepository.save(member);
     }
+
 }

@@ -98,4 +98,5 @@ public class Item {
     public int hashCode() {
         return Objects.hash(getId(), getPrice(), getStockQuantity(), getInfo());
     }
+
 }

@@ -50,4 +50,5 @@ public class OrderController {
         orderService.cancel(id);
         return ResponseEntity.ok("주문 취소 완료");
     }
+
 }

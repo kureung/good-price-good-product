@@ -33,7 +33,6 @@ public class Address {
     private String name;            //주소이름(닉네임)
     private String detailed;        //상세주소
 
-
     private Address(User user, String roadName, String zipCode, String name, String detailed) {
         this.user = user;
         this.roadName = roadName;
@@ -52,7 +51,6 @@ public class Address {
         return new Address(user, roadName, zipCode, name, detailed);
     }
 
-
     @Transient
     private static final int NAME_MAX_LEN = 20;
     @Transient
@@ -67,34 +65,32 @@ public class Address {
     @Transient
     private static final Pattern NEW_ZIP_CODE = Pattern.compile("^\\d{5}$");
 
-
     protected static class AddressValidator {
 
-
         private static void verifyZipCodes(String zipCode) {
-            if (zipCode == null || zipCode.isBlank()) {
+            if (zipCode==null || zipCode.isBlank()) {
                 throw new IllegalArgumentException("우편번호는 비어있을 수 없습니다.");
             }
 
             boolean OldZipCode = OLD_ZIP_CODE.matcher(zipCode).matches();
             boolean NewZipCode = NEW_ZIP_CODE.matcher(zipCode).matches();
 
-            if (! (OldZipCode || NewZipCode)) {
+            if (!(OldZipCode || NewZipCode)) {
                 throw new IllegalArgumentException("우편번호 형식이 맞지 않습니다.");
             }
         }
 
         private static void verifyRoadName(String roadName) {
-            if (roadName == null || roadName.isBlank()) {
+            if (roadName==null || roadName.isBlank()) {
                 throw new IllegalArgumentException("도로명은 비어있을 수 없습니다.");
             }
-            if (! (numberBetween(ROADNAME_MIN_LEN, ROADNAME_MAX_LEN, roadName.length()))) {
+            if (!(numberBetween(ROADNAME_MIN_LEN, ROADNAME_MAX_LEN, roadName.length()))) {
                 throw new IllegalArgumentException("도로명 길이가 맞지 않습니다.");
             }
         }
 
         private static void verifyName(String name) {
-            if (name == null || name.isBlank()) {
+            if (name==null || name.isBlank()) {
                 throw new IllegalArgumentException("주소 이름은 비어있을 수 없습니다.");
             }
             if (!numberBetween(NAME_MIN_LEN, NAME_MAX_LEN, name.length())) {
@@ -114,7 +110,7 @@ public class Address {
 
     }
 
-    public void update(Address address){
+    public void update(Address address) {
         setRoadName(address.roadName);
         setZipCode(address.zipCode);
         setName(address.name);
@@ -140,4 +136,5 @@ public class Address {
         AddressValidator.verifyDetailed(detailed);
         this.detailed = detailed;
     }
+
 }
