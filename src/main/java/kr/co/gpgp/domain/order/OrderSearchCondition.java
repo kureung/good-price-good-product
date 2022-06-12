@@ -1,6 +1,6 @@
 package kr.co.gpgp.domain.order;
 
-import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
+import kr.co.gpgp.domain.delivery.DeliveryStatus;
 import lombok.Builder;
 import lombok.Getter;
 
