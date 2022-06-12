@@ -12,6 +12,6 @@ public interface DeliveryRepository {
 
     Optional<Delivery> findById(Long deliveryId);
 
-    void save(Delivery delivery2);
+    Delivery save(Delivery delivery2);
 
 }
