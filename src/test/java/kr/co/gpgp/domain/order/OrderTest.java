@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.util.List;
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.delivery.entity.Delivery;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.orderline.OrderLine;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
-import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.requirement.Requirement;
+import kr.co.gpgp.domain.user.Role;
+import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
 
