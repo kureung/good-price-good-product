@@ -1,12 +1,12 @@
 package kr.co.gpgp.repository.order;
 
 import static java.util.stream.Collectors.toMap;
-import static kr.co.gpgp.domain.address.entity.QAddress.address;
-import static kr.co.gpgp.domain.delivery.entity.QDelivery.delivery;
-import static kr.co.gpgp.domain.item.entity.QItem.item;
-import static kr.co.gpgp.domain.order.entity.QOrder.order;
-import static kr.co.gpgp.domain.orderline.entity.QOrderLine.orderLine;
-import static kr.co.gpgp.domain.requirement.entity.QRequirement.requirement;
+import static kr.co.gpgp.domain.address.QAddress.address;
+import static kr.co.gpgp.domain.delivery.QDelivery.delivery;
+import static kr.co.gpgp.domain.item.QItem.item;
+import static kr.co.gpgp.domain.order.QOrder.order;
+import static kr.co.gpgp.domain.orderline.QOrderLine.orderLine;
+import static kr.co.gpgp.domain.requirement.QRequirement.requirement;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -15,9 +15,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import kr.co.gpgp.domain.delivery.entity.enums.DeliveryStatus;
-import kr.co.gpgp.domain.order.OrderSearchCondition;
+import kr.co.gpgp.domain.delivery.DeliveryStatus;
 import kr.co.gpgp.domain.order.Order;
+import kr.co.gpgp.domain.order.OrderSearchCondition;
 import kr.co.gpgp.domain.order.OrderStatus;
 import kr.co.gpgp.domain.orderline.OrderLine;
 import lombok.RequiredArgsConstructor;

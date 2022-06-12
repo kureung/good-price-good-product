@@ -1,14 +1,14 @@
 package kr.co.gpgp.repository.item;
 
-import static kr.co.gpgp.domain.item.entity.QItem.item;
+import static kr.co.gpgp.domain.item.QItem.item;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import kr.co.gpgp.domain.item.ItemSearchCondition;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.dto.QItemResponse;
-import kr.co.gpgp.domain.item.ItemSearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.util.List;
-import kr.co.gpgp.domain.address.entity.Address;
-import kr.co.gpgp.domain.delivery.entity.Delivery;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.orderline.OrderLine;
-import kr.co.gpgp.domain.requirement.entity.Requirement;
-import kr.co.gpgp.domain.user.entity.Role;
-import kr.co.gpgp.domain.user.entity.User;
+import kr.co.gpgp.domain.requirement.Requirement;
+import kr.co.gpgp.domain.user.Role;
+import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
 
@@ -70,7 +70,7 @@ public class OrderTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         Order order = Order.of(user, delivery, orderLines);
-        delivery.next();
+        delivery.next(user);
 
         // then
         assertThatCode(order::cancel).doesNotThrowAnyException();
@@ -90,8 +90,8 @@ public class OrderTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         Order order = Order.of(user, delivery, orderLines);
-        delivery.next();
-        delivery.next();
+        delivery.next(user);
+        delivery.next(user);
 
         // then
         assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
@@ -111,9 +111,9 @@ public class OrderTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         Order order = Order.of(user, delivery, orderLines);
-        delivery.next();
-        delivery.next();
-        delivery.next();
+        delivery.next(user);
+        delivery.next(user);
+        delivery.next(user);
 
         // then
         assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
@@ -133,10 +133,10 @@ public class OrderTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         Order order = Order.of(user, delivery, orderLines);
-        delivery.next();
-        delivery.next();
-        delivery.next();
-        delivery.next();
+        delivery.next(user);
+        delivery.next(user);
+        delivery.next(user);
+        delivery.next(user);
 
         // then
         assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
