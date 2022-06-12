@@ -23,8 +23,8 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
         return jpaRepository.findById(deliveryId);
     }
 
-    public void save(Delivery delivery) {
-        jpaRepository.save(delivery);
+    public Delivery save(Delivery delivery) {
+        return jpaRepository.save(delivery);
     }
 
 }
