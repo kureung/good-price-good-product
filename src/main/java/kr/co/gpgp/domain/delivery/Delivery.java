@@ -1,6 +1,7 @@
 package kr.co.gpgp.domain.delivery;
 
 import static javax.persistence.EnumType.STRING;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.*;
 import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.CascadeType;
@@ -15,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.requirement.Requirement;
-import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 public class Delivery {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,16 +43,49 @@ public class Delivery {
     private Delivery(Requirement requirement, Address address) {
         this.requirement = requirement;
         this.address = address;
-        this.status = status.init(); // 배송 상태 초기화
+        this.status = DeliveryStatus.init(); // 배송 상태 초기화
     }
 
     public static Delivery of(Requirement requirement, Address address) {
         return new Delivery(requirement, address);
     }
 
-    public void next(User user) {
-        status = status.next(user);
+
+    public void nextStepInstruct() {
+        if (status != ACCEPT) {
+            throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
+        }
+        status = DeliveryStatus.sequence.get(status);
     }
+
+    public void nextStepDeparture() {
+        if (status != INSTRUCT) {
+            throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
+        }
+        status = sequence.get(status);
+    }
+
+    public void nextStepFinalDelivery() {
+        if (status != DEPARTURE) {
+            throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
+        }
+        status = sequence.get(status);
+    }
+
+    public void nextStepNoneTracking() {
+        if (status != FINAL_DELIVERY) {
+            throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
+        }
+        status = sequence.get(status);
+    }
+
+    public void nextStepPurchaseConfirmation() {
+        if (status != NONE_TRACKING) {
+            throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
+        }
+        status = sequence.get(status);
+    }
+
 
     public Long getUserId() {
         return getAddress().getUser().getId();
@@ -82,23 +116,24 @@ public class Delivery {
     }
 
     public boolean isAccept() {
-        return getStatus()==DeliveryStatus.ACCEPT;
+        return getStatus() == ACCEPT;
     }
 
     public boolean isInstruct() {
-        return getStatus()==DeliveryStatus.INSTRUCT;
+        return getStatus() == DeliveryStatus.INSTRUCT;
     }
 
     public boolean isDeparture() {
-        return getStatus()==DeliveryStatus.DEPARTURE;
+        return getStatus() == DeliveryStatus.DEPARTURE;
     }
 
     public boolean isFinalDelivery() {
-        return getStatus()==DeliveryStatus.FINAL_DELIVERY;
+        return getStatus() == DeliveryStatus.FINAL_DELIVERY;
     }
 
     public boolean isNoneTracking() {
-        return getStatus()==DeliveryStatus.NONE_TRACKING;
+        return getStatus() == DeliveryStatus.NONE_TRACKING;
     }
+
 
 }
