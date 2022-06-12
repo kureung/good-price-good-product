@@ -11,9 +11,9 @@ public enum DeliveryStatus {
     /** 배송 지시 상태 */
     DEPARTURE,
     /** 배송 중 상태 */
-    FINAL_DELIVERY,
+    IN_TRANSIT,
     /** 배송 완료 상태 */
-    NONE_TRACKING,
+    FINAL_DELIVERY,
 
     /** 구매 확정 상태 */
     PURCHASE_CONFIRMATION,
@@ -41,9 +41,9 @@ public enum DeliveryStatus {
 
         sequence.put(ACCEPT, INSTRUCT);
         sequence.put(INSTRUCT, DEPARTURE);
-        sequence.put(DEPARTURE, FINAL_DELIVERY);
-        sequence.put(FINAL_DELIVERY, NONE_TRACKING);
-        sequence.put(NONE_TRACKING, PURCHASE_CONFIRMATION);
+        sequence.put(DEPARTURE, IN_TRANSIT);
+        sequence.put(IN_TRANSIT, FINAL_DELIVERY);
+        sequence.put(FINAL_DELIVERY, PURCHASE_CONFIRMATION);
 
         return sequence;
     }
@@ -54,8 +54,8 @@ public enum DeliveryStatus {
         statusMessage.put(ACCEPT, "결제완료");
         statusMessage.put(INSTRUCT, "상품준비중");
         statusMessage.put(DEPARTURE, "배송지시");
+        statusMessage.put(IN_TRANSIT, "배송완료");
         statusMessage.put(FINAL_DELIVERY, "배송중");
-        statusMessage.put(NONE_TRACKING, "배송완료");
         statusMessage.put(PURCHASE_CONFIRMATION, "구매확정");
 
         return statusMessage;
