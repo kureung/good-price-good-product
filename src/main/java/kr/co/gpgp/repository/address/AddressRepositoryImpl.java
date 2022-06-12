@@ -13,11 +13,10 @@ import org.springframework.stereotype.Repository;
 public class AddressRepositoryImpl  implements AddressRepository {
 
     private final AddressJpaRepository jpaRepository;
-    private final AddressRepositoryCustom repositoryCustom;
 
     @Override
     public List<AddressResponse> findByUserId(Long userId) {
-        return repositoryCustom.findByUserId(userId);
+        return jpaRepository.findByUserId(userId);
     }
 
     @Override

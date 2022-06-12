@@ -9,9 +9,9 @@ import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
-import kr.co.gpgp.repository.address.AddressRepositoryImpl;
-import kr.co.gpgp.repository.delivery.DeliveryRepositoryImpl;
-import kr.co.gpgp.repository.user.UserRepositoryImpl;
+import kr.co.gpgp.repository.address.AddressJpaRepository;
+import kr.co.gpgp.repository.delivery.DeliveryJpaRepository;
+import kr.co.gpgp.repository.user.UserJpaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,30 +19,29 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(MockitoExtension.class)
-@DataJpaTest
-public class DeliveryUserServiceTest{
+@SpringBootTest
+public class DeliveryUserServiceTest {
 
     private User user;
     private Address address;
     private Requirement requirement;
     private Delivery delivery;
 
-
     @SpyBean
     public DeliveryUserService deliveryUserService;
 
     @Autowired
-    public AddressRepositoryImpl addressRepository;
+    public AddressJpaRepository addressRepository;
 
     @Autowired
-    public DeliveryRepositoryImpl deliveryRepository;
+    public DeliveryJpaRepository deliveryRepository;
 
     @Autowired
-    public UserRepositoryImpl userRepository;
-
+    public UserJpaRepository userRepository;
 
     @BeforeEach
     void setup() {
@@ -76,25 +75,25 @@ public class DeliveryUserServiceTest{
         deliveryRepository.save(unknownDelivery);
 
         //when
-        List<DeliveryResponse> list = deliveryUserService.selectAll(user.getId());
+        List<Delivery> list = deliveryUserService.selectAll(user.getId());
 
         //then
         assertThat(list.stream().count()).isEqualTo(2);
         Assertions.assertAll(
                 () -> assertThat(list).isNotNull(),
                 () -> assertThat(list.get(0).getRequirement()).isEqualTo(requirement.getMessage()),
-                () -> assertThat(list.get(0).getRoadName()).isEqualTo(address.getRoadName()),
-                () -> assertThat(list.get(0).getZipCode()).isEqualTo(address.getZipCode()),
+                () -> assertThat(list.get(0).getAddressRoadName()).isEqualTo(address.getRoadName()),
+                () -> assertThat(list.get(0).getAddressZipCode()).isEqualTo(address.getZipCode()),
                 () -> assertThat(list.get(0).getAddressName()).isEqualTo(address.getName()),
-                () -> assertThat(list.get(0).getDetailedAddress()).isEqualTo(address.getDetailed())
+                () -> assertThat(list.get(0).getAddressDetailed()).isEqualTo(address.getDetailed())
         );
         Assertions.assertAll(
                 () -> assertThat(list).isNotNull(),
                 () -> assertThat(list.get(1).getRequirement()).isEqualTo(requirement2.getMessage()),
-                () -> assertThat(list.get(1).getRoadName()).isEqualTo(address2.getRoadName()),
-                () -> assertThat(list.get(1).getZipCode()).isEqualTo(address2.getZipCode()),
+                () -> assertThat(list.get(1).getAddressRoadName()).isEqualTo(address2.getRoadName()),
+                () -> assertThat(list.get(1).getAddressZipCode()).isEqualTo(address2.getZipCode()),
                 () -> assertThat(list.get(1).getAddressName()).isEqualTo(address2.getName()),
-                () -> assertThat(list.get(1).getDetailedAddress()).isEqualTo(address2.getDetailed())
+                () -> assertThat(list.get(1).getAddressDetailed()).isEqualTo(address2.getDetailed())
         );
 
     }

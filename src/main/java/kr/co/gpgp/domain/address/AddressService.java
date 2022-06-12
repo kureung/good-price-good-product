@@ -5,6 +5,9 @@ import kr.co.gpgp.domain.address.dto.AddressRequest;
 import kr.co.gpgp.domain.address.dto.AddressResponse;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
+import kr.co.gpgp.repository.address.AddressJpaRepository;
+import kr.co.gpgp.repository.user.UserJpaRepository;
+import kr.co.gpgp.repository.user.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AddressService {
 
-    private final AddressRepository addressRepository;
+    private final AddressJpaRepository addressRepository;
 
-    private final UserRepository userRepository;
+    private final UserRepositoryImpl userRepository;
 
     /**
      * 주소는 생성할수 있다.

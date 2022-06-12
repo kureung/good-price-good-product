@@ -3,10 +3,12 @@ package kr.co.gpgp.domain.delivery;
 import java.util.List;
 import java.util.Map;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
 import kr.co.gpgp.domain.requirement.Requirement;
-import kr.co.gpgp.domain.user.UserRepository;
+import kr.co.gpgp.repository.address.AddressRepositoryImpl;
+import kr.co.gpgp.repository.delivery.DeliveryJpaRepository;
+import kr.co.gpgp.repository.delivery.DeliveryRepositoryImpl;
+import kr.co.gpgp.repository.user.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DeliveryUserService implements DeliveryService {
 
-    private final DeliveryRepository deliveryRepository;
-    private final UserRepository userRepository;
+    private final DeliveryRepositoryImpl deliveryRepository;
+    private final UserRepositoryImpl userRepository;
 
-    private final AddressRepository addressRepository;
+    private final AddressRepositoryImpl addressRepository;
 
     //유저는 자신의 모든 배송 을 조회를 할수 있다.
-    public List<DeliveryResponse> selectAll(Long userId) {
+    public List<Delivery> selectAll(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("유저 ID가 없어 배송을 조회할수 없습니다."));
 

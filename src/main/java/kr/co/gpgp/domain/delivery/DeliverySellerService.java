@@ -1,6 +1,7 @@
 package kr.co.gpgp.domain.delivery;
 
-import kr.co.gpgp.domain.user.UserRepository;
+import kr.co.gpgp.repository.delivery.DeliveryRepositoryImpl;
+import kr.co.gpgp.repository.user.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +9,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DeliverySellerService implements DeliveryService {
 
-    private final DeliveryRepository deliveryRepository;
-    private final UserRepository userRepository;
+    private final DeliveryRepositoryImpl deliveryRepository;
+    private final UserRepositoryImpl userRepository;
 
     //    DeliverySellerService.sequence.instructStep(Target DeliveryId,User);
 
