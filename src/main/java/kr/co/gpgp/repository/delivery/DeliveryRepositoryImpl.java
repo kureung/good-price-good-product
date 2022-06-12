@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.delivery.DeliveryRepository;
-import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,11 +12,10 @@ import org.springframework.stereotype.Repository;
 public class DeliveryRepositoryImpl implements DeliveryRepository {
 
     private final DeliveryJpaRepository jpaRepository;
-    private final DeliveryRepositoryCustom repositoryCustom;
 
     @Override
-    public List<DeliveryResponse> findByUserId(Long userId) {
-        return repositoryCustom.findByUserId(userId);
+    public List<Delivery> findByUserId(Long userId) {
+        return jpaRepository.findByAddressUserId(userId);
     }
 
     @Override
