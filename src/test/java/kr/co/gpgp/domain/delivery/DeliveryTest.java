@@ -22,12 +22,11 @@ public class DeliveryTest {
 
         assertThatThrownBy(() -> {
             Delivery delivery = Delivery.of(requirement, address);
-            delivery.next(seller);
-            delivery.next(seller);
-            delivery.next(courier);
-            delivery.next(courier);
-            delivery.next(user);
-        }).hasMessage("이미 완료된 배송입니다.");
+            delivery.nextStepDeparture();
+            delivery.nextStepInstruct();
+            delivery.nextStepFinalDelivery();
+            delivery.nextStepNoneTracking();
+        }).hasMessage("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
     }
 
     @Test
@@ -35,14 +34,14 @@ public class DeliveryTest {
         Delivery delivery = Delivery.of(requirement, address);
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.ACCEPT);
 
-        delivery.next(seller);
+        delivery.nextStepInstruct();
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.INSTRUCT);
-        delivery.next(seller);
+        delivery.nextStepDeparture();
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.DEPARTURE);
 
-        delivery.next(courier);
+        delivery.nextStepFinalDelivery();
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.FINAL_DELIVERY);
-        delivery.next(courier);
+        delivery.nextStepNoneTracking();
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.NONE_TRACKING);
 
         assertThat(delivery)
