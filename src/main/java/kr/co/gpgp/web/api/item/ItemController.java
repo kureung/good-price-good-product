@@ -4,8 +4,8 @@ import java.net.URI;
 import javax.validation.Valid;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemCommandService;
-import kr.co.gpgp.domain.item.ItemFindService;
 import kr.co.gpgp.domain.item.ItemDtoService;
+import kr.co.gpgp.domain.item.ItemFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/items")
 @RequiredArgsConstructor
+@RequestMapping("/api/items")
 public class ItemController {
 
     private final ItemCommandService itemCommandService;
@@ -27,9 +27,11 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemResponse> register(
-            @Valid @RequestBody ItemRequest request) {
-
-        ItemResponse response = itemCommandService.register(request);
+            @Valid @RequestBody ItemRequest request
+    ) {
+        Item item = request.toEntity();
+        Item savedItem = itemCommandService.save(item);
+        ItemResponse response = ItemResponse.toDto(savedItem);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
