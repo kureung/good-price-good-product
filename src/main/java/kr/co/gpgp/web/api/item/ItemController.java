@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemCommandService;
 import kr.co.gpgp.domain.item.ItemFindService;
-import kr.co.gpgp.domain.item.ItemDtoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,19 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/items")
 @RequiredArgsConstructor
+@RequestMapping("/api/items")
 public class ItemController {
 
     private final ItemCommandService itemCommandService;
     private final ItemFindService itemFindService;
-    private final ItemDtoService itemDtoService;
 
     @PostMapping
     public ResponseEntity<ItemResponse> register(
-            @Valid @RequestBody ItemRequest request) {
-
-        ItemResponse response = itemCommandService.register(request);
+            @Valid @RequestBody ItemRequest request
+    ) {
+        Item item = request.toEntity();
+        Item savedItem = itemCommandService.save(item);
+        ItemResponse response = ItemResponse.toDto(savedItem);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -45,7 +45,7 @@ public class ItemController {
             @PathVariable Long itemId) {
 
         Item findItem = itemFindService.findOne(itemId);
-        ItemResponse response = itemDtoService.toDto(findItem);
+        ItemResponse response = ItemResponse.toDto(findItem);
         return ResponseEntity.ok(response);
     }
 
@@ -54,11 +54,11 @@ public class ItemController {
             @PathVariable Long itemId,
             @Valid @RequestBody ItemRequest request) {
 
-        Item item = itemDtoService.toEntity(request);
+        Item item = request.toEntity();
         itemCommandService.update(itemId, item);
 
         Item findItem = itemFindService.findOne(itemId);
-        ItemResponse response = itemDtoService.toDto(findItem);
+        ItemResponse response = ItemResponse.toDto(findItem);
 
         return ResponseEntity.ok(response);
     }
