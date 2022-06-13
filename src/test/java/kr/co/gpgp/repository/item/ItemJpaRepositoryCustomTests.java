@@ -6,7 +6,7 @@ import java.util.List;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
-import kr.co.gpgp.domain.item.dto.ItemResponse;
+import kr.co.gpgp.web.api.item.ItemResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

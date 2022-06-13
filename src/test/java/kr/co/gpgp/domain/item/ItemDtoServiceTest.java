@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import kr.co.gpgp.web.api.item.ItemRequest;
-import kr.co.gpgp.domain.item.dto.ItemResponse;
+import kr.co.gpgp.web.api.item.ItemResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

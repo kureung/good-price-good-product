@@ -4,7 +4,7 @@ import java.util.Optional;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemRepository;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
-import kr.co.gpgp.domain.item.dto.ItemResponse;
+import kr.co.gpgp.web.api.item.ItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

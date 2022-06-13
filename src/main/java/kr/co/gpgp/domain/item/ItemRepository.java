@@ -1,7 +1,7 @@
 package kr.co.gpgp.domain.item;
 
 import java.util.Optional;
-import kr.co.gpgp.domain.item.dto.ItemResponse;
+import kr.co.gpgp.web.api.item.ItemResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
