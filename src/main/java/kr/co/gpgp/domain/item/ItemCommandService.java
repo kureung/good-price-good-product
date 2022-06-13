@@ -1,7 +1,5 @@
 package kr.co.gpgp.domain.item;
 
-import kr.co.gpgp.web.api.item.ItemRequest;
-import kr.co.gpgp.web.api.item.ItemResponse;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.web.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -30,13 +28,6 @@ public class ItemCommandService {
         Item findItem = itemFindService.findOne(itemId);
         findItem.update(item.getPrice(), item.getStockQuantity(), item.getInfo());
         return findItem.getId();
-    }
-
-    public ItemResponse register(ItemRequest request) {
-        Item item = itemDtoService.toEntity(request);
-        Long itemId = save(item);
-        Item findItem = itemFindService.findOne(itemId);
-        return itemDtoService.toDto(findItem);
     }
 
 }
