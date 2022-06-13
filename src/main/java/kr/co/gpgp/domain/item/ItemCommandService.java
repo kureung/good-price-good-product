@@ -1,6 +1,6 @@
 package kr.co.gpgp.domain.item;
 
-import kr.co.gpgp.domain.item.dto.ItemRequest;
+import kr.co.gpgp.web.api.item.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.web.exception.ErrorCode;

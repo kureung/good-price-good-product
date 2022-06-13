@@ -2,7 +2,6 @@ package kr.co.gpgp.web.api.item;
 
 import java.net.URI;
 import javax.validation.Valid;
-import kr.co.gpgp.domain.item.dto.ItemRequest;
 import kr.co.gpgp.domain.item.dto.ItemResponse;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemCommandService;
