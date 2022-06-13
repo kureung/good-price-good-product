@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.item.dto;
+package kr.co.gpgp.web.api.item;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

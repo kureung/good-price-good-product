@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.dto;
+package kr.co.gpgp.web.api.order;
 
 import java.util.List;
 import javax.validation.Valid;
