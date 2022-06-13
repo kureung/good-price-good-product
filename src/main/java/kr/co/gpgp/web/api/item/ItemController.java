@@ -1,4 +1,4 @@
-package kr.co.gpgp.web.api;
+package kr.co.gpgp.web.api.item;
 
 import java.net.URI;
 import javax.validation.Valid;
