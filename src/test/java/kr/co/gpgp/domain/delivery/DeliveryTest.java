@@ -13,8 +13,6 @@ public class DeliveryTest {
 
     Requirement requirement = new Requirement("요청사항");
     User user = User.of("회원", "kgh2252@naver.com", Role.USER);
-    User seller = User.of("판매원", "kgh2252@naver.com", Role.SELLER);
-    User courier = User.of("asdf", "kgh2252@naver.com", Role.COURIER);
     Address address = Address.of(user, "1234567890", "12345", "12345", "12345");
 
     @Test
@@ -24,8 +22,8 @@ public class DeliveryTest {
             Delivery delivery = Delivery.of(requirement, address);
             delivery.nextStepDeparture();
             delivery.nextStepInstruct();
+            delivery.nextStepInTransit();
             delivery.nextStepFinalDelivery();
-            delivery.nextStepNoneTracking();
         }).hasMessage("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
     }
 
@@ -38,10 +36,9 @@ public class DeliveryTest {
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.INSTRUCT);
         delivery.nextStepDeparture();
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.DEPARTURE);
-
-        delivery.nextStepFinalDelivery();
+        delivery.nextStepInTransit();
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.IN_TRANSIT);
-        delivery.nextStepNoneTracking();
+        delivery.nextStepFinalDelivery();
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.FINAL_DELIVERY);
 
         assertThat(delivery)
