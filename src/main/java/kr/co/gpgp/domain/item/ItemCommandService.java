@@ -13,7 +13,6 @@ public class ItemCommandService {
 
     private final ItemJpaRepository itemJpaRepository;
     private final ItemFindService itemFindService;
-    private final ItemDtoService itemDtoService;
 
     public Item save(Item item) {
         if (itemJpaRepository.existsByInfoCode(item.getCode())) {
