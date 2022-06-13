@@ -4,7 +4,6 @@ import java.net.URI;
 import javax.validation.Valid;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemCommandService;
-import kr.co.gpgp.domain.item.ItemDtoService;
 import kr.co.gpgp.domain.item.ItemFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,6 @@ public class ItemController {
 
     private final ItemCommandService itemCommandService;
     private final ItemFindService itemFindService;
-    private final ItemDtoService itemDtoService;
 
     @PostMapping
     public ResponseEntity<ItemResponse> register(
@@ -56,11 +54,11 @@ public class ItemController {
             @PathVariable Long itemId,
             @Valid @RequestBody ItemRequest request) {
 
-        Item item = itemDtoService.toEntity(request);
+        Item item = request.toEntity();
         itemCommandService.update(itemId, item);
 
         Item findItem = itemFindService.findOne(itemId);
-        ItemResponse response = itemDtoService.toDto(findItem);
+        ItemResponse response = ItemResponse.toDto(findItem);
 
         return ResponseEntity.ok(response);
     }
