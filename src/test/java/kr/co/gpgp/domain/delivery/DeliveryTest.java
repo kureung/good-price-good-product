@@ -40,9 +40,9 @@ public class DeliveryTest {
         assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.DEPARTURE);
 
         delivery.nextStepFinalDelivery();
-        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.FINAL_DELIVERY);
+        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.IN_TRANSIT);
         delivery.nextStepNoneTracking();
-        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.NONE_TRACKING);
+        assertThat(delivery.getStatus()).isEqualTo(DeliveryStatus.FINAL_DELIVERY);
 
         assertThat(delivery)
                 .isNotInstanceOf(DeliveryStatusOverflowException.class);
