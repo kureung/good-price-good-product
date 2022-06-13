@@ -15,13 +15,12 @@ public class ItemCommandService {
     private final ItemFindService itemFindService;
     private final ItemDtoService itemDtoService;
 
-    public Long save(Item item) {
+    public Item save(Item item) {
         if (itemJpaRepository.existsByInfoCode(item.getCode())) {
             throw new IllegalStateException(ErrorCode.ITEM_DUPLICATE_CHECK_ERROR.getMessage());
         }
 
-        Item savedItem = itemJpaRepository.save(item);
-        return savedItem.getId();
+        return itemJpaRepository.save(item);
     }
 
     public Long update(Long itemId, Item item) {
