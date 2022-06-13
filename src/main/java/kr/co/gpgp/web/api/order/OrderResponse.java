@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.order.dto;
+package kr.co.gpgp.web.api.order;
 
 import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import java.util.List;
