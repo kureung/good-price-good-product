@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
+import kr.co.gpgp.domain.item.Item;
+import kr.co.gpgp.domain.item.ItemInfo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,6 +48,22 @@ public class ItemRequest {
         this.code = code;
         this.imageUrl = imageUrl;
         this.releaseDate = releaseDate;
+    }
+
+    public Item toEntity() {
+        ItemInfo info = ItemInfo.builder()
+                .code(code)
+                .imageUrl(imageUrl)
+                .name(name)
+                .releaseDate(releaseDate)
+                .weight(weight)
+                .build();
+
+        return Item.builder()
+                .price(price)
+                .info(info)
+                .stockQuantity(stockQuantity)
+                .build();
     }
 
 }
