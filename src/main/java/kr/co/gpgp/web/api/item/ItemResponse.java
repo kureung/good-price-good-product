@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDate;
+import kr.co.gpgp.domain.item.Item;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -39,6 +40,19 @@ public class ItemResponse {
         this.code = code;
         this.imageUrl = imageUrl;
         this.releaseDate = releaseDate;
+    }
+
+    public static ItemResponse toDto(Item item) {
+        return ItemResponse.builder()
+                .id(item.getId())
+                .code(item.getCode())
+                .imageUrl(item.getImageUrl())
+                .name(item.getName())
+                .price(item.getPrice())
+                .releaseDate(item.getReleaseDate())
+                .stockQuantity(item.getStockQuantity())
+                .weight(item.getWeight())
+                .build();
     }
 
 }
