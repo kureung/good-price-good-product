@@ -2,11 +2,7 @@ package kr.co.gpgp.domain.address;
 
 import java.util.List;
 import kr.co.gpgp.domain.address.dto.AddressRequest;
-import kr.co.gpgp.domain.address.dto.AddressResponse;
 import kr.co.gpgp.domain.user.User;
-import kr.co.gpgp.domain.user.UserRepository;
-import kr.co.gpgp.repository.address.AddressJpaRepository;
-import kr.co.gpgp.repository.user.UserJpaRepository;
 import kr.co.gpgp.repository.user.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,17 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AddressService {
 
-    private final AddressJpaRepository addressRepository;
-
     private final UserRepositoryImpl userRepository;
+    private final AddressRepository addressRepository;
 
-    /**
-     * 주소는 생성할수 있다.
-     *
-     * @param userId         주소를 생성할 유저 ID 값
-     * @param addressRequest 생성할 주소 값
-     * @return Long
-     */
     public Long create(Long userId, AddressRequest addressRequest) {
 
         User user = userRepository.findById(userId)
@@ -39,11 +27,7 @@ public class AddressService {
         return address.getId();
     }
 
-    /**
-     * 주소는 삭제할수 있다.
-     *
-     * @param addressId 주소 ID 값을 가져온다
-     */
+    /** 주소는 삭제할수 있다. */
     public void delete(Long addressId) {
 
         Address address = addressRepository.findById(addressId)
@@ -52,12 +36,7 @@ public class AddressService {
         addressRepository.delete(address);
     }
 
-    /**
-     * 주소는 수정할수 있다.
-     *
-     * @param addressBeforeId adress_id 수정할 주소 Id값이다
-     * @param addressRequest  수정된 address 값을 가져온다.
-     */
+    /** 주소는 수정할수 있다. */
     public void update(Long addressBeforeId, AddressRequest addressRequest) {
 
         Address addressBefore = addressRepository.findById(addressBeforeId)
@@ -66,17 +45,13 @@ public class AddressService {
         addressBefore.update(addressRequest.toEntity(addressBefore.getUser()));
     }
 
-    /**
-     * 주소는 조회가 가능하다.
-     *
-     * @param userId
-     * @return List&lt;AddressResponse>
-     */
-    public List<AddressResponse> select(Long userId) {
+    /** 주소는 조회가 가능하다. */
+    public List<Address> select(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("조회하려는 User ID 값이 조회할수 없습니다."));
+        List<Address> list = addressRepository.findByUserId(userId);
 
-        return addressRepository.findByUserId(userId);
+        return list;
     }
 
 }

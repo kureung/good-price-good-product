@@ -1,7 +1,12 @@
 package kr.co.gpgp.domain.delivery;
 
 import static javax.persistence.EnumType.STRING;
-import static kr.co.gpgp.domain.delivery.DeliveryStatus.*;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.ACCEPT;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.DEPARTURE;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.FINAL_DELIVERY;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.INSTRUCT;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.IN_TRANSIT;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.sequence;
 import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.CascadeType;
@@ -23,7 +28,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 public class Delivery {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,14 +77,14 @@ public class Delivery {
     }
 
     public void nextStepNoneTracking() {
-        if (status != FINAL_DELIVERY) {
+        if (status != IN_TRANSIT) {
             throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
         }
         status = sequence.get(status);
     }
 
     public void nextStepPurchaseConfirmation() {
-        if (status != NONE_TRACKING) {
+        if (status != FINAL_DELIVERY) {
             throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
         }
         status = sequence.get(status);
@@ -131,8 +135,8 @@ public class Delivery {
         return getStatus() == DeliveryStatus.FINAL_DELIVERY;
     }
 
-    public boolean isNoneTracking() {
-        return getStatus() == DeliveryStatus.NONE_TRACKING;
+    public boolean isInTransit() {
+        return getStatus() == DeliveryStatus.IN_TRANSIT;
     }
 
 
