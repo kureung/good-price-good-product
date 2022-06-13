@@ -14,7 +14,6 @@ public enum DeliveryStatus {
     IN_TRANSIT,
     /** 배송 완료 상태 */
     FINAL_DELIVERY,
-
     /** 구매 확정 상태 */
     PURCHASE_CONFIRMATION,
     /** 배송 취소 상태 */
@@ -28,12 +27,12 @@ public enum DeliveryStatus {
         return statusMessage.get(this);
     }
 
-    public DeliveryStatus cancelStatus() {
+    DeliveryStatus cancelStatus() {
         return WITHDRAW_ORDER;
     }
 
-    protected static final EnumMap<DeliveryStatus, DeliveryStatus> sequence = sequenceInit();
-    private static final EnumMap<DeliveryStatus, String> statusMessage = statusMessageInit();
+    static final EnumMap<DeliveryStatus, DeliveryStatus> sequence = sequenceInit();
+    static final EnumMap<DeliveryStatus, String> statusMessage = statusMessageInit();
 
 
     private static EnumMap<DeliveryStatus, DeliveryStatus> sequenceInit() {
@@ -57,6 +56,7 @@ public enum DeliveryStatus {
         statusMessage.put(IN_TRANSIT, "배송완료");
         statusMessage.put(FINAL_DELIVERY, "배송중");
         statusMessage.put(PURCHASE_CONFIRMATION, "구매확정");
+        statusMessage.put(WITHDRAW_ORDER, "배송취소");
 
         return statusMessage;
     }
