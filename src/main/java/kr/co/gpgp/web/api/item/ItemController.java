@@ -47,7 +47,7 @@ public class ItemController {
             @PathVariable Long itemId) {
 
         Item findItem = itemFindService.findOne(itemId);
-        ItemResponse response = itemDtoService.toDto(findItem);
+        ItemResponse response = ItemResponse.toDto(findItem);
         return ResponseEntity.ok(response);
     }
 
