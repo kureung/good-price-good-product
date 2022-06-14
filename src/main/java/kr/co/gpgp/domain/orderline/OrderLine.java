@@ -9,15 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import kr.co.gpgp.domain.common.BaseEntity;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.order.Order;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = PROTECTED)
 @Entity
-public class OrderLine {
+@NoArgsConstructor(access = PROTECTED)
+public class OrderLine extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
