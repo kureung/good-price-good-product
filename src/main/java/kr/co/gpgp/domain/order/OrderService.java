@@ -74,6 +74,10 @@ public class OrderService {
     public void cancel(Long orderId) {
         Order order = findOne(orderId);
         order.cancel();
+
+        Delivery delivery = order.getDelivery();
+        delivery.cancle();
+
     }
 
     public Order findOne(Long orderId) {
