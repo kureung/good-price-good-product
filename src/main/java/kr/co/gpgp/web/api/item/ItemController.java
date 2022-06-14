@@ -17,7 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/items")
+@RequestMapping("/api/v1/items")
 public class ItemController {
 
     private final ItemCommandService itemCommandService;
