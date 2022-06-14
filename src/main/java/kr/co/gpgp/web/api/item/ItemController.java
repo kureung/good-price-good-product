@@ -70,8 +70,8 @@ public class ItemController {
     @PostMapping()
     public ResponseEntity<List<ItemResponse>> itemSearch(
             @Valid @RequestBody ItemSearchCondition condition,
-            Pageable pageable) {
-
+            Pageable pageable
+    ) {
         Page<ItemResponse> searchItemResponses = itemFindService.search(condition, pageable)
                 .map(ItemResponse::toDto);
 
