@@ -5,25 +5,21 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.delivery.dto.DeliveryResponse;
+import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
-import kr.co.gpgp.repository.address.AddressJpaRepository;
-import kr.co.gpgp.repository.delivery.DeliveryJpaRepository;
-import kr.co.gpgp.repository.user.UserJpaRepository;
+import kr.co.gpgp.domain.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 public class DeliveryUserServiceTest {
 
     private User user;
@@ -35,13 +31,13 @@ public class DeliveryUserServiceTest {
     public DeliveryUserService deliveryUserService;
 
     @Autowired
-    public AddressJpaRepository addressRepository;
+    public AddressRepository addressRepository;
 
     @Autowired
-    public DeliveryJpaRepository deliveryRepository;
+    public DeliveryRepository deliveryRepository;
 
     @Autowired
-    public UserJpaRepository userRepository;
+    public UserRepository userRepository;
 
     @BeforeEach
     void setup() {
@@ -81,7 +77,7 @@ public class DeliveryUserServiceTest {
         assertThat(list.stream().count()).isEqualTo(2);
         Assertions.assertAll(
                 () -> assertThat(list).isNotNull(),
-                () -> assertThat(list.get(0).getRequirement()).isEqualTo(requirement.getMessage()),
+                () -> assertThat(list.get(0).getRequirement().getMessage()).isEqualTo(requirement.getMessage()),
                 () -> assertThat(list.get(0).getAddressRoadName()).isEqualTo(address.getRoadName()),
                 () -> assertThat(list.get(0).getAddressZipCode()).isEqualTo(address.getZipCode()),
                 () -> assertThat(list.get(0).getAddressName()).isEqualTo(address.getName()),
@@ -89,7 +85,7 @@ public class DeliveryUserServiceTest {
         );
         Assertions.assertAll(
                 () -> assertThat(list).isNotNull(),
-                () -> assertThat(list.get(1).getRequirement()).isEqualTo(requirement2.getMessage()),
+                () -> assertThat(list.get(1).getRequirement().getMessage()).isEqualTo(requirement2.getMessage()),
                 () -> assertThat(list.get(1).getAddressRoadName()).isEqualTo(address2.getRoadName()),
                 () -> assertThat(list.get(1).getAddressZipCode()).isEqualTo(address2.getZipCode()),
                 () -> assertThat(list.get(1).getAddressName()).isEqualTo(address2.getName()),
@@ -118,15 +114,15 @@ public class DeliveryUserServiceTest {
         addressRepository.save(pickAddress);
         deliveryRepository.save(pickDelivery);
 
-        DeliveryResponse deliveryResponse = deliveryUserService.select(pickUser.getId(), pickDelivery.getId());
+        Delivery delivery = deliveryUserService.select(pickUser.getId(), pickDelivery.getId());
 
         Assertions.assertAll(
-                () -> assertThat(deliveryResponse).isNotNull(),
-                () -> assertThat(deliveryResponse.getRequirement()).isEqualTo(pickRequirement.getMessage()),
-                () -> assertThat(deliveryResponse.getAddressName()).isEqualTo(pickAddress.getName()),
-                () -> assertThat(deliveryResponse.getDetailedAddress()).isEqualTo(pickAddress.getDetailed()),
-                () -> assertThat(deliveryResponse.getRoadName()).isEqualTo(pickAddress.getRoadName()),
-                () -> assertThat(deliveryResponse.getZipCode()).isEqualTo(pickAddress.getZipCode())
+                () -> assertThat(delivery).isNotNull(),
+                () -> assertThat(delivery.getRequirement().getMessage()).isEqualTo(pickRequirement.getMessage()),
+                () -> assertThat(delivery.getAddressName()).isEqualTo(pickAddress.getName()),
+                () -> assertThat(delivery.getAddressDetailed()).isEqualTo(pickAddress.getDetailed()),
+                () -> assertThat(delivery.getAddressRoadName()).isEqualTo(pickAddress.getRoadName()),
+                () -> assertThat(delivery.getAddressZipCode()).isEqualTo(pickAddress.getZipCode())
         );
     }
 
@@ -150,6 +146,15 @@ public class DeliveryUserServiceTest {
         assertThatThrownBy(() -> deliveryUserService.select(this.user.getId(), delivery.getId()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("선택한 배송은 유저가 생성한게 아닙니다.");
+    }
+
+    @Test
+    void 유저는배송을_구매확정상태로_바꿀수있다() {
+        delivery.nextStepInstruct();
+        delivery.nextStepDeparture();
+        delivery.nextStepInTransit();
+        delivery.nextStepFinalDelivery();
+        delivery.nextStepPurchaseConfirmation();
     }
 
 }
