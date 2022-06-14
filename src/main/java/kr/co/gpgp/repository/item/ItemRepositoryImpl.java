@@ -32,4 +32,14 @@ public class ItemRepositoryImpl implements ItemRepository {
         return repositoryCustom.searchItem(condition, pageable);
     }
 
+    @Override
+    public Optional<Item> findById(Long id) {
+        return jpaRepository.findById(id);
+    }
+
+    @Override
+    public Item save(Item item) {
+        return jpaRepository.save(item);
+    }
+
 }

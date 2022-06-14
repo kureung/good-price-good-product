@@ -13,4 +13,8 @@ public interface ItemRepository {
 
     Page<ItemResponse> searchItem(ItemSearchCondition condition, Pageable pageable);
 
+    Optional<Item> findById(Long id);
+
+    Item save(Item item);
+
 }
