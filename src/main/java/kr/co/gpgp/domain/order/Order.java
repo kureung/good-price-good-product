@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import kr.co.gpgp.domain.common.BaseEntity;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.user.User;
@@ -28,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "orders")
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
