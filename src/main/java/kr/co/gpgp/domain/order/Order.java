@@ -71,11 +71,11 @@ public class Order {
             throw new IllegalStateException(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
         }
 
-        if (delivery.isFinalDelivery()) {
+        if (delivery.isInTransit()) {
             throw new IllegalStateException(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
         }
 
-        if (delivery.isNoneTracking()) {
+        if (delivery.isFinalDelivery()) {
             throw new IllegalStateException(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
         }
 
