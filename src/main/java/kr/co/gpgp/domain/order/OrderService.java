@@ -76,8 +76,7 @@ public class OrderService {
         order.cancel();
 
         Delivery delivery = order.getDelivery();
-        delivery.cancle();
-
+        delivery.cancel();
     }
 
     public Order findOne(Long orderId) {
