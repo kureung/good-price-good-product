@@ -157,7 +157,7 @@ class OrderServiceTest {
         Requirement requirement = new Requirement("요청사항");
         Address address = Address.of(user, "123456789", "12345", "주소", "주소주소");
         Delivery delivery = Delivery.of(requirement, address);
-        delivery.next(savedUser);
+        delivery.nextStepInstruct();
 
         ItemInfo info = ItemInfo.builder()
                 .code("123")
