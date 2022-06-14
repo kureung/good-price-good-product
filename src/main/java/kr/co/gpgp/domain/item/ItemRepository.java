@@ -15,4 +15,6 @@ public interface ItemRepository {
 
     Optional<Item> findById(Long id);
 
+    Item save(Item item);
+
 }

@@ -37,4 +37,9 @@ public class ItemRepositoryImpl implements ItemRepository {
         return jpaRepository.findById(id);
     }
 
+    @Override
+    public Item save(Item item) {
+        return jpaRepository.save(item);
+    }
+
 }
