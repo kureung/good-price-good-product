@@ -6,9 +6,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
-import kr.co.gpgp.web.api.item.ItemResponse;
-import kr.co.gpgp.domain.item.dto.QItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +22,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<ItemResponse> searchItem(ItemSearchCondition condition, Pageable pageable) {
-        List<ItemResponse> content = searchItemContent(condition, pageable);
+    public Page<Item> searchItem(ItemSearchCondition condition, Pageable pageable) {
+        List<Item> content = searchItemContent(condition, pageable);
         JPAQuery<Long> totalCount = getTotalCount(condition);
 
         return PageableExecutionUtils.getPage(content, pageable, totalCount::fetchOne);
@@ -40,18 +39,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                         priceLoe(condition.getPriceLoe()));
     }
 
-    private List<ItemResponse> searchItemContent(ItemSearchCondition condition, Pageable pageable) {
+    private List<Item> searchItemContent(ItemSearchCondition condition, Pageable pageable) {
         return queryFactory
-                .select(new QItemResponse(
-                        item.id,
-                        item.price,
-                        item.stockQuantity,
-                        item.info.name,
-                        item.info.weight,
-                        item.info.code,
-                        item.info.imageUrl,
-                        item.info.releaseDate))
-                .from(item)
+                .selectFrom(item)
                 .where(
                         itemNameContains(condition.getItemName()),
                         priceGoe(condition.getPriceGoe()),

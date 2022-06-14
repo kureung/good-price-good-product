@@ -28,7 +28,7 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Page<ItemResponse> searchItem(ItemSearchCondition condition, Pageable pageable) {
+    public Page<Item> searchItem(ItemSearchCondition condition, Pageable pageable) {
         return repositoryCustom.searchItem(condition, pageable);
     }
 
