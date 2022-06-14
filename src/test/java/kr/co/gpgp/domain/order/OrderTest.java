@@ -70,7 +70,7 @@ public class OrderTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         Order order = Order.of(user, delivery, orderLines);
-        delivery.next(user);
+        delivery.nextStepInstruct();
 
         // then
         assertThatCode(order::cancel).doesNotThrowAnyException();
@@ -90,8 +90,8 @@ public class OrderTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         Order order = Order.of(user, delivery, orderLines);
-        delivery.next(user);
-        delivery.next(user);
+        delivery.nextStepInstruct();
+        delivery.nextStepDeparture();
 
         // then
         assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
@@ -111,9 +111,9 @@ public class OrderTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         Order order = Order.of(user, delivery, orderLines);
-        delivery.next(user);
-        delivery.next(user);
-        delivery.next(user);
+        delivery.nextStepInstruct();
+        delivery.nextStepDeparture();
+        delivery.nextStepInTransit();
 
         // then
         assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
@@ -133,10 +133,10 @@ public class OrderTest {
         Delivery delivery = Delivery.of(requirement, address);
 
         Order order = Order.of(user, delivery, orderLines);
-        delivery.next(user);
-        delivery.next(user);
-        delivery.next(user);
-        delivery.next(user);
+        delivery.nextStepInstruct();
+        delivery.nextStepDeparture();
+        delivery.nextStepInTransit();
+        delivery.nextStepFinalDelivery();
 
         // then
         assertThatThrownBy(order::cancel).isInstanceOf(IllegalStateException.class).hasMessage(ErrorCode.UNABLE_TO_CANCEL_ORDER.getMessage());
