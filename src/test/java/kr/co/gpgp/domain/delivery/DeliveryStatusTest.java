@@ -77,8 +77,7 @@ public class DeliveryStatusTest {
 
     @Test
     void 배송취소상태로_만들수있다면_성공() {
-        delivery.cancle();
-
+        delivery.cancel();
     }
 
 }
