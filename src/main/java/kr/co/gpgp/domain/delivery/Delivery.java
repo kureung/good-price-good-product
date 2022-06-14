@@ -1,7 +1,13 @@
 package kr.co.gpgp.domain.delivery;
 
 import static javax.persistence.EnumType.STRING;
-import static kr.co.gpgp.domain.delivery.DeliveryStatus.*;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.ACCEPT;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.DEPARTURE;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.FINAL_DELIVERY;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.INSTRUCT;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.IN_TRANSIT;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.WITHDRAW_ORDER;
+import static kr.co.gpgp.domain.delivery.DeliveryStatus.sequence;
 import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.CascadeType;
@@ -50,14 +56,15 @@ public class Delivery {
     }
 
 
-    /** 1 -> 2 */
+    /** 2단계 */
     public void nextStepInstruct() {
         if (status != ACCEPT) {
             throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
         }
         status = DeliveryStatus.sequence.get(status);
     }
-    /** 2 -> 3 */
+
+    /** 3단계 */
     public void nextStepDeparture() {
         if (status != INSTRUCT) {
             throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
@@ -65,16 +72,7 @@ public class Delivery {
         status = sequence.get(status);
     }
 
-
-    /** 3 -> 4 */
-    public void nextStepFinalDelivery() {
-        if (status != IN_TRANSIT) {
-            throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
-        }
-        status = sequence.get(status);
-    }
-
-    /** 5 -> 6 */
+    /** 4단계 */
     public void nextStepInTransit() {
         if (status != DEPARTURE) {
             throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
@@ -82,8 +80,15 @@ public class Delivery {
         status = sequence.get(status);
     }
 
+    /** 5단계 */
+    public void nextStepFinalDelivery() {
+        if (status != IN_TRANSIT) {
+            throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
+        }
+        status = sequence.get(status);
+    }
 
-    /** 5 -> 6 */
+    /** 6단계 */
     public void nextStepPurchaseConfirmation() {
         if (status != FINAL_DELIVERY) {
             throw new IllegalArgumentException("변경하려는 이전 상태가 아니라 다음 상태로 갈 수 없습니다.");
@@ -91,9 +96,10 @@ public class Delivery {
         status = sequence.get(status);
     }
 
-    public void cancle() {
-        if(status == WITHDRAW_ORDER)
+    public void cancel() {
+        if (status == WITHDRAW_ORDER) {
             throw new IllegalArgumentException("이미 취소한 배송입니다.");
+        }
         status = status.cancelStatus();
     }
 
@@ -145,6 +151,14 @@ public class Delivery {
 
     public boolean isFinalDelivery() {
         return getStatus() == DeliveryStatus.FINAL_DELIVERY;
+    }
+
+    public boolean isPurchaseConfirmation() {
+        return getStatus() == DeliveryStatus.PURCHASE_CONFIRMATION;
+    }
+
+    public boolean isWithdrawOrder() {
+        return getStatus() == DeliveryStatus.WITHDRAW_ORDER;
     }
 
 

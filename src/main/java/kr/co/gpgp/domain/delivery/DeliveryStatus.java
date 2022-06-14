@@ -53,8 +53,8 @@ public enum DeliveryStatus {
         statusMessage.put(ACCEPT, "결제완료");
         statusMessage.put(INSTRUCT, "상품준비중");
         statusMessage.put(DEPARTURE, "배송지시");
-        statusMessage.put(IN_TRANSIT, "배송완료");
-        statusMessage.put(FINAL_DELIVERY, "배송중");
+        statusMessage.put(IN_TRANSIT, "배송중");
+        statusMessage.put(FINAL_DELIVERY, "배송완료");
         statusMessage.put(PURCHASE_CONFIRMATION, "구매확정");
         statusMessage.put(WITHDRAW_ORDER, "배송취소");
 
