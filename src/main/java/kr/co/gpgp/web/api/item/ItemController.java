@@ -1,11 +1,15 @@
 package kr.co.gpgp.web.api.item;
 
 import java.net.URI;
+import java.util.List;
 import javax.validation.Valid;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemCommandService;
 import kr.co.gpgp.domain.item.ItemFindService;
+import kr.co.gpgp.domain.item.ItemSearchCondition;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,6 +65,19 @@ public class ItemController {
         ItemResponse response = ItemResponse.toDto(findItem);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping()
+    public ResponseEntity<List<ItemResponse>> itemSearch(
+            @Valid @RequestBody ItemSearchCondition condition,
+            Pageable pageable) {
+
+        Page<ItemResponse> searchItemResponses = itemFindService.search(condition, pageable)
+                .map(ItemResponse::toDto);
+
+        List<ItemResponse> content = searchItemResponses.getContent();
+
+        return ResponseEntity.ok(content);
     }
 
 }
