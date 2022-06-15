@@ -4,6 +4,7 @@ import java.util.Optional;
 import kr.co.gpgp.domain.order.Order;
 import kr.co.gpgp.domain.order.OrderRepository;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
+import kr.co.gpgp.domain.order.OrderSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     private final OrderRepositoryCustom repositoryCustom;
 
     @Override
-    public Page<Order> orderSearch(OrderSearchCondition condition, Pageable pageable) {
+    public Page<OrderSearchResponse> orderSearch(OrderSearchCondition condition, Pageable pageable) {
         return repositoryCustom.orderSearch(condition, pageable);
     }
 
