@@ -17,6 +17,8 @@ import kr.co.gpgp.web.api.order.OrderRequest.OrderLineRequest;
 import kr.co.gpgp.web.api.order.OrderResponse;
 import kr.co.gpgp.web.api.order.OrderResponse.OrderLineResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -95,6 +97,11 @@ public class OrderService {
                 .addressName(order.getAddressName())
                 .orderLines(toDtos(order.getOrderLines()))
                 .build();
+
+    }
+
+    public Page<OrderSearchResponse> searchItem(OrderSearchCondition condition, Pageable pageable) {
+        return orderRepository.orderSearch(condition, pageable);
 
     }
 
