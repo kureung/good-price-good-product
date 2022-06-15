@@ -15,11 +15,10 @@ import org.springframework.stereotype.Repository;
 public class OrderRepositoryImpl implements OrderRepository {
 
     private final OrderJpaRepository jpaRepository;
-    private final OrderRepositoryCustom repositoryCustom;
 
     @Override
     public Page<OrderSearchResponse> orderSearch(OrderSearchCondition condition, Pageable pageable) {
-        return repositoryCustom.orderSearch(condition, pageable);
+        return jpaRepository.orderSearch(condition, pageable);
     }
 
     @Override
