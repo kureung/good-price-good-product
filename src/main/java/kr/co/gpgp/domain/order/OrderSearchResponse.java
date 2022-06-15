@@ -1,6 +1,7 @@
 package kr.co.gpgp.domain.order;
 
 import com.querydsl.core.annotations.QueryProjection;
+import java.util.ArrayList;
 import java.util.List;
 import kr.co.gpgp.domain.delivery.DeliveryStatus;
 import lombok.Getter;
@@ -8,18 +9,20 @@ import lombok.Getter;
 @Getter
 public class OrderSearchResponse {
 
+    private final Long orderId;
     private final DeliveryStatus deliveryStatus;
     private final OrderStatus orderStatus;
-    private List<OrderLineSearchResponse> orderLines;
+    private final List<OrderLineSearchResponse> orderLines = new ArrayList<>();
 
     @QueryProjection
-    public OrderSearchResponse(DeliveryStatus deliveryStatus, OrderStatus orderStatus) {
+    public OrderSearchResponse(Long orderId, DeliveryStatus deliveryStatus, OrderStatus orderStatus) {
+        this.orderId = orderId;
         this.deliveryStatus = deliveryStatus;
         this.orderStatus = orderStatus;
     }
 
-    public void addOrderLines(List<OrderLineSearchResponse> orderLines) {
-        this.orderLines = orderLines;
+    public void addOrderLines(OrderLineSearchResponse orderLine) {
+        orderLines.add(orderLine);
     }
 
     @Getter
@@ -41,5 +44,7 @@ public class OrderSearchResponse {
             this.itemPrice = itemPrice;
             this.orderQuantity = orderQuantity;
         }
+
     }
+
 }
