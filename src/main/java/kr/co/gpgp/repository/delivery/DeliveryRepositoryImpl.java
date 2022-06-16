@@ -27,4 +27,7 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
         return jpaRepository.save(delivery);
     }
 
+    @Override
+    public void delete(Delivery Delivery) {  jpaRepository.delete(Delivery);  }
+
 }
