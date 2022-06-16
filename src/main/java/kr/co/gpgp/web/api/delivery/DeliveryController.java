@@ -10,10 +10,6 @@ import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.delivery.DeliveryUserService;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.requirement.RequirementRequest;
-import kr.co.gpgp.domain.user.Role;
-import kr.co.gpgp.domain.user.User;
-import kr.co.gpgp.domain.user.UserRepository;
-import kr.co.gpgp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,9 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DeliveryController {
 
     private final DeliveryUserService deliveryUserService;
-    private final UserRepository userService;
-
-
 
     @PostMapping("/{id}")
     public ResponseEntity<DeliveryResponse> create(
@@ -41,8 +34,7 @@ public class DeliveryController {
             @Valid @RequestBody AddressRequest addressRequest,
             @Valid @RequestBody RequirementRequest requirementRequest
     ) throws URISyntaxException {
-        User user = User.of("asdf","kgh22522252@gmail.com", Role.USER);
-        userService.save(user);
+
         Delivery delivery = Delivery.of(Requirement.of(requirementRequest),
                 Address.of(addressRequest));
 
@@ -62,11 +54,10 @@ public class DeliveryController {
         Delivery delivery = deliveryUserService.update(
                 Delivery.of(
                         Requirement.of(deliveryRequest.getRequirement()),
-                        Address.of(
-                                AddressRequest.of(deliveryRequest.getAddressName(),
-                                        deliveryRequest.getZipCode(),
-                                        deliveryRequest.getRoadName(),
-                                        deliveryRequest.getDetailedAddress()))
+                        Address.of(AddressRequest.of(deliveryRequest.getAddressName(),
+                                deliveryRequest.getZipCode(),
+                                deliveryRequest.getRoadName(),
+                                deliveryRequest.getDetailedAddress()))
                 )
         );
 
@@ -92,7 +83,9 @@ public class DeliveryController {
     public ResponseEntity<List<DeliveryResponse>> selectAll(
             @PathVariable Long id
     ) {
+
         List<Delivery> delivery = deliveryUserService.selectAll(id);
+
         List<DeliveryResponse> deliveryResponse = DeliveryResponse.convertList(delivery);
 
         return ResponseEntity.ok(deliveryResponse);
