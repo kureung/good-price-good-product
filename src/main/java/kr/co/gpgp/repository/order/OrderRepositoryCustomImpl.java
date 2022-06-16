@@ -1,12 +1,10 @@
 package kr.co.gpgp.repository.order;
 
 import static java.util.stream.Collectors.toMap;
-import static kr.co.gpgp.domain.address.QAddress.address;
 import static kr.co.gpgp.domain.delivery.QDelivery.delivery;
 import static kr.co.gpgp.domain.item.QItem.item;
 import static kr.co.gpgp.domain.order.QOrder.order;
 import static kr.co.gpgp.domain.orderline.QOrderLine.orderLine;
-import static kr.co.gpgp.domain.requirement.QRequirement.requirement;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -16,10 +14,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import kr.co.gpgp.domain.delivery.DeliveryStatus;
-import kr.co.gpgp.domain.order.Order;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
+import kr.co.gpgp.domain.order.OrderSearchResponse;
+import kr.co.gpgp.domain.order.OrderSearchResponse.OrderLineSearchResponse;
 import kr.co.gpgp.domain.order.OrderStatus;
-import kr.co.gpgp.domain.orderline.OrderLine;
+import kr.co.gpgp.domain.order.QOrderSearchResponse;
+import kr.co.gpgp.domain.order.QOrderSearchResponse_OrderLineSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,15 +32,15 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    private static Map<Long, Order> map;
+    private static Map<Long, OrderSearchResponse> map;
 
     @Override
-    public Page<Order> orderSearch(OrderSearchCondition condition, Pageable pageable) {
+    public Page<OrderSearchResponse> orderSearch(OrderSearchCondition condition, Pageable pageable) {
 
-        List<Order> content = searchContent(condition, pageable);
+        List<OrderSearchResponse> content = searchContent(condition, pageable);
 
         map = content.stream()
-                .collect(toMap(Order::getId, Function.identity()));
+                .collect(toMap(OrderSearchResponse::getOrderId, Function.identity()));
 
         searchOrderLinesContent(map.keySet())
                 .forEach(this::registerOrderLine);
@@ -49,10 +49,10 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
         return PageableExecutionUtils.getPage(content, pageable, totalCount::fetchOne);
     }
 
-    private void registerOrderLine(OrderLine orderLine) {
-        long orderId = orderLine.getOrderId();
-        Order order = map.get(orderId);
-        order.addOrderLine(orderLine);
+    private void registerOrderLine(OrderLineSearchResponse orderLineSearchResponse) {
+        Long orderId = orderLineSearchResponse.getOrderId();
+        OrderSearchResponse orderSearchResponse = map.get(orderId);
+        orderSearchResponse.addOrderLines(orderLineSearchResponse);
     }
 
     private JPAQuery<Long> getTotalCount(OrderSearchCondition condition) {
@@ -65,12 +65,15 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
                 );
     }
 
-    private List<Order> searchContent(OrderSearchCondition condition, Pageable pageable) {
+    private List<OrderSearchResponse> searchContent(OrderSearchCondition condition, Pageable pageable) {
         return queryFactory
-                .selectFrom(order)
+                .select(new QOrderSearchResponse(
+                        order.id,
+                        delivery.status,
+                        order.orderStatus
+                ))
+                .from(order)
                 .innerJoin(order.delivery, delivery)
-                .innerJoin(delivery.requirement, requirement)
-                .innerJoin(delivery.address, address)
                 .where(
                         userIdEq(condition.getUserId()),
                         orderStatusEq(condition.getOrderStatus()),
@@ -81,9 +84,15 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
                 .fetch();
     }
 
-    private List<OrderLine> searchOrderLinesContent(Collection<Long> orderIds) {
+    private List<OrderLineSearchResponse> searchOrderLinesContent(Collection<Long> orderIds) {
         return queryFactory
-                .selectFrom(orderLine)
+                .select(new QOrderSearchResponse_OrderLineSearchResponse(
+                        order.id,
+                        item.info.name,
+                        item.price,
+                        orderLine.orderQuantity
+                ))
+                .from(orderLine)
                 .innerJoin(orderLine.order, order)
                 .innerJoin(orderLine.item, item)
                 .where(

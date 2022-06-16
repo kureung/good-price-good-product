@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface OrderRepository {
 
-    Page<Order> orderSearch(OrderSearchCondition condition, Pageable pageable);
+    Page<OrderSearchResponse> orderSearch(OrderSearchCondition condition, Pageable pageable);
 
     Order save(Order order);
 
