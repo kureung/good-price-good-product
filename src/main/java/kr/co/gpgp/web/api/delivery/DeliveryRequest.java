@@ -41,6 +41,10 @@ public class DeliveryRequest {
         this.detailedAddress = detailedAddress;
     }
 
+    public static DeliveryRequest of(Long id, String requirement, String roadName, String zipCode, String addressName, String detailedAddress) {
+        return new DeliveryRequest(id, requirement, roadName, zipCode, addressName, detailedAddress);
+    }
+
     public Delivery toEntity() {
         return Delivery.of(new Requirement(requirement),
                 Address.of(
