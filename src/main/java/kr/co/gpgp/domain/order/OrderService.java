@@ -3,7 +3,6 @@ package kr.co.gpgp.domain.order;
 import java.util.List;
 import java.util.NoSuchElementException;
 import kr.co.gpgp.domain.delivery.Delivery;
-import kr.co.gpgp.domain.item.ItemFindService;
 import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserService;
@@ -20,7 +19,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final UserService userService;
-    private final ItemFindService itemFindService;
 
     @Transactional
     public Long order(Long userId, Delivery delivery, List<OrderLine> orderLines) {
