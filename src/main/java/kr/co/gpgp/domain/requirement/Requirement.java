@@ -44,4 +44,10 @@ public class Requirement {
 
     }
 
+    public static Requirement of(RequirementRequest requirementRequest) {
+        return new Requirement(requirementRequest.getMessage());
+    }
+    public static Requirement of(String message) {
+        return new Requirement(message);
+    }
 }

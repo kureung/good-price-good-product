@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AddressRequest {
 
+    private User user;
+
     @NotNull(message = "도로명을 다시 확인해주세요.")
     @Size(max = 40, min = 9)
     private String roadName;
@@ -42,8 +44,5 @@ public class AddressRequest {
         return new AddressRequest(address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
     }
 
-    public Address toEntity(User user) {
-        return Address.of(user, roadName, zipCode, name, detailed);
-    }
 
 }

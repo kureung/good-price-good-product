@@ -8,16 +8,17 @@ import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemFindService;
-import kr.co.gpgp.web.api.order.OrderRequest;
-import kr.co.gpgp.web.api.order.OrderRequest.OrderLineRequest;
-import kr.co.gpgp.web.api.order.OrderResponse;
-import kr.co.gpgp.web.api.order.OrderResponse.OrderLineResponse;
 import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserService;
-import kr.co.gpgp.repository.order.OrderJpaRepository;
+import kr.co.gpgp.web.api.order.OrderRequest;
+import kr.co.gpgp.web.api.order.OrderRequest.OrderLineRequest;
+import kr.co.gpgp.web.api.order.OrderResponse;
+import kr.co.gpgp.web.api.order.OrderResponse.OrderLineResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderJpaRepository orderJpaRepository;
+    private final OrderRepository orderRepository;
     private final UserService userService;
     private final ItemFindService itemFindService;
 
@@ -40,7 +41,7 @@ public class OrderService {
         List<OrderLine> orderLines = this.toEntities(orderLineRequests);
 
         Order order = Order.of(user, delivery, orderLines);
-        return orderJpaRepository.save(order).getId();
+        return orderRepository.save(order).getId();
     }
 
     @Transactional
@@ -80,7 +81,7 @@ public class OrderService {
     }
 
     public Order findOne(Long orderId) {
-        return orderJpaRepository.findById(orderId)
+        return orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("해당 주문을 찾을 수 없습니다."));
     }
 
@@ -96,6 +97,11 @@ public class OrderService {
                 .addressName(order.getAddressName())
                 .orderLines(toDtos(order.getOrderLines()))
                 .build();
+
+    }
+
+    public Page<OrderSearchResponse> searchOrder(OrderSearchCondition condition, Pageable pageable) {
+        return orderRepository.orderSearch(condition, pageable);
 
     }
 
