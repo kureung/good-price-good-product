@@ -5,26 +5,29 @@ import java.util.EnumMap;
 public enum DeliveryStatus {
 
     /** 결제 완료 상태 */
-    ACCEPT,
+    ACCEPT("결제완료"),
     /** 상품 중비중 상태 */
-    INSTRUCT,
+    INSTRUCT("상품준비중"),
     /** 배송 지시 상태 */
-    DEPARTURE,
+    DEPARTURE("배송지시"),
     /** 배송 중 상태 */
-    IN_TRANSIT,
+    IN_TRANSIT( "배송중"),
     /** 배송 완료 상태 */
-    FINAL_DELIVERY,
+    FINAL_DELIVERY("배송완료"),
     /** 구매 확정 상태 */
-    PURCHASE_CONFIRMATION,
+    PURCHASE_CONFIRMATION( "구매확정"),
     /** 배송 취소 상태 */
-    WITHDRAW_ORDER;
-
+    WITHDRAW_ORDER( "배송취소");
+    private String message;
+    DeliveryStatus(String message) {
+        this.message=message;
+    }
     public static DeliveryStatus init() {
         return ACCEPT;
     }
 
     public String getMessage() {
-        return statusMessage.get(this);
+        return message;
     }
 
     DeliveryStatus cancelStatus() {
@@ -32,8 +35,6 @@ public enum DeliveryStatus {
     }
 
     static final EnumMap<DeliveryStatus, DeliveryStatus> sequence = sequenceInit();
-    static final EnumMap<DeliveryStatus, String> statusMessage = statusMessageInit();
-
 
     private static EnumMap<DeliveryStatus, DeliveryStatus> sequenceInit() {
         EnumMap<DeliveryStatus, DeliveryStatus> sequence = new EnumMap<>(DeliveryStatus.class);
@@ -45,20 +46,6 @@ public enum DeliveryStatus {
         sequence.put(FINAL_DELIVERY, PURCHASE_CONFIRMATION);
 
         return sequence;
-    }
-
-    private static EnumMap<DeliveryStatus, String> statusMessageInit() {
-        EnumMap<DeliveryStatus, String> statusMessage = new EnumMap<>(DeliveryStatus.class);
-
-        statusMessage.put(ACCEPT, "결제완료");
-        statusMessage.put(INSTRUCT, "상품준비중");
-        statusMessage.put(DEPARTURE, "배송지시");
-        statusMessage.put(IN_TRANSIT, "배송중");
-        statusMessage.put(FINAL_DELIVERY, "배송완료");
-        statusMessage.put(PURCHASE_CONFIRMATION, "구매확정");
-        statusMessage.put(WITHDRAW_ORDER, "배송취소");
-
-        return statusMessage;
     }
 
 }

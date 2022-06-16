@@ -10,6 +10,7 @@ import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
+import kr.co.gpgp.web.api.delivery.DeliveryResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -155,6 +156,32 @@ public class DeliveryUserServiceTest {
         delivery.nextStepInTransit();
         delivery.nextStepFinalDelivery();
         delivery.nextStepPurchaseConfirmation();
+    }
+
+    @Test
+    void Response_convertList_확인() {
+        User user = User.of("BBB", "BBB@gmail.com", Role.USER);
+        Address address1 = Address.of(user, "BBB_BBB_BBB", "12345", "BBBName", "BBB1");
+        Delivery delivery1 = Delivery.of(new Requirement("BBB"), address1);
+
+        userRepository.save(user);
+        addressRepository.save(address1);
+        deliveryRepository.save(delivery1);
+
+        Address address2 = Address.of(user, "AAA2_AAA2_AAA2", "12345", "AAA@Name", "AAA2");
+        Requirement requirement2 = new Requirement("AAA2");
+        Delivery delivery3 = Delivery.of(requirement2, address2);
+        addressRepository.save(address2);
+        deliveryRepository.save(delivery3);
+        Long userId = userRepository.findByEmail("BBB@gmail.com").get().getId();
+
+        List<Delivery> list = deliveryUserService.selectAll(userId);
+        List<DeliveryResponse> res = DeliveryResponse.convertList(list);
+
+        System.out.println(res.get(0).getRequirement());
+
+        System.out.println(res.get(1).getAddressName());
+
     }
 
 }

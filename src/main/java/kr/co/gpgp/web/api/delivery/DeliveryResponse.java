@@ -1,7 +1,8 @@
-package kr.co.gpgp.domain.delivery.dto;
+package kr.co.gpgp.web.api.delivery;
 
 import com.querydsl.core.annotations.QueryProjection;
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.requirement.Requirement;
@@ -34,12 +35,22 @@ public class DeliveryResponse {
         return new DeliveryResponse(id, requirement, roadName, zipCode, addressName, detailedAddress);
     }
 
-    public static DeliveryResponse of(Optional<Delivery> optional) {
-        return new DeliveryResponse(optional.get().getId(), optional.get().getRequirementMessage(), optional.get().getAddressRoadName(), optional.get().getAddressZipCode(), optional.get().getAddressName(), optional.get().getAddressDetailed());
+    public static DeliveryResponse of(Long id, Requirement requirement, Address address) {
+        return new DeliveryResponse(id, requirement.getMessage(), address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
+    }
+
+    public static DeliveryResponse of(Delivery delivery) {
+        System.out.println(delivery.getRequirement());
+        return new DeliveryResponse(delivery.getId(), delivery.getRequirement().getMessage(), delivery.getAddressRoadName(), delivery.getAddressZipCode(), delivery.getAddressName(), delivery.getAddressDetailed());
     }
 
     public Delivery toEntity(Requirement requirement, Address address) {
         return Delivery.of(requirement, address);
     }
 
+    public static List<DeliveryResponse> convertList(List<Delivery> list) {
+        return list.stream()
+                .map(DeliveryResponse::of)
+                .collect(Collectors.toList());
+    }
 }

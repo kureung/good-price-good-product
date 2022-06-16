@@ -21,8 +21,7 @@ public class AddressService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 주소를 생성할수 없습니다."));
 
-        Address address = addressRepository.save(
-                addressRequest.toEntity(user));
+        Address address = addressRepository.save(Address.of(addressRequest));
 
         return address.getId();
     }
@@ -42,7 +41,7 @@ public class AddressService {
         Address addressBefore = addressRepository.findById(addressBeforeId)
                 .orElseThrow(() -> new IllegalArgumentException("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다."));
 
-        addressBefore.update(addressRequest.toEntity(addressBefore.getUser()));
+        addressBefore.update(Address.of(addressRequest));
     }
 
     /** 주소는 조회가 가능하다. */

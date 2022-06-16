@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import kr.co.gpgp.domain.address.dto.AddressRequest;
 import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,11 @@ public class Address {
         this.name = name;
         this.detailed = detailed;
     }
+
+    public static Address of(AddressRequest request){
+        return new Address(request.getUser(),request.getRoadName(),request.getZipCode(),request.getName(),request.getDetailed());
+    }
+
 
     public static Address of(User user, String roadName, String zipCode, String name, String detailed
     ) {
