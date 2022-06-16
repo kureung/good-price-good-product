@@ -55,7 +55,7 @@ public class OrderController {
 
     @PostMapping("/search0")
     public ResponseEntity<Page<OrderSearchResponse>> searchResponse(OrderSearchCondition condition, Pageable pageable) {
-        Page<OrderSearchResponse> orderSearchResponses = orderService.searchItem(condition, pageable);
+        Page<OrderSearchResponse> orderSearchResponses = orderService.searchOrder(condition, pageable);
         return ResponseEntity.ok(orderSearchResponses);
     }
 

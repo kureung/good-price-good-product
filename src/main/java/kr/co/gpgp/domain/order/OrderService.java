@@ -100,7 +100,7 @@ public class OrderService {
 
     }
 
-    public Page<OrderSearchResponse> searchItem(OrderSearchCondition condition, Pageable pageable) {
+    public Page<OrderSearchResponse> searchOrder(OrderSearchCondition condition, Pageable pageable) {
         return orderRepository.orderSearch(condition, pageable);
 
     }
