@@ -3,6 +3,7 @@ package kr.co.gpgp.domain.address.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AddressRequest {
+
+    private User user;
 
     @NotNull(message = "도로명을 다시 확인해주세요.")
     @Size(max = 40, min = 9)
