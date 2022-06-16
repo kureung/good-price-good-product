@@ -2,8 +2,12 @@ package kr.co.gpgp.web.api.order;
 
 import java.net.URI;
 import javax.validation.Valid;
+import kr.co.gpgp.domain.order.OrderSearchCondition;
+import kr.co.gpgp.domain.order.OrderSearchResponse;
 import kr.co.gpgp.domain.order.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +51,12 @@ public class OrderController {
     public ResponseEntity<String> orderCancel(@PathVariable Long id) {
         orderService.cancel(id);
         return ResponseEntity.ok("주문 취소 완료");
+    }
+
+    @PostMapping("/search0")
+    public ResponseEntity<Page<OrderSearchResponse>> searchResponse(OrderSearchCondition condition, Pageable pageable) {
+        Page<OrderSearchResponse> orderSearchResponses = orderService.searchItem(condition, pageable);
+        return ResponseEntity.ok(orderSearchResponses);
     }
 
 }
