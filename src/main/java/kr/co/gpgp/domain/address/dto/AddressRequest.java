@@ -3,7 +3,6 @@ package kr.co.gpgp.domain.address.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,8 +41,5 @@ public class AddressRequest {
         return new AddressRequest(address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
     }
 
-    public Address toEntity(User user) {
-        return Address.of(user, roadName, zipCode, name, detailed);
-    }
 
 }
