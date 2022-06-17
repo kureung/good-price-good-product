@@ -10,6 +10,8 @@ import static kr.co.gpgp.domain.delivery.DeliveryStatus.WITHDRAW_ORDER;
 import static kr.co.gpgp.domain.delivery.DeliveryStatus.sequence;
 import static lombok.AccessLevel.PROTECTED;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -21,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.order.Order;
 import kr.co.gpgp.domain.requirement.Requirement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,10 +54,26 @@ public class Delivery {
         this.status = DeliveryStatus.init(); // 배송 상태 초기화
     }
 
+    private Delivery(Long id, Requirement requirement, Address address, DeliveryStatus status) {
+        this.id = id;
+        this.requirement = requirement;
+        this.address = address;
+        this.status = status;
+    }
+
     public static Delivery of(Requirement requirement, Address address) {
         return new Delivery(requirement, address);
     }
 
+    public static List<Delivery> ofOrder(List<Order> list) {
+        return list.stream()
+                .map(ls -> Delivery.of(ls.getDelivery()))
+                .collect(Collectors.toList());
+    }
+
+    private static Delivery of(Delivery delivery) {
+        return new Delivery(delivery.getId(), delivery.getRequirement(), delivery.getAddress(), delivery.getStatus());
+    }
 
     /** 2단계 */
     public void nextStepInstruct() {

@@ -1,5 +1,6 @@
 package kr.co.gpgp.repository.order;
 
+import java.util.List;
 import java.util.Optional;
 import kr.co.gpgp.domain.order.Order;
 import kr.co.gpgp.domain.order.OrderRepository;
@@ -29,6 +30,11 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Optional<Order> findById(Long id) {
         return jpaRepository.findById(id);
+    }
+
+    @Override
+    public List<Order> findByUserId(Long userId) {
+        return jpaRepository.findByUserId(userId);
     }
 
 }

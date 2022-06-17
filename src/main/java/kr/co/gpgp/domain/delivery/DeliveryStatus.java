@@ -29,6 +29,7 @@ public enum DeliveryStatus {
     public String getMessage() {
         return message;
     }
+    public String getStatus(){  return this.toString(); }
 
     DeliveryStatus cancelStatus() {
         return WITHDRAW_ORDER;
