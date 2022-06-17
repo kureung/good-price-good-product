@@ -12,6 +12,7 @@ import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.domain.order.Order;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
+import kr.co.gpgp.domain.order.OrderSearchResponse;
 import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.requirement.RequirementRepository;
@@ -101,9 +102,9 @@ class OrderJpaRepositoryCustomImplTests {
         int PageSize = 3;
         PageRequest pageRequest = PageRequest.of(0, PageSize);
 
-        Page<Order> orders = sut.orderSearch(condition, pageRequest);
+        Page<OrderSearchResponse> orderSearchResponse = sut.orderSearch(condition, pageRequest);
 
-        List<Order> content = orders.getContent();
+        List<OrderSearchResponse> content = orderSearchResponse.getContent();
 
         assertThat(content.size()).isEqualTo(PageSize);
     }

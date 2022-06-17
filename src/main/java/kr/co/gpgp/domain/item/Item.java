@@ -9,15 +9,16 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import kr.co.gpgp.domain.common.BaseEntity;
 import kr.co.gpgp.web.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = PROTECTED)
 @Getter
 @Entity
-public class Item {
+@NoArgsConstructor(access = PROTECTED)
+public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

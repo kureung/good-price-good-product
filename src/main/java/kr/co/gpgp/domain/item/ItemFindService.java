@@ -2,6 +2,8 @@ package kr.co.gpgp.domain.item;
 
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,5 +22,9 @@ public class ItemFindService {
     public Item findOne(String itemCode) {
         return itemRepository.findByInfoCode(itemCode)
                 .orElseThrow(() -> new NoSuchElementException("해당 상품을 찾을 수 없습니다."));
+    }
+
+    public Page<Item> search(ItemSearchCondition condition, Pageable pageable) {
+        return itemRepository.searchItem(condition, pageable);
     }
 }
