@@ -10,6 +10,8 @@ import static kr.co.gpgp.domain.delivery.DeliveryStatus.WITHDRAW_ORDER;
 import static kr.co.gpgp.domain.delivery.DeliveryStatus.sequence;
 import static lombok.AccessLevel.PROTECTED;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -21,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.order.Order;
 import kr.co.gpgp.domain.requirement.Requirement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,6 +58,15 @@ public class Delivery {
         return new Delivery(requirement, address);
     }
 
+    private static Delivery of(Delivery delivery) {
+        return new Delivery(delivery.getRequirement(), delivery.getAddress());
+    }
+
+    public static List<Delivery> ofOrder(List<Order> list) {
+        return list.stream()
+                .map(ls -> Delivery.of(ls.getDelivery()))
+                .collect(Collectors.toList());
+    }
 
     /** 2단계 */
     public void nextStepInstruct() {
