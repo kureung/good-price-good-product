@@ -54,18 +54,25 @@ public class Delivery {
         this.status = DeliveryStatus.init(); // 배송 상태 초기화
     }
 
-    public static Delivery of(Requirement requirement, Address address) {
-        return new Delivery(requirement, address);
+    private Delivery(Long id, Requirement requirement, Address address, DeliveryStatus status) {
+        this.id = id;
+        this.requirement = requirement;
+        this.address = address;
+        this.status = status;
     }
 
-    private static Delivery of(Delivery delivery) {
-        return new Delivery(delivery.getRequirement(), delivery.getAddress());
+    public static Delivery of(Requirement requirement, Address address) {
+        return new Delivery(requirement, address);
     }
 
     public static List<Delivery> ofOrder(List<Order> list) {
         return list.stream()
                 .map(ls -> Delivery.of(ls.getDelivery()))
                 .collect(Collectors.toList());
+    }
+
+    private static Delivery of(Delivery delivery) {
+        return new Delivery(delivery.getId(), delivery.getRequirement(), delivery.getAddress(), delivery.getStatus());
     }
 
     /** 2단계 */
