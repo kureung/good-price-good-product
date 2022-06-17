@@ -5,5 +5,5 @@ import kr.co.gpgp.domain.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderJpaRepository extends JpaRepository<Order, Long> {
-    List<Order> findByDeliveryId(Long deliveryId);
+    List<Order> findByUserId(Long userId);
 }
