@@ -33,8 +33,8 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> findByDeliveryId(Long deliveryId) {
-        return jpaRepository.findByDeliveryId(deliveryId);
+    public List<Order> findByUserId(Long userId) {
+        return jpaRepository.findByUserId(userId);
     }
 
 }
