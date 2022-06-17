@@ -13,6 +13,6 @@ public interface OrderRepository {
 
     Optional<Order> findById(Long id);
 
-    List<Order> findByDeliveryId(Long deliveryId);
+    List<Order> findByUserId(Long userId);
 
 }
