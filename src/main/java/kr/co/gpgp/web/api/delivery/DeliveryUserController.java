@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/delivery/user")
-public class DeliveryController {
+public class DeliveryUserController {
 
     private final DeliveryUserService deliveryUserService;
 
