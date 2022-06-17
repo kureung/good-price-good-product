@@ -35,7 +35,7 @@ public class DeliverySellerService {
                 .getId();
 
         //2단계
-        List<Order> orderList = orderRepository.findByDeliveryId(sellerId);
+        List<Order> orderList = orderRepository.findByUserId(sellerId);
 
         //3 단계
         List<Delivery> deliveryList = Delivery.ofOrder(orderList);
@@ -55,11 +55,10 @@ public class DeliverySellerService {
                 .getId();
 
         //2단계
-        List<Order> orderList = orderRepository.findByDeliveryId(sellerId);
+        List<Order> orderList = orderRepository.findByUserId(sellerId);
 
         //3 단계
-        List<Delivery> deliveryList = Delivery.ofOrder(orderList);
-        return deliveryRepository.findByUserId(userId);
+        return Delivery.ofOrder(orderList);
     }
 
 
