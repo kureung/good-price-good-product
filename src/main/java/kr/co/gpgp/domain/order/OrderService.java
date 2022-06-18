@@ -2,8 +2,13 @@ package kr.co.gpgp.domain.order;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.address.AddressRepository;
+import kr.co.gpgp.domain.address.AddressService;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.orderline.OrderLine;
+import kr.co.gpgp.domain.requirement.Requirement;
+import kr.co.gpgp.domain.requirement.RequirementRepository;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +24,28 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final UserService userService;
+    private final AddressService addressService;
+
+    private final AddressRepository addressRepository;
+
+    private final RequirementRepository requirementRepository;
 
     @Transactional
-    public Long order(Long userId, Delivery delivery, List<OrderLine> orderLines) {
-        if (orderLines.isEmpty()) {
-            throw new IllegalArgumentException("주문하려는 상품을 입력해주세요.");
-        }
+    public Long order(Long userId,
+                      Address address,
+                      Requirement requirement,
+                      List<OrderLine> orderLines
+    ) {
+
+        Address findAddress = addressRepository.findByName(address.getName())
+                .orElseGet(() -> addressRepository.save(address));
+
+        Requirement findRequirement = requirementRepository.findByMessage(requirement.getMessage())
+                .orElseGet(() -> requirementRepository.save(requirement));
 
         User user = userService.findOne(userId);
+
+        Delivery delivery = Delivery.of(findRequirement, findAddress);
 
         Order order = Order.of(user, delivery, orderLines);
         return orderRepository.save(order).getId();
