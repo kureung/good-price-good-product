@@ -1,5 +1,6 @@
 package kr.co.gpgp.domain.address;
 
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ public class Address {
     private String name;            //주소이름(닉네임)
     private String detailed;        //상세주소
 
-    private Address(User user, String roadName, String zipCode, String name, String detailed) {
+    public Address(User user, String roadName, String zipCode, String name, String detailed) {
         this.user = user;
         this.roadName = roadName;
         this.zipCode = zipCode;
@@ -42,8 +43,8 @@ public class Address {
         this.detailed = detailed;
     }
 
-    public static Address of(AddressRequest request){
-        return new Address(request.getUser(),request.getRoadName(),request.getZipCode(),request.getName(),request.getDetailed());
+    public static Address of(Address request) {
+        return new Address(request.getUser(), request.getRoadName(), request.getZipCode(), request.getName(), request.getDetailed());
     }
 
 
@@ -55,6 +56,41 @@ public class Address {
         AddressValidator.verifyDetailed(detailed);
 
         return new Address(user, roadName, zipCode, name, detailed);
+    }
+
+
+    @Getter
+    @NoArgsConstructor(access = PRIVATE)
+    public static class AddressDto {
+
+        private String roadName;        //도로명
+        private String zipCode;         //우편번호
+        private String name;            //주소이름(닉네임)
+        private String detailed;        //상세주소
+
+        private AddressDto(String roadName, String zipCode, String name, String detailed) {
+            this.roadName = roadName;
+            this.zipCode = zipCode;
+            this.name = name;
+            this.detailed = detailed;
+        }
+
+        public static Address toEntity(User user, AddressDto request) {
+            return new Address(user, request.getRoadName(), request.getZipCode(), request.getName(), request.getDetailed());
+        }
+
+        public static Address toEntity(User user,AddressRequest addressRequest) {
+            return new Address(user, addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+        }
+
+        public static AddressDto of(AddressRequest addressRequest) {
+            return new AddressDto(addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+        }
+
+        public static AddressDto of(Address address) {
+            return new AddressDto(address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
+        }
+
     }
 
     @Transient
@@ -74,7 +110,7 @@ public class Address {
     protected static class AddressValidator {
 
         private static void verifyZipCodes(String zipCode) {
-            if (zipCode==null || zipCode.isBlank()) {
+            if (zipCode == null || zipCode.isBlank()) {
                 throw new IllegalArgumentException("우편번호는 비어있을 수 없습니다.");
             }
 
@@ -87,7 +123,7 @@ public class Address {
         }
 
         private static void verifyRoadName(String roadName) {
-            if (roadName==null || roadName.isBlank()) {
+            if (roadName == null || roadName.isBlank()) {
                 throw new IllegalArgumentException("도로명은 비어있을 수 없습니다.");
             }
             if (!(numberBetween(ROADNAME_MIN_LEN, ROADNAME_MAX_LEN, roadName.length()))) {
@@ -96,7 +132,7 @@ public class Address {
         }
 
         private static void verifyName(String name) {
-            if (name==null || name.isBlank()) {
+            if (name == null || name.isBlank()) {
                 throw new IllegalArgumentException("주소 이름은 비어있을 수 없습니다.");
             }
             if (!numberBetween(NAME_MIN_LEN, NAME_MAX_LEN, name.length())) {
@@ -116,7 +152,7 @@ public class Address {
 
     }
 
-    public void update(Address address) {
+    public void update(AddressDto address) {
         setRoadName(address.roadName);
         setZipCode(address.zipCode);
         setName(address.name);

@@ -1,5 +1,7 @@
 package kr.co.gpgp.domain.requirement;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,9 +13,6 @@ import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-// 연관관계 --------------------------------------------------
-// [회원] 1:N [요청사항] 단반향(Requirement)
-// [배송] 1:1 [요청사항] 단반향(Delivery)
 
 @Entity
 @Getter
@@ -35,6 +34,14 @@ public class Requirement {
         this.message = message;
     }
 
+
+    private Requirement(Long id,String message) {
+        validatMessage(message);
+        this.message = message;
+        this.id = id;
+    }
+
+
     private static void validatMessage(String message) {
         final int REQUIREMENT_MAX_LEN = 18;
 
@@ -44,9 +51,30 @@ public class Requirement {
 
     }
 
+    @Getter
+    @NoArgsConstructor(access = PRIVATE)
+    public static class RequirementDto {
+
+        private Long id;
+        private String message;
+
+        private RequirementDto(Long id, String message) {
+            this.id = id;
+            this.message = message;
+        }
+
+        public static RequirementDto of(RequirementRequest requirementRequest) {
+            return new RequirementDto(requirementRequest.getId(),requirementRequest.getMessage());
+        }
+        public static Requirement toEntity(RequirementDto requirementDto){
+            return new Requirement(requirementDto.getId(), requirementDto.getMessage());
+        }
+    }
+
     public static Requirement of(RequirementRequest requirementRequest) {
         return new Requirement(requirementRequest.getMessage());
     }
+
     public static Requirement of(String message) {
         return new Requirement(message);
     }

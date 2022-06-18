@@ -1,6 +1,11 @@
 package kr.co.gpgp.domain.delivery;
 
 import java.util.List;
+import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.address.Address.AddressDto;
+import kr.co.gpgp.domain.requirement.Requirement;
+import kr.co.gpgp.domain.requirement.Requirement.RequirementDto;
+import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
 import kr.co.gpgp.repository.delivery.DeliveryRepositoryImpl;
 import lombok.RequiredArgsConstructor;
@@ -42,21 +47,42 @@ public class DeliveryUserService {
     }
 
     @Transactional
-    public void save(Delivery delivery) {
-        deliveryRepository.save(delivery);
+    public Delivery save(Long id, AddressDto addressdto, RequirementDto requirementDto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("유저 ID가 없어 배송을 조회할수 없습니다."));
+
+        Requirement requirement = RequirementDto.toEntity(requirementDto);
+        Address address = AddressDto.toEntity(user, addressdto);
+
+        Delivery delivery = Delivery.of(requirement, address);
+
+        return deliveryRepository.save(delivery);
     }
 
 
+    public void delete(Long userId, Long deliveryId) {
 
-    public void delete(Delivery delivery) {
-        Delivery findDelivery = deliveryRepository.findById(delivery.getId())
+        Delivery findDelivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new IllegalArgumentException("배송 ID가 존재하지 않아 삭제할수 없습니다."));
+
+        userRepository.findById(userId)
+                .stream()
+                .filter(u -> u.getId() == findDelivery.getUserId())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유저가 배송 ID 값을 포함되지 않아 삭제할수 없습니다."));
+
         deliveryRepository.delete(findDelivery);
     }
 
-    public Delivery update(Delivery delivery) {
-        Delivery findDelivery = deliveryRepository.findById(delivery.getId())
-                .orElseThrow(() -> new IllegalArgumentException("배송 ID가 존재하지 않아 수정할수 없습니다."));
-        return deliveryRepository.save(findDelivery);
+    public Delivery update(Long id, AddressDto addressdto, RequirementDto requirementDto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("유저 ID가 없어 배송을 수정정 할수 없습니."));
+
+        Requirement requirement = RequirementDto.toEntity(requirementDto);
+        Address address = AddressDto.toEntity(user, addressdto);
+
+        Delivery delivery = Delivery.of(requirement, address);
+
+        return deliveryRepository.save(delivery);
     }
 }
