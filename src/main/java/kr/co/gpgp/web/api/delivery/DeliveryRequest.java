@@ -2,10 +2,6 @@ package kr.co.gpgp.web.api.delivery;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.address.dto.AddressRequest;
-import kr.co.gpgp.domain.delivery.Delivery;
-import kr.co.gpgp.domain.requirement.Requirement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,19 +39,6 @@ public class DeliveryRequest {
 
     public static DeliveryRequest of(Long id, String requirement, String roadName, String zipCode, String addressName, String detailedAddress) {
         return new DeliveryRequest(id, requirement, roadName, zipCode, addressName, detailedAddress);
-    }
-
-    public Delivery toEntity() {
-        return Delivery.of(new Requirement(requirement),
-                Address.of(
-                        AddressRequest.of(
-                                getAddressName(),
-                                getZipCode(),
-                                getRoadName(),
-                                getDetailedAddress()
-                        )
-                )
-        );
     }
 
 }
