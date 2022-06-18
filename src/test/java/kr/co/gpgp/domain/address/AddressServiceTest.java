@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
+import kr.co.gpgp.domain.address.Address.AddressDto;
 import kr.co.gpgp.domain.address.dto.AddressRequest;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
@@ -42,13 +43,13 @@ public class AddressServiceTest {
 
     @Test
     void 주소_생성_성공() {
-        AddressRequest addressRequest = AddressRequest
-                .of(address.getRoadName(),
-                        address.getZipCode(),
-                        address.getName(),
-                        address.getDetailed());
+        AddressRequest addressRequest = AddressRequest.of(1L,
+                address.getRoadName(),
+                address.getZipCode(),
+                address.getName(),
+                address.getDetailed());
 
-        addressService.create(user.getId(), addressRequest);
+        addressService.create(user.getId(), AddressDto.of(addressRequest));
 
         Assertions.assertAll(
                 () -> assertThat(address).isNotNull(),
@@ -63,12 +64,15 @@ public class AddressServiceTest {
     void 주소_생성시_유저가_없다면_테스트가_실패한다() {
 
         AddressRequest addressRequest = AddressRequest
-                .of(address.getRoadName(),
+                .of(1L,address.getRoadName(),
                         address.getZipCode(),
                         address.getName(),
                         address.getDetailed());
 
-        assertThatThrownBy(() -> addressService.create(Long.MAX_VALUE, addressRequest))
+        addressService.create(user.getId(), AddressDto.of(addressRequest));
+        Address address = addressRepository.findById(1L)
+                .get();
+        assertThatThrownBy(() -> addressService.create(Long.MAX_VALUE, AddressDto.of(address)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("user ID를 조회할수 없어 주소를 생성할수 없습니다.");
     }
@@ -132,7 +136,7 @@ public class AddressServiceTest {
 
         assertThatThrownBy(() -> addressService.select(Long.MAX_VALUE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("조회하려는 User ID 값이 조회할수 없습니다.");
+                .hasMessage("조회하려는 User ID 값이 없어 주소를 조회할수 없습니다.");
     }
 
     @Test
@@ -144,27 +148,27 @@ public class AddressServiceTest {
 
         assertThatThrownBy(() -> addressService.select(Long.MAX_VALUE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("조회하려는 User ID 값이 조회할수 없습니다.");
+                .hasMessage("조회하려는 User ID 값이 없어 주소를 조회할수 없습니다.");
     }
 
     @Test
     void 주소_수정_성공() {
         address = addressRepository.save(address);
-        AddressRequest addressRequest = AddressRequest.of("경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
-
-        addressService.update(address.getId(), addressRequest);
+        AddressRequest addressRequest = AddressRequest.of(address.getId(),"경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
+        AddressDto addressDto = AddressDto.of(addressRequest);
+        addressService.update(address.getId(), addressDto);
 
         Mockito.verify(addressService)
-                .update(address.getId(), addressRequest);
+                .update(address.getId(), addressDto);
     }
 
     @Test
     void 주소_수정할_주소_ID가_존재하지않아_수정_실패() {
 
         address = addressRepository.save(address);
-        AddressRequest addressRequest = AddressRequest.of("경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
+        AddressRequest addressRequest = AddressRequest.of(address.getId(),"경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
 
-        assertThatThrownBy(() -> addressService.update(Long.MAX_VALUE, addressRequest))
+        assertThatThrownBy(() -> addressService.update(Long.MAX_VALUE, AddressDto.of(addressRequest)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다.");
     }
