@@ -1,6 +1,8 @@
 package kr.co.gpgp.domain.requirement;
 
 
+import kr.co.gpgp.domain.requirement.Requirement.RequirementDto;
+
 public class RequirementRequest {
 
     private Long id;
@@ -13,6 +15,10 @@ public class RequirementRequest {
 
     public static RequirementRequest of(Long id, String message) {
         return new RequirementRequest(id,message);
+    }
+
+    public static RequirementDto toRequirementDto(RequirementRequest requirementRequest) {
+        return RequirementDto.of(requirementRequest.getId(), requirementRequest.getMessage());
     }
 
     public String getMessage() {
