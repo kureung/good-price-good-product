@@ -1,4 +1,4 @@
-package kr.co.gpgp.auth.config;
+package kr.co.gpgp.auth.dto.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;
