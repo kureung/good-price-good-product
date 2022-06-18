@@ -1,4 +1,4 @@
-package kr.co.gpgp.web.api.order;
+package kr.co.gpgp.web.api.address;
 
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.user.User;

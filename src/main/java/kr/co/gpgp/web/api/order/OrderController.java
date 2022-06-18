@@ -10,6 +10,7 @@ import kr.co.gpgp.domain.order.OrderSearchResponse;
 import kr.co.gpgp.domain.order.OrderService;
 import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.requirement.Requirement;
+import kr.co.gpgp.web.api.address.AddressAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
