@@ -18,7 +18,8 @@ public class OrderResponse {
     private String roadName;
 
     private String zipCode;
-
+    
+    private String orderCode;
     private String addressName;
 
     private String detailedAddress;
@@ -33,6 +34,7 @@ public class OrderResponse {
             String zipCode,
             String addressName,
             String detailedAddress,
+            String orderCode,
             List<OrderLineResponse> orderLines) {
 
         this.id = id;
@@ -41,6 +43,7 @@ public class OrderResponse {
         this.zipCode = zipCode;
         this.addressName = addressName;
         this.detailedAddress = detailedAddress;
+        this.orderCode = orderCode;
         this.orderLines = orderLines;
     }
 

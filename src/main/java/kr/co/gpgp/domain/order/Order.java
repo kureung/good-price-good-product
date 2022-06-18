@@ -8,6 +8,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -35,6 +36,9 @@ public class Order extends BaseEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private String code;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -49,14 +53,15 @@ public class Order extends BaseEntity {
     @Enumerated(STRING)
     OrderStatus orderStatus;
 
-    private Order(User user, Delivery delivery) {
+    private Order(User user, Delivery delivery, String code) {
         this.user = user;
         this.delivery = delivery;
         this.orderStatus = OrderStatus.ORDER;
+        this.code = code;
     }
 
-    public static Order of(User user, Delivery delivery, List<OrderLine> orderLines) {
-        Order order = new Order(user, delivery);
+    public static Order of(User user, Delivery delivery, List<OrderLine> orderLines, String code) {
+        Order order = new Order(user, delivery, code);
         orderLines.forEach(order::addOrderLine);
         return order;
     }
