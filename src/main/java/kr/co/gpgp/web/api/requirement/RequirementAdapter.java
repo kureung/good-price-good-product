@@ -1,4 +1,4 @@
-package kr.co.gpgp.web.api.order;
+package kr.co.gpgp.web.api.requirement;
 
 import kr.co.gpgp.domain.requirement.Requirement;
 import org.springframework.stereotype.Component;
