@@ -12,5 +12,6 @@ public interface AddressRepository {
     Optional<Address> findById(Long addressId);
 
     Address save(Address toEntity);
+    Optional<Address> findByName(String name);
 
 }

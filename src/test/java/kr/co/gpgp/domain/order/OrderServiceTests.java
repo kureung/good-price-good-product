@@ -1,10 +1,7 @@
 package kr.co.gpgp.domain.order;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 import kr.co.gpgp.domain.address.Address;
@@ -20,9 +17,6 @@ import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
-import kr.co.gpgp.web.api.order.OrderRequest.OrderLineRequest;
-import kr.co.gpgp.web.api.order.OrderResponse.OrderLineResponse;
-import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class OrderServiceTest {
+class OrderServiceTests {
 
     @Autowired
     private OrderService sut;
@@ -62,8 +56,7 @@ class OrderServiceTest {
         User savedUser = userRepository.save(user);
 
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "123456789", "12345", "주소", "주소주소");
-        Delivery delivery = Delivery.of(requirement, address);
+        Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
                 .code("123")
@@ -77,56 +70,13 @@ class OrderServiceTest {
                 .build();
         itemJpaRepository.save(item);
 
-        List<OrderLineRequest> orderLineRequests = List.of(
-                OrderLineRequest.builder()
-                        .itemCode(item.getInfo().getCode())
-                        .orderQuantity(10)
-                        .build());
+        List<OrderLine> orderLines = List.of(OrderLine.of(item, 10));
 
         // when, then
         assertDoesNotThrow(() ->
-                sut.order(
-                        savedUser.getId(),
-                        delivery,
-                        orderLineRequests)
+                sut.order(savedUser.getId(), address, requirement, orderLines)
         );
-    }
 
-    @Test
-    void 상품_주문시_재고수량을_초과하면_예외가_발생한다() {
-        // given
-        User user = User.of("name", "abc@naver.com", Role.USER);
-        User savedUser = userRepository.save(user);
-
-        Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "123456789", "12345", "주소", "주소주소");
-        Delivery delivery = Delivery.of(requirement, address);
-
-        ItemInfo info = ItemInfo.builder()
-                .code("123")
-                .weight(10)
-                .build();
-
-        Item item = Item.builder()
-                .stockQuantity(11)
-                .info(info)
-                .price(1000)
-                .build();
-        itemJpaRepository.save(item);
-
-        List<OrderLineRequest> orderLineRequests = List.of(
-                OrderLineRequest.builder()
-                        .itemCode(item.getInfo().getCode())
-                        .orderQuantity(40)
-                        .build());
-
-        // then
-        assertThatThrownBy(() -> sut.order(
-                savedUser.getId(),
-                delivery,
-                orderLineRequests))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
     }
 
     @Test
@@ -136,8 +86,7 @@ class OrderServiceTest {
         User savedUser = userRepository.save(user);
 
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "123456789", "12345", "주소", "주소주소");
-        Delivery delivery = Delivery.of(requirement, address);
+        Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
                 .code("123")
@@ -151,16 +100,13 @@ class OrderServiceTest {
                 .build();
         itemJpaRepository.save(item);
 
-        List<OrderLineRequest> orderLineRequests = List.of(
-                OrderLineRequest.builder()
-                        .itemCode(item.getInfo().getCode())
-                        .orderQuantity(10)
-                        .build());
+        List<OrderLine> orderLines = List.of(OrderLine.of(item, 10));
 
         Long orderId = sut.order(
                 savedUser.getId(),
-                delivery,
-                orderLineRequests);
+                address,
+                requirement,
+                orderLines);
 
         // when, then
         assertDoesNotThrow(() -> sut.cancel(orderId));
@@ -173,9 +119,7 @@ class OrderServiceTest {
         User savedUser = userRepository.save(user);
 
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(user, "123456789", "12345", "주소", "주소주소");
-        Delivery delivery = Delivery.of(requirement, address);
-        delivery.nextStepInstruct();
+        Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
                 .code("123")
@@ -189,78 +133,27 @@ class OrderServiceTest {
                 .build();
         itemJpaRepository.save(item);
 
-        List<OrderLineRequest> orderLineRequests = List.of(
-                OrderLineRequest.builder()
-                        .itemCode(item.getInfo().getCode())
-                        .orderQuantity(10)
-                        .build());
+        List<OrderLine> orderLines = List.of(OrderLine.of(item, 10));
 
         Long orderId = sut.order(
                 savedUser.getId(),
-                delivery,
-                orderLineRequests);
+                address,
+                requirement,
+                orderLines);
+
+        Order findOrder = orderRepository.findById(orderId).orElseThrow();
+        Delivery delivery = findOrder.getDelivery();
+        delivery.nextStepInstruct();
 
         // when, then
         assertDoesNotThrow(() -> sut.cancel(orderId));
     }
 
     @Test
-    void 엔티티리스트를_dto리스트로_변환_테스트() {
-        // given
-        ItemInfo info = ItemInfo.builder()
-                .code("123")
-                .weight(10)
-                .build();
-
-        Item item = Item.builder()
-                .stockQuantity(11)
-                .info(info)
-                .price(1000)
-                .build();
-
-        OrderLine orderLine = OrderLine.of(item, 10);
-        List<OrderLine> orderLines = List.of(orderLine);
-
-        //when, then
-        List<OrderLineResponse> responses = assertDoesNotThrow(() -> sut.toDtos(orderLines));
-        assertNotNull(responses);
-        assertInstanceOf(List.class, responses);
-    }
-
-    @Test
-    void dto리스트를_엔티티리스트로_변환_테스트() {
-        // given
-        String itemCode = "123";
-        ItemInfo info = ItemInfo.builder()
-                .code(itemCode)
-                .build();
-        Item item = Item.builder()
-                .info(info)
-                .stockQuantity(11)
-                .build();
-        itemJpaRepository.save(item);
-
-        OrderLineRequest request = OrderLineRequest.builder()
-                .itemCode(itemCode)
-                .orderQuantity(10)
-                .build();
-        List<OrderLineRequest> requests = List.of(request);
-
-        // when, then
-        List<OrderLine> responses = assertDoesNotThrow(() -> sut.toEntities(requests));
-        assertNotNull(responses);
-        assertInstanceOf(List.class, responses);
-    }
-
-    @Test
     void 주문_검색_테스트() {
         // given
-        OrderSearchCondition condition = OrderSearchCondition.builder()
-                .userId(1L)
-                .build();
-
         User user = User.of("name1", "abc@naver.com", Role.USER);
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         Requirement requirement = new Requirement("요청사항");
         requirementRepository.save(requirement);
@@ -270,6 +163,10 @@ class OrderServiceTest {
 
         Delivery delivery = Delivery.of(requirement, address);
         deliveryRepository.save(delivery);
+
+        OrderSearchCondition condition = OrderSearchCondition.builder()
+                .userId(savedUser.getId())
+                .build();
 
         for (int i = 0; i < 100; i++) {
             ItemInfo info = ItemInfo.builder()

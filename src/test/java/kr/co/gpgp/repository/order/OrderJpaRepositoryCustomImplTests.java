@@ -11,6 +11,7 @@ import kr.co.gpgp.domain.delivery.DeliveryRepository;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.domain.order.Order;
+import kr.co.gpgp.domain.order.OrderRepository;
 import kr.co.gpgp.domain.order.OrderSearchCondition;
 import kr.co.gpgp.domain.order.OrderSearchResponse;
 import kr.co.gpgp.domain.orderline.OrderLine;
@@ -32,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 class OrderJpaRepositoryCustomImplTests {
 
     @Autowired
-    private OrderRepositoryCustom sut;
+    private OrderRepository sut;
 
     @Autowired
     private UserRepository userRepository;

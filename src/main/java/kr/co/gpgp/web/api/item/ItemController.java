@@ -67,7 +67,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping()
+    @PostMapping("/search")
     public ResponseEntity<List<ItemResponse>> itemSearch(
             @Valid @RequestBody ItemSearchCondition condition,
             Pageable pageable
