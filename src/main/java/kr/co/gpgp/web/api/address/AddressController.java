@@ -29,7 +29,7 @@ public class AddressController {
             @Valid @RequestBody AddressRequest addressRequest
     ) {
         addressService.create(userId,
-                AddressRequest.toAddressRequestDto(addressRequest)
+                AddressRequest.toAddressDto(addressRequest)
         );
 
         return ResponseEntity.ok().build();
@@ -48,7 +48,7 @@ public class AddressController {
             @PathVariable Long userId,
             @Valid @RequestBody AddressRequest addressRequest
     ) {
-        AddressDto addressDto = AddressDto.of(addressRequest);
+        AddressDto addressDto = AddressRequest.toAddressDto(addressRequest);
 
         addressService.update(userId, addressDto);
 

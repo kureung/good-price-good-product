@@ -35,7 +35,7 @@ public class Requirement {
     }
 
 
-    private Requirement(Long id,String message) {
+    private Requirement(Long id, String message) {
         validatMessage(message);
         this.message = message;
         this.id = id;
@@ -63,12 +63,14 @@ public class Requirement {
             this.message = message;
         }
 
-        public static RequirementDto of(RequirementRequest requirementRequest) {
-            return new RequirementDto(requirementRequest.getId(),requirementRequest.getMessage());
+        public static RequirementDto of(Long id, String message) {
+            return new RequirementDto(id, message);
         }
-        public static Requirement toEntity(RequirementDto requirementDto){
+
+        public static Requirement toEntity(RequirementDto requirementDto) {
             return new Requirement(requirementDto.getId(), requirementDto.getMessage());
         }
+
     }
 
     public static Requirement of(RequirementRequest requirementRequest) {

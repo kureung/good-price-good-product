@@ -35,8 +35,9 @@ public class DeliveryUserController {
             @Valid @RequestBody RequirementRequest requirementRequest
     ) throws URISyntaxException {
 
-        AddressDto addressdto = AddressDto.of(addressRequest);
-        RequirementDto requirementdto = RequirementDto.of(requirementRequest);
+        AddressDto addressdto = AddressRequest.toAddressDto(addressRequest);
+
+        RequirementDto requirementdto = RequirementRequest.toRequirementDto(requirementRequest);
 
         Delivery delivery = deliveryUserService.save(id, addressdto, requirementdto);
 
@@ -52,8 +53,8 @@ public class DeliveryUserController {
             @Valid @RequestBody RequirementRequest requirementRequest
     ) {
 
-        AddressDto addressdto = AddressDto.of(addressRequest);
-        RequirementDto requirementdto = RequirementDto.of(requirementRequest);
+        AddressDto addressdto =  AddressRequest.toAddressDto(addressRequest);
+        RequirementDto requirementdto = RequirementRequest.toRequirementDto(requirementRequest);
 
         Delivery delivery = deliveryUserService.update(id, addressdto, requirementdto);
 
