@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,10 @@ import org.hibernate.validator.constraints.Range;
 @Getter
 @NoArgsConstructor
 public class OrderRequest {
+
+    @NotNull
+    @Positive
+    private Long userId;
 
     @Size(max = 18, min = 0, message = "요구사항 다시 확인해주세요.")
     private String requirement;
@@ -40,6 +45,7 @@ public class OrderRequest {
 
     @Builder
     private OrderRequest(
+            Long userId,
             String requirement,
             String roadName,
             String zipCode,
@@ -47,6 +53,7 @@ public class OrderRequest {
             String detailedAddress,
             List<OrderLineRequest> orderLines) {
 
+        this.userId = userId;
         this.requirement = requirement;
         this.roadName = roadName;
         this.zipCode = zipCode;
