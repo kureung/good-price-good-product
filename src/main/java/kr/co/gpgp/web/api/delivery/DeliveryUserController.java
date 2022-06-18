@@ -4,11 +4,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import javax.validation.Valid;
-import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.address.Address.AddressDto;
 import kr.co.gpgp.domain.address.dto.AddressRequest;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.delivery.DeliveryUserService;
-import kr.co.gpgp.domain.requirement.Requirement;
+import kr.co.gpgp.domain.requirement.Requirement.RequirementDto;
 import kr.co.gpgp.domain.requirement.RequirementRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +35,10 @@ public class DeliveryUserController {
             @Valid @RequestBody RequirementRequest requirementRequest
     ) throws URISyntaxException {
 
-        Delivery delivery = Delivery.of(Requirement.of(requirementRequest),
-                Address.of(addressRequest));
+        AddressDto addressdto = AddressDto.of(addressRequest);
+        RequirementDto requirementdto = RequirementDto.of(requirementRequest);
 
-        deliveryUserService.save(delivery);
+        Delivery delivery = deliveryUserService.save(id, addressdto, requirementdto);
 
         DeliveryResponse deliveryResponse = DeliveryResponse.of(delivery);
 
@@ -48,32 +48,26 @@ public class DeliveryUserController {
     @PutMapping("/{id}")
     public ResponseEntity<DeliveryResponse> update(
             @PathVariable Long id,
-            @Valid @RequestBody DeliveryRequest deliveryRequest
+            @Valid @RequestBody AddressRequest addressRequest,
+            @Valid @RequestBody RequirementRequest requirementRequest
     ) {
 
-        Delivery delivery = deliveryUserService.update(
-                Delivery.of(
-                        Requirement.of(deliveryRequest.getRequirement()),
-                        Address.of(AddressRequest.of(deliveryRequest.getAddressName(),
-                                deliveryRequest.getZipCode(),
-                                deliveryRequest.getRoadName(),
-                                deliveryRequest.getDetailedAddress()))
-                )
-        );
+        AddressDto addressdto = AddressDto.of(addressRequest);
+        RequirementDto requirementdto = RequirementDto.of(requirementRequest);
+
+        Delivery delivery = deliveryUserService.update(id, addressdto, requirementdto);
 
         DeliveryResponse deliveryResponse = DeliveryResponse.of(delivery);
 
         return ResponseEntity.ok(deliveryResponse);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userId}/{deliveryId}")
     public ResponseEntity<DeliveryResponse> delete(
-            @PathVariable Long id,
-            @Valid @RequestBody DeliveryRequest deliveryRequest
+            @PathVariable Long userId,
+            @PathVariable Long deliveryId
     ) {
-        Delivery delivery = deliveryRequest.toEntity();
-
-        deliveryUserService.delete(delivery);
+        deliveryUserService.delete(userId, deliveryId);
 
         return ResponseEntity.noContent().build();
     }
