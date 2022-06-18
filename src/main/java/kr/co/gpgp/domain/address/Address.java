@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-import kr.co.gpgp.domain.address.dto.AddressRequest;
 import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -79,12 +78,12 @@ public class Address {
             return new Address(user, request.getRoadName(), request.getZipCode(), request.getName(), request.getDetailed());
         }
 
-        public static Address toEntity(User user,AddressRequest addressRequest) {
-            return new Address(user, addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+        public static Address toEntity(User user,String roadName, String zipCode, String name, String detailed) {
+            return new Address(user, roadName, zipCode, name, detailed);
         }
 
-        public static AddressDto of(AddressRequest addressRequest) {
-            return new AddressDto(addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+        public static AddressDto of(String roadName, String zipCode, String name, String detailed) {
+            return new AddressDto(roadName, zipCode, name, detailed);
         }
 
         public static AddressDto of(Address address) {
