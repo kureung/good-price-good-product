@@ -2,6 +2,7 @@ package kr.co.gpgp.domain.order;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.address.AddressService;
@@ -47,7 +48,9 @@ public class OrderService {
 
         Delivery delivery = Delivery.of(findRequirement, findAddress);
 
-        Order order = Order.of(user, delivery, orderLines);
+        String orderCode = UUID.randomUUID().toString();
+
+        Order order = Order.of(user, delivery, orderLines, orderCode);
         return orderRepository.save(order).getId();
     }
 
