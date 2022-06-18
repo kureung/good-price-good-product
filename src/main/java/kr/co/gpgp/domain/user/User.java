@@ -50,6 +50,11 @@ public class User {
         return this;
     }
 
+    public User updateRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
     public User updateName(String name) {
         UserValidator.verifyName(name);
         this.name = name;
@@ -72,12 +77,13 @@ public class User {
             "kakao.com"
     );
 
+
     //@Builder override 재정의 하고픔
     private static class UserValidator {
 
         private static void verifyName(String name) {
 
-            if (name==null || name.isBlank()) {
+            if (name == null || name.isBlank()) {
                 throw new IllegalArgumentException("이름은 비어있을 수 없습니다.");
             }
 
@@ -87,7 +93,7 @@ public class User {
         }
 
         private static void verifyEmail(String email) {
-            if (email==null || email.isBlank()) {
+            if (email == null || email.isBlank()) {
                 throw new IllegalArgumentException("이메일은 비어있을 수 없습니다");
             }
             if (!numberBetween(EMAIL_MIN_LEN, EMAIL_MAX_LEN, email.length())) {

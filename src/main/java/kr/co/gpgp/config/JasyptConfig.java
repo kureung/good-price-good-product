@@ -1,4 +1,4 @@
-package kr.co.gpgp.auth.config;
+package kr.co.gpgp.config;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;

@@ -4,6 +4,9 @@ jasypt:
     bean: jasyptStringEncryptor
 
 spring:
+  mvc:
+    view:
+      suffix: .html
   profiles:
     include: oauth
   output:
