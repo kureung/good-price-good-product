@@ -33,4 +33,9 @@ public class AddressRepositoryImpl implements AddressRepository {
         return jpaRepository.save(toEntity);
     }
 
+    @Override
+    public Optional<Address> findByName(String name) {
+        return jpaRepository.findByName(name);
+    }
+
 }
