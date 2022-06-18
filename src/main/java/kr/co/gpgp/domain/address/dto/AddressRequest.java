@@ -46,8 +46,8 @@ public class AddressRequest {
     }
 
 
-    public static AddressDto toAddressRequestDto(AddressRequest addressRequest) {
-        return AddressDto.of(addressRequest);
+    public static AddressDto toAddressDto(AddressRequest addressRequest) {
+        return AddressDto.of(addressRequest.getRoadName(),addressRequest.getZipCode(),addressRequest.getName(),addressRequest.getDetailed());
     }
 
 
