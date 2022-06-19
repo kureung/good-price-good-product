@@ -2,9 +2,8 @@ package kr.co.gpgp.web.api.address;
 
 
 import javax.validation.Valid;
-import kr.co.gpgp.domain.address.Address.AddressDto;
+import kr.co.gpgp.domain.address.AddressDto;
 import kr.co.gpgp.domain.address.AddressService;
-import kr.co.gpgp.domain.address.dto.AddressRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,43 +22,45 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    @PostMapping("/{userId}")
+    @PostMapping("/{id}")
     public ResponseEntity<Void> create(
-            @PathVariable Long userId,
+            @PathVariable Long id,
             @Valid @RequestBody AddressRequest addressRequest
     ) {
-        addressService.create(userId,
-                AddressRequest.toAddressDto(addressRequest)
-        );
+        AddressDto addressDto = AddressDto.of(id, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+
+        addressService.create(addressDto);
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
-            @PathVariable Long userId
+            @PathVariable Long id
     ) {
-        addressService.delete(userId);
+        addressService.delete(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> update(
-            @PathVariable Long userId,
+            @PathVariable Long id,
             @Valid @RequestBody AddressRequest addressRequest
     ) {
-        AddressDto addressDto = AddressRequest.toAddressDto(addressRequest);
+        AddressDto addressDto = AddressDto.of(id, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        addressService.update(userId, addressDto);
+        addressService.update(id, addressDto);
 
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{id}")
     public ResponseEntity<Void> select(
-            @PathVariable Long userId
+            @PathVariable Long id
     ) {
-        addressService.select(userId);
+
+        addressService.select(id);
+
         return ResponseEntity.ok().build();
     }
 

@@ -1,9 +1,8 @@
-package kr.co.gpgp.domain.address.dto;
+package kr.co.gpgp.web.api.address;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.address.Address.AddressDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,25 +28,20 @@ public class AddressRequest {
     @Size(max = 17, message = "상세주소을 다시 확인해주세요.")
     private String detailed;
 
-    private AddressRequest(Long id,String roadName, String zipCode, String name, String detailed) {
-        this.id=id;
+    private AddressRequest(Long id, String roadName, String zipCode, String name, String detailed) {
+        this.id = id;
         this.roadName = roadName;
         this.zipCode = zipCode;
         this.name = name;
         this.detailed = detailed;
     }
 
-    public static AddressRequest of(Long id,String roadName, String zipCode, String name, String detailed) {
-        return new AddressRequest(id,roadName, zipCode, name, detailed);
+    public static AddressRequest of(Long id, String roadName, String zipCode, String name, String detailed) {
+        return new AddressRequest(id, roadName, zipCode, name, detailed);
     }
 
     public static AddressRequest of(Address address) {
         return new AddressRequest(address.getId(), address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
-    }
-
-
-    public static AddressDto toAddressDto(AddressRequest addressRequest) {
-        return AddressDto.of(addressRequest.getRoadName(),addressRequest.getZipCode(),addressRequest.getName(),addressRequest.getDetailed());
     }
 
 

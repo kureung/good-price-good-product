@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.address;
 
-import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.util.regex.Pattern;
@@ -55,41 +54,6 @@ public class Address {
         AddressValidator.verifyDetailed(detailed);
 
         return new Address(user, roadName, zipCode, name, detailed);
-    }
-
-
-    @Getter
-    @NoArgsConstructor(access = PRIVATE)
-    public static class AddressDto {
-
-        private String roadName;        //도로명
-        private String zipCode;         //우편번호
-        private String name;            //주소이름(닉네임)
-        private String detailed;        //상세주소
-
-        private AddressDto(String roadName, String zipCode, String name, String detailed) {
-            this.roadName = roadName;
-            this.zipCode = zipCode;
-            this.name = name;
-            this.detailed = detailed;
-        }
-
-        public static Address toEntity(User user, AddressDto request) {
-            return new Address(user, request.getRoadName(), request.getZipCode(), request.getName(), request.getDetailed());
-        }
-
-        public static Address toEntity(User user,String roadName, String zipCode, String name, String detailed) {
-            return new Address(user, roadName, zipCode, name, detailed);
-        }
-
-        public static AddressDto of(String roadName, String zipCode, String name, String detailed) {
-            return new AddressDto(roadName, zipCode, name, detailed);
-        }
-
-        public static AddressDto of(Address address) {
-            return new AddressDto(address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
-        }
-
     }
 
     @Transient
@@ -151,11 +115,11 @@ public class Address {
 
     }
 
-    public void update(AddressDto address) {
-        setRoadName(address.roadName);
-        setZipCode(address.zipCode);
-        setName(address.name);
-        setDetailed(address.detailed);
+    public void update(String roadName, String zipCode, String name, String detailed) {
+        setRoadName(roadName);
+        setZipCode(zipCode);
+        setName(name);
+        setDetailed(detailed);
     }
 
     private void setRoadName(String roadName) {

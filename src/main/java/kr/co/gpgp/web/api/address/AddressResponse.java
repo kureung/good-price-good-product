@@ -1,4 +1,4 @@
-package kr.co.gpgp.domain.address.dto;
+package kr.co.gpgp.web.api.address;
 
 import com.querydsl.core.annotations.QueryProjection;
 import kr.co.gpgp.domain.address.Address;
@@ -31,10 +31,6 @@ public class AddressResponse {
                 address.getZipCode(),
                 address.getName(),
                 address.getDetailed());
-    }
-
-    public Address toEntity(User user) {
-        return Address.of(user, roadName, zipCode, name, detailed);
     }
 
 }
