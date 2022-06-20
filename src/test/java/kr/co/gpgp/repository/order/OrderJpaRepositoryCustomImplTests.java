@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.delivery.Delivery;
@@ -91,7 +92,9 @@ class OrderJpaRepositoryCustomImplTests {
 
             }
 
-            Order order = Order.of(savedUser, delivery, orderLines);
+            String orderCode = UUID.randomUUID().toString();
+            Order order = Order.of(user, delivery, orderLines, orderCode);
+
             orderJpaRepository.save(order);
 
         }
