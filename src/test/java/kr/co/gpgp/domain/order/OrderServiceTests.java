@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.List;
+import java.util.UUID;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.delivery.Delivery;
@@ -184,7 +185,8 @@ class OrderServiceTests {
             OrderLine orderLine = OrderLine.of(item, i);
             List<OrderLine> orderLines = List.of(orderLine);
 
-            Order order = Order.of(user, delivery, orderLines);
+            String orderCode = UUID.randomUUID().toString();
+            Order order = Order.of(user, delivery, orderLines, orderCode);
             orderRepository.save(order);
         }
 

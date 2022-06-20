@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.util.List;
+import java.util.UUID;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.item.Item;
@@ -31,7 +32,9 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        Order order = Order.of(user, delivery, orderLines);
+        String orderCode = UUID.randomUUID().toString();
+        Order order = Order.of(user, delivery, orderLines, orderCode);
+
 
         // then
         assertInstanceOf(Integer.class, order.getTotalPrice());
@@ -50,7 +53,8 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        Order order = Order.of(user, delivery, orderLines);
+        String orderCode = UUID.randomUUID().toString();
+        Order order = Order.of(user, delivery, orderLines, orderCode);
 
         // then
         assertDoesNotThrow(order::cancel);
@@ -69,7 +73,8 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        Order order = Order.of(user, delivery, orderLines);
+        String orderCode = UUID.randomUUID().toString();
+        Order order = Order.of(user, delivery, orderLines, orderCode);
         delivery.nextStepInstruct();
 
         // then
@@ -89,7 +94,8 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        Order order = Order.of(user, delivery, orderLines);
+        String orderCode = UUID.randomUUID().toString();
+        Order order = Order.of(user, delivery, orderLines, orderCode);
         delivery.nextStepInstruct();
         delivery.nextStepDeparture();
 
@@ -110,7 +116,8 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        Order order = Order.of(user, delivery, orderLines);
+        String orderCode = UUID.randomUUID().toString();
+        Order order = Order.of(user, delivery, orderLines, orderCode);
         delivery.nextStepInstruct();
         delivery.nextStepDeparture();
         delivery.nextStepInTransit();
@@ -132,7 +139,8 @@ public class OrderTest {
         Address address = Address.of(user, "roadName123456", "12345", "name", "detailAddress");
         Delivery delivery = Delivery.of(requirement, address);
 
-        Order order = Order.of(user, delivery, orderLines);
+        String orderCode = UUID.randomUUID().toString();
+        Order order = Order.of(user, delivery, orderLines, orderCode);
         delivery.nextStepInstruct();
         delivery.nextStepDeparture();
         delivery.nextStepInTransit();
