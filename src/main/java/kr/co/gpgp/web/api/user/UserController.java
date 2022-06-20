@@ -1,6 +1,9 @@
 package kr.co.gpgp.web.api.user;
 
 import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import kr.co.gpgp.auth.dto.SessionUser;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
 import kr.co.gpgp.domain.user.UserService;
@@ -28,17 +31,17 @@ public class UserController {
         userService.changeOfPermission(id, role);
         User user = userRepository.findById(id).get();
 
-        System.out.println(user.getRole());
 
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/")
-    public ResponseEntity<Principal> roleUpdate(
-            Principal principal
-
+    public ResponseEntity<SessionUser> roleUpdate(
+            HttpServletRequest request
     ) {
+        HttpSession session = request.getSession();
+        SessionUser user = (SessionUser) session.getAttribute("user");
 
-        return ResponseEntity.ok().body(principal);
+        return ResponseEntity.ok().body(user );
     }
 }
