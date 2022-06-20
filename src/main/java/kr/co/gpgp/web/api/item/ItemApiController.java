@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/items")
-public class ItemController {
+public class ItemApiController {
 
     private final ItemCommandService itemCommandService;
     private final ItemFindService itemFindService;
