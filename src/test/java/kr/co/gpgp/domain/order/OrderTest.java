@@ -35,7 +35,6 @@ public class OrderTest {
         String orderCode = UUID.randomUUID().toString();
         Order order = Order.of(user, delivery, orderLines, orderCode);
 
-
         // then
         assertInstanceOf(Integer.class, order.getTotalPrice());
     }

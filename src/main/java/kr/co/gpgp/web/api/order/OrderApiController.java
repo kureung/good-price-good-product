@@ -27,7 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/orders")
-public class OrderController {
+public class OrderApiController {
 
     private final OrderService orderService;
     private final OrderAdapter orderAdapter;
