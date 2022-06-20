@@ -4,12 +4,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import javax.validation.Valid;
-import kr.co.gpgp.domain.address.Address.AddressDto;
-import kr.co.gpgp.domain.address.dto.AddressRequest;
+import kr.co.gpgp.domain.address.AddressDto;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.delivery.DeliveryUserService;
 import kr.co.gpgp.domain.requirement.Requirement.RequirementDto;
 import kr.co.gpgp.domain.requirement.RequirementRequest;
+import kr.co.gpgp.web.api.address.AddressRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +28,7 @@ public class DeliveryUserController {
 
     private final DeliveryUserService deliveryUserService;
 
+
     @PostMapping("/{id}")
     public ResponseEntity<DeliveryResponse> create(
             @PathVariable Long id,
@@ -35,11 +36,11 @@ public class DeliveryUserController {
             @Valid @RequestBody RequirementRequest requirementRequest
     ) throws URISyntaxException {
 
-        AddressDto addressdto = AddressRequest.toAddressDto(addressRequest);
+        AddressDto addressDto = AddressDto.of(id, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
         RequirementDto requirementdto = RequirementRequest.toRequirementDto(requirementRequest);
 
-        Delivery delivery = deliveryUserService.save(id, addressdto, requirementdto);
+        Delivery delivery = deliveryUserService.save(id, addressDto, requirementdto);
 
         DeliveryResponse deliveryResponse = DeliveryResponse.of(delivery);
 
@@ -53,10 +54,12 @@ public class DeliveryUserController {
             @Valid @RequestBody RequirementRequest requirementRequest
     ) {
 
-        AddressDto addressdto =  AddressRequest.toAddressDto(addressRequest);
+        AddressDto addressDto = AddressDto.of(id, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+
+
         RequirementDto requirementdto = RequirementRequest.toRequirementDto(requirementRequest);
 
-        Delivery delivery = deliveryUserService.update(id, addressdto, requirementdto);
+        Delivery delivery = deliveryUserService.update(id, addressDto, requirementdto);
 
         DeliveryResponse deliveryResponse = DeliveryResponse.of(delivery);
 
@@ -96,5 +99,4 @@ public class DeliveryUserController {
 
         return ResponseEntity.ok(deliveryResponse);
     }
-
 }
