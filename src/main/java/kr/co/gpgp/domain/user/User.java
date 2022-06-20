@@ -28,6 +28,18 @@ public class User {
     private Role role; //oauth2 login
     private String name;
     private String email;
+    private String profileImage;
+
+    private User(String name, String email, Role role, String profileImage) {
+
+        UserValidator.verifyName(name);
+        UserValidator.verifyEmail(email);
+
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.profileImage = profileImage;
+    }
 
     private User(String name, String email, Role role) {
 
@@ -41,6 +53,11 @@ public class User {
 
     public static User of(String name, String email, Role role) {
         return new User(name, email, role);
+    }
+
+
+    public static User of(String name, String email, Role role, String profileImage) {
+        return new User(name, email, role, profileImage);
     }
 
     public User updateEmail(String email) {
