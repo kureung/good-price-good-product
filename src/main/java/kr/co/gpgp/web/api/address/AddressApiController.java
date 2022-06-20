@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/address/")
-public class AddressController {
+public class AddressApiController {
 
     private final AddressService addressService;
 
