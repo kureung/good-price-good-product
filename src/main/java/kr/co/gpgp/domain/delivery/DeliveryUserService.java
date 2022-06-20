@@ -2,12 +2,12 @@ package kr.co.gpgp.domain.delivery;
 
 import java.util.List;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.address.Address.AddressDto;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.requirement.Requirement.RequirementDto;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
 import kr.co.gpgp.repository.delivery.DeliveryRepositoryImpl;
+import kr.co.gpgp.domain.address.AddressDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +52,8 @@ public class DeliveryUserService {
                 .orElseThrow(() -> new IllegalArgumentException("유저 ID가 없어 배송을 조회할수 없습니다."));
 
         Requirement requirement = RequirementDto.toEntity(requirementDto);
-        Address address = AddressDto.toEntity(user, addressdto);
+
+        Address address = addressdto.toEntity(user);
 
         Delivery delivery = Delivery.of(requirement, address);
 
@@ -79,7 +80,8 @@ public class DeliveryUserService {
                 .orElseThrow(() -> new IllegalArgumentException("유저 ID가 없어 배송을 수정정 할수 없습니."));
 
         Requirement requirement = RequirementDto.toEntity(requirementDto);
-        Address address = AddressDto.toEntity(user, addressdto);
+
+        Address address = addressdto.toEntity(user);
 
         Delivery delivery = Delivery.of(requirement, address);
 
