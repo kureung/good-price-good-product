@@ -1,8 +1,6 @@
 package kr.co.gpgp.web.api.address;
 
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/address")
-public class AddressController {
+public class AddressApiController {
 
     private final AddressService addressService;
 
@@ -40,7 +35,7 @@ public class AddressController {
 
         AddressDto addressDto = AddressDto.of(addressRequest.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        Address address = addressService.create(userId,addressDto);
+        Address address = addressService.create(userId, addressDto);
 
         return ResponseEntity.ok().body(address);
     }
@@ -79,8 +74,8 @@ public class AddressController {
 
         Long userId = getSessionUserId(request);
         List<Address> address = addressService.select(userId);
-        List<AddressResponse> responses= AddressResponse.of(address);
-        mav.addObject("addressList",responses);
+        List<AddressResponse> responses = AddressResponse.of(address);
+        mav.addObject("addressList", responses);
         return mav;
     }
 

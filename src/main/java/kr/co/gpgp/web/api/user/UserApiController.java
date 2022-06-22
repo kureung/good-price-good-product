@@ -1,6 +1,5 @@
 package kr.co.gpgp.web.api.user;
 
-import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import kr.co.gpgp.auth.dto.SessionUser;
@@ -17,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
-public class UserController {
-
+public class UserApiController {
     private final UserService userService;
     private final UserRepository userRepository;
 
