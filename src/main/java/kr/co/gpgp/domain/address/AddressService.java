@@ -17,9 +17,9 @@ public class AddressService {
     final int ADDRESS_CREATE_COUNT_MAX = 10;
 
     //주소는 생성할수 있다.
-    public Address create(AddressDto addressDto) {
+    public Address create(Long id,AddressDto addressDto) {
 
-        User user = userRepository.findById(addressDto.getUserId())
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 주소를 생성할수 없습니다."));
 
         List<Address> addressList = addressRepository.findByUserId(user.getId());

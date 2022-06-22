@@ -1,26 +1,23 @@
 package kr.co.gpgp.web.api.oauth;
 
-import java.security.Principal;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-;
 
 @Controller
 @RequestMapping("/")
 public class OAuth2LoginController {
 
+    @GetMapping("/oauth2/not-authorized")
+    public ResponseEntity<String> notAuthorized() {
+        return ResponseEntity.ok().body("권한 부족 ");
+    }
+
     @GetMapping("/")
     public String index() {
         return "index";
     }
-
 
     @GetMapping("/user")
     public String user() {
@@ -31,8 +28,10 @@ public class OAuth2LoginController {
     public String inex() {
         return "/index";
     }
+
+
     @GetMapping("/logout")
-    public String logout(){
+    public String logout() {
         return "/logout/oauth2/code/kakao";
     }
 

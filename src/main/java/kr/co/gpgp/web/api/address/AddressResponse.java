@@ -1,8 +1,9 @@
 package kr.co.gpgp.web.api.address;
 
 import com.querydsl.core.annotations.QueryProjection;
+import java.util.List;
+import java.util.stream.Collectors;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,5 +33,12 @@ public class AddressResponse {
                 address.getName(),
                 address.getDetailed());
     }
+
+    public static List<AddressResponse> of(List<Address> list) {
+        return list.stream()
+                .map(AddressResponse::of)
+                .collect(Collectors.toList());
+    }
+
 
 }

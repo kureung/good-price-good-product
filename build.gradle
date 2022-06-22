@@ -38,7 +38,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.4.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.6.0'
-
+    compile('org.springframework.boot:spring-boot-devtools')
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

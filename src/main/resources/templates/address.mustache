@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>배송지 목록</title>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/applicationStylesheet.css">
+  <script src="/js/applicationScript.js"></script>
+
+  <style type="text/css">
+       body{
+           text-align: center;
+           display: block;
+           margin: 0 auto;
+           font-size: 16px;
+           color: #999;
+       }
+       h1{
+           font-family: 'Oswald', sans-serif;
+           font-size: 30px;
+           color: #216182;
+       }
+       label {
+           display: block;
+           margin-top: 20px;
+           letter-spacing: 2px;
+       }
+       form {
+           margin: 0 auto;
+           width: 459px;
+       }
+       input, textarea {
+           width: 439px;
+           height: 27px;
+           background-color: #efefef;
+           border-radius: 6px;
+           border: 1px solid #dedede;
+           padding: 10px;
+           margin-top: 3px;
+           font-size: 0.9em;
+           color: #3a3a3a;
+       }
+           input:focus, textarea:focus{
+               border: 1px solid #97d6eb;
+           }
+
+       textarea{
+           height: 60px;
+           background-color: #efefef;
+       }
+       #submit{
+           width: 127px;
+           height: 48px;
+           text-align: center;
+           border: none;
+           margin-top: 20px;
+           cursor: pointer;
+       }
+       #submit:hover{
+           color: #fff;
+           background-color: #216282;
+           opacity: 0.9;
+       }
+       #cancel {
+           width: 127px; height: 48px;
+           text-align: center;
+           border: none;
+           margin-top: 20px;
+           cursor: pointer;
+       }
+       #cancel:hover{
+           color: #fff;
+           background-color: #216282;
+           opacity: 0.9;
+       }
+
+      .modal {
+           position: fixed;
+           left: 0;
+           top: 0;
+           width: 100%;
+           height: 100%;
+           background-color: rgba(0, 0, 0, 0.5);
+           opacity: 0;
+           visibility: hidden;
+           transform: scale(1.1);
+           transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+       }
+       .modal-content {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           background-color: white;
+           padding: 1rem 1.5rem;
+           width: 500px;
+           height: 350px;
+           border-radius: 0.5rem;
+       }
+       .close-button {
+           float: right;
+           width: 1.5rem;
+           line-height: 1.5rem;
+           text-align: center;
+           cursor: pointer;
+           border-radius: 0.25rem;
+           background-color: lightgray;
+       }
+       .close-button:hover {
+           background-color: darkgray;
+       }
+       .show-modal {
+           opacity: 1;
+           visibility: visible;
+           transform: scale(1.0);
+           transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+       }
+
+  </style>
+</head>
+<body>
+<div id="n_" style="margin-left:8%">
+  <div>
+    <svg class="n_23907">
+      <rect id="n_23907" rx="0" ry="0" x="0" y="0" width="308" height="120">
+      </rect>
+    </svg>
+    <svg class="n_23906">
+      <rect id="n_23906" rx="0" ry="0" x="0" y="0" width="740" height="105">
+      </rect>
+    </svg>
+    <svg class="n_23905">
+      <rect id="n_23905" rx="0" ry="0" x="0" y="0" width="740" height="105">
+      </rect>
+    </svg>
+    <svg class="n_23885">
+      <rect id="n_23885" rx="0" ry="0" x="0" y="0" width="1920" height="589">
+      </rect>
+    </svg>
+    <div id="Who_we_are">
+      <span>Who we are?</span>
+    </div>
+    <div id="About_us">
+      <span>About us</span>
+    </div>
+    <div id="Careers">
+      <span>Careers</span>
+    </div>
+    <div id="Feature_Tour">
+      <span>Feature Tour</span>
+    </div>
+    <div id="Presentation">
+      <span>Presentation</span>
+    </div>
+    <div id="Support">
+      <span>Support</span>
+    </div>
+    <div id="Knowledge_base">
+      <span>Knowledge base</span>
+    </div>
+    <div id="Video_Guides">
+      <span>Video Guides</span>
+    </div>
+    <div id="Report_a_Bug">
+      <span>Report a Bug</span>
+    </div>
+    <div id="Terms_of_Use">
+      <span>Terms of Use</span>
+    </div>
+    <div id="Contact_Us">
+      <span>Contact Us</span>
+    </div>
+    <div id="dmstlf1104navercom">
+      <span>dmstlf1104@naver.com</span>
+    </div>
+    <div id="terry9611navercom">
+      <span>terry9611@naver.com</span>
+    </div>
+    <div id="kgh22522252gmailcom">
+      <span>kgh22522252@gmail.com</span>
+    </div>
+    <div id="Terms_of_Use_">
+      <span>Terms of Use</span>
+    </div>
+  </div>
+  <!--  배송지 목록 div -->
+  <div id="n__">
+    <span>배송지 목록</span>
+  </div>
+  <div id="n________15__________">
+    <span>쇼핑, 예약, 해피빈, 톡톡 등에서 사용하신 배송지를 최대 15개까지 함께 관리하실 수 있습니다.<br/>자주쓰는 배송지를 편리하게 통합 관리 하세요!</span>
+  </div>
+  <div id="n_18505" onclick="toggleModal();">
+    <svg class="n_23898" onclick="toggleModal();">
+      <rect id="n_23898" rx="0" ry="0" x="0" y="0" width="100" height="34">
+      </rect>
+    </svg>
+    <div id="n__ba" onclick="toggleModal();">
+      <span onclick="toggleModal();">배송지 등록</span>
+    </div>
+  </div>
+
+  <!-- 배송지 등록 팝업창   -->
+  <div>
+    <button class="trigger">배송지 등록</button>
+
+    <!-- 팝업 될 레이어 -->
+    <div class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h1 class="title">배송지 등록 / 수정</h1>
+        <form name="frm" action="/address" method="POST">
+          <input type="hidden" id="id" name="id" class="form-control" value="-1">
+          <input type="text" id="name"  name="name" class="form-control" placeholder="사용자 지정 이름 ">
+          <input type="text" id="roadName"  name="roadName" class="form-control" placeholder="도로명 주소">
+          <input type="text" id="zipCode"  name="zipCode" class="form-control" placeholder="우편번호">
+          <input type="text"  id="detailed" name="detailed" class="form-control" placeholder="자세한 주소">
+          <button type="submit">버튼</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <svg class="n_23899">
+    <rect id="n_23899" rx="0" ry="0" x="0" y="0" width="740" height="50">
+    </rect>
+  </svg>
+  <svg class="n_23900">
+    <rect id="n_23900" rx="0" ry="0" x="0" y="0" width="308" height="731">
+    </rect>
+  </svg>
+  <div id="Text">
+    <span>수령인</span>
+  </div>
+  <div id="Text_be">
+    <span>주소</span>
+  </div>
+  <div id="Text_bf">
+    <span>수정/삭제</span>
+  </div>
+  <!--  반복 되는 html -->
+  {{#addressList}}
+    <div>
+      <div id="Text_bg">
+        <span> {{name}} </span>
+      </div>
+      <div id="n___383-1_593_010-1212-1212">
+        <span> {{roadName}} {{zipCode}}<br/>{{detailed}}</span>
+      </div>
+      <div>
+        <div id="updateButton">
+          <div id="n_18508">
+            <svg class="n_23901">
+              <rect id="n_23901" rx="0" ry="0" x="0" y="0" width="60" height="30">
+              </rect>
+            </svg>
+            <div id="Text_bk" onclick="toggleModal2({{id}},'{{roadName}}','{{zipCode}}','{{name}}','{{detailed}}');">
+                수정
+            </div>
+          </div>
+        </div>
+
+        <div id="n_18509" onclick="delete();">
+          <svg class="n_23902">
+            <rect id="n_23902" rx="0" ry="0" x="0" y="0" width="60" height="30">
+            </rect>
+          </svg>
+          <div id="Text_bn" >
+            <form name="frm" action="/address" method="post">
+              <input type="hidden" name="_method" value="PUT"/>
+              <input type="hidden" id="id" name="id" class="form-control" value="{{id}}">
+              <button type="submit"><span>삭제</span></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/addressList}}
+
+  <div id="My_Account">
+    <span>My Account</span>
+  </div>
+  <div id="Text_bx">
+    <span>주문내역</span>
+  </div>
+  <div onclick="application.goToTargetView(event)" id="n__by">
+    <span>주문 조회/변경/취소</span>
+  </div>
+  <div id="n__bz">
+    <span>반품/교환 내역</span>
+  </div>
+  <div id="n___b">
+    <span>취소 주문 내역</span>
+  </div>
+  <div id="Text_b">
+    <span>이벤트</span>
+  </div>
+  <div id="Text_ca">
+    <span>출석체크</span>
+  </div>
+  <div id="Text_cb">
+    <span>마일리지</span>
+  </div>
+  <div id="n__b">
+    <span>회원정보 관리</span>
+  </div>
+  <div id="n__ca">
+    <span>개인정보 수정</span>
+  </div>
+  <div id="n__cb">
+    <span>회원 탈퇴</span>
+  </div>
+  <div id="n__cc">
+    <span>배송 정보</span>
+  </div>
+  <div id="n__cd">
+    <span>배송지 목록</span>
+  </div>
+  <div id="n__ce">
+    <span>배송 조회</span>
+  </div>
+  <svg class="n_23875">
+    <rect id="n_23875" rx="0" ry="0" x="0" y="0" width="1920" height="100">
+    </rect>
+  </svg>
+  <div onclick="application.goToTargetView(event)" id="GPGP">
+    <span>GPGP</span>
+  </div>
+  <div onclick="application.goToTargetView(event)" id="Text_cc">
+    <span>상품</span>
+  </div>
+  <div id="Text_cd">
+    <span>문의하기</span>
+  </div>
+  <div id="Text_ce">
+    <span>팀원소개</span>
+  </div>
+  <svg class="n_23895">
+    <rect id="n_23895" rx="0" ry="0" x="0" y="0" width="1920" height="71">
+    </rect>
+  </svg>
+  <svg class="n_23886">
+    <rect id="n_23886" rx="22.5" ry="22.5" x="0" y="0" width="624" height="45">
+    </rect>
+  </svg>
+  <div id="n__7__3" class="______7___3">
+    <svg class="n_7672" viewBox="566.981 -169.172 25.616 25.826">
+      <path id="n_7672"
+            d="M 592.5969848632812 -145.4884338378906 L 586.3035888671875 -151.7818298339844 C 587.7188720703125 -153.6085205078125 588.5712890625 -155.8923797607422 588.5712890625 -158.3768768310547 C 588.5712890625 -164.3289031982422 583.7281494140625 -169.1719970703125 577.776123046875 -169.1719970703125 C 571.8240966796875 -169.1719970703125 566.9810180664062 -164.3289031982422 566.9810180664062 -158.3768768310547 C 566.9810180664062 -152.4241790771484 571.8240966796875 -147.5817565917969 577.776123046875 -147.5817565917969 C 580.1528930664062 -147.5817565917969 582.3458862304688 -148.3634643554688 584.130859375 -149.669677734375 L 590.4551391601562 -143.3459777832031 L 592.5969848632812 -145.4884338378906 Z M 570.0109252929688 -158.3768768310547 C 570.0109252929688 -162.6584320068359 573.493896484375 -166.1421203613281 577.776123046875 -166.1421203613281 C 582.0576782226562 -166.1421203613281 585.5413818359375 -162.6584320068359 585.5413818359375 -158.3768768310547 C 585.5413818359375 -154.0946502685547 582.0576782226562 -150.6116333007812 577.776123046875 -150.6116333007812 C 573.493896484375 -150.6116333007812 570.0109252929688 -154.0946502685547 570.0109252929688 -158.3768768310547 Z">
+      </path>
+    </svg>
+  </div>
+  <div id="n__9__3" class="______9___3">
+    <div id="n__8__1" class="______8___1">
+      <svg class="n_23693">
+        <rect id="n_23693" rx="0" ry="0" x="0" y="0" width="26" height="3">
+        </rect>
+      </svg>
+      <svg class="n_23694">
+        <rect id="n_23694" rx="0" ry="0" x="0" y="0" width="26" height="3">
+        </rect>
+      </svg>
+      <svg class="n_23865">
+        <rect id="n_23865" rx="0" ry="0" x="0" y="0" width="26" height="3">
+        </rect>
+      </svg>
+    </div>
+    <div id="n_18487">
+      <svg class="n_23888">
+        <rect id="n_23888" rx="0" ry="0" x="0" y="0" width="365" height="50">
+        </rect>
+      </svg>
+      <svg class="n_23889">
+        <rect id="n_23889" rx="0" ry="0" x="0" y="0" width="365" height="50">
+        </rect>
+      </svg>
+      <svg class="n_23890">
+        <rect id="n_23890" rx="0" ry="0" x="0" y="0" width="365" height="50">
+        </rect>
+      </svg>
+      <svg class="n_23891">
+        <rect id="n_23891" rx="0" ry="0" x="0" y="0" width="365" height="50">
+        </rect>
+      </svg>
+      <svg class="n_23892">
+        <rect id="n_23892" rx="0" ry="0" x="0" y="0" width="365" height="50">
+        </rect>
+      </svg>
+      <svg class="n_23893">
+        <rect id="n_23893" rx="0" ry="0" x="0" y="0" width="365" height="50">
+        </rect>
+      </svg>
+      <svg class="n_23894">
+        <rect id="n_23894" rx="0" ry="0" x="0" y="0" width="365" height="50">
+        </rect>
+      </svg>
+      <div id="Text_cw">
+        <span>로그인</span>
+      </div>
+      <div id="Text_cx">
+        <span>주문/배송</span>
+      </div>
+      <div id="n__cy">
+        <span>개인정보 수정</span>
+      </div>
+      <div id="n__cz">
+        <span>상품 문의</span>
+      </div>
+      <div id="n__c">
+        <span>알림 설정</span>
+      </div>
+      <div id="Text_c">
+        <span>이벤트</span>
+      </div>
+      <div id="Text_da">
+        <span>이용안내</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+     var modal = document.querySelector(".modal");
+     var trigger = document.querySelector("#n_18505");
+     var closeButton = document.querySelector(".close-button");
+     var cancelButton = document.querySelector("#cancel");
+     var updateButton = document.querySelector("#Text_bk");
+     var deleteButton = document.querySelector("#n_18509");
+
+    function toggleModal() {
+        var theForm = document.frm;
+         theForm.action = "";
+
+         modal.classList.toggle("show-modal");
+     }
+     function toggleModal2(id,roadName,zipCode,name,detailed) {
+        var theForm = document.frm;
+        theForm.action = "address/update";
+
+        document.getElementById("id").value = id;
+        document.getElementById("roadName").value = roadName;
+        document.getElementById("zipCode").value = zipCode;
+        document.getElementById("name").value = name;
+        document.getElementById("detailed").value = detailed;
+
+         modal.classList.toggle("show-modal");
+     }
+
+    function windowOnClick(event) {
+         if (event.target === modal) {
+             toggleModal();
+         }
+     }
+
+
+    trigger.addEventListener("click", toggleModal);
+     closeButton.addEventListener("click", toggleModal);
+     cancel.addEventListener("click", toggleModal);
+     window.addEventListener("click", windowOnClick);
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+
+</html>

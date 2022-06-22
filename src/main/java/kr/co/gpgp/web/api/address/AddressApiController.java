@@ -1,68 +1,88 @@
 package kr.co.gpgp.web.api.address;
 
 
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import kr.co.gpgp.auth.dto.SessionUser;
+import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.address.AddressDto;
 import kr.co.gpgp.domain.address.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/address/")
+@RequestMapping("/address")
 public class AddressApiController {
 
     private final AddressService addressService;
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Void> create(
-            @PathVariable Long id,
-            @Valid @RequestBody AddressRequest addressRequest
+    @PostMapping("")
+    public ResponseEntity<Address> create(
+            AddressRequest addressRequest,
+            HttpServletRequest request
     ) {
-        AddressDto addressDto = AddressDto.of(id, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+        Long userId = getSessionUserId(request);
 
-        addressService.create(addressDto);
+        AddressDto addressDto = AddressDto.of(addressRequest.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        return ResponseEntity.ok().build();
+        Address address = addressService.create(userId,addressDto);
+
+        return ResponseEntity.ok().body(address);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{addressId}")
     public ResponseEntity<Void> delete(
-            @PathVariable Long id
+            HttpServletRequest request,
+            @Valid Long addressId
     ) {
-        addressService.delete(id);
+        Long userId = getSessionUserId(request);
+
+        addressService.delete(addressId);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/update")
     public ResponseEntity<Void> update(
-            @PathVariable Long id,
-            @Valid @RequestBody AddressRequest addressRequest
+            HttpServletRequest request,
+            AddressRequest addressRequest
     ) {
-        AddressDto addressDto = AddressDto.of(id, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        addressService.update(id, addressDto);
+        Long userId = getSessionUserId(request);
+
+        AddressDto addressDto = AddressDto.of(addressRequest.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+
+        addressService.update(userId, addressDto);
 
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Void> select(
-            @PathVariable Long id
+    @GetMapping("")
+    public ModelAndView home(
+            HttpServletRequest request
     ) {
+        ModelAndView mav = new ModelAndView("address");
 
-        addressService.select(id);
-
-        return ResponseEntity.ok().build();
+        Long userId = getSessionUserId(request);
+        List<Address> address = addressService.select(userId);
+        List<AddressResponse> responses= AddressResponse.of(address);
+        mav.addObject("addressList",responses);
+        return mav;
     }
 
 
+    private Long getSessionUserId(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        return user.getId();
+    }
 }

@@ -50,7 +50,7 @@ public class AddressServiceTest {
 
         AddressDto addressDto = AddressDto.of(1L, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        addressService.create(addressDto);
+        addressService.create(1L,addressDto);
 
         Assertions.assertAll(
                 () -> assertThat(address).isNotNull(),
@@ -72,11 +72,11 @@ public class AddressServiceTest {
 
         AddressDto addressDto = AddressDto.of(1L, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        addressService.create(addressDto);
+        addressService.create(1L,addressDto);
 
         AddressDto addressDtos = AddressDto.of(1000000L, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        assertThatThrownBy(() -> addressService.create(addressDtos))
+        assertThatThrownBy(() -> addressService.create(Long.MAX_VALUE, addressDtos))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("user ID를 조회할수 없어 주소를 생성할수 없습니다.");
     }
