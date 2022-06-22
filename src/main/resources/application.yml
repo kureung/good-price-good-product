@@ -6,7 +6,7 @@ jasypt:
 spring:
   mvc:
     view:
-      suffix: .html
+      suffix: .html , .mustache
   profiles:
     include: oauth
   output:
@@ -24,6 +24,13 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    cache: false
 
 logging:
   level:
