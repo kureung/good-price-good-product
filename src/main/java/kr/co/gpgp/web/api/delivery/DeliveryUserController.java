@@ -3,7 +3,10 @@ package kr.co.gpgp.web.api.delivery;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import kr.co.gpgp.auth.dto.SessionUser;
 import kr.co.gpgp.domain.address.AddressDto;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.delivery.DeliveryUserService;
@@ -23,79 +26,98 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/delivery/user")
+@RequestMapping("/delivery/user")
 public class DeliveryUserController {
 
     private final DeliveryUserService deliveryUserService;
 
 
-    @PostMapping("/{id}")
+    @GetMapping("/")
+    public String get(
+            HttpServletRequest request
+    ) {
+        HttpSession session = request.getSession();
+        SessionUser user = (SessionUser) session.getAttribute("user");
+
+        List<Delivery> delivery = deliveryUserService.selectAll(user.getId());
+        List<DeliveryResponse> deliveryResponse = DeliveryResponse.convertList(delivery);
+
+        return "deliveryUser";
+    }
+
+
+    @PostMapping("/")
     public ResponseEntity<DeliveryResponse> create(
-            @PathVariable Long id,
+            HttpServletRequest request,
             @Valid @RequestBody AddressRequest addressRequest,
             @Valid @RequestBody RequirementRequest requirementRequest
     ) throws URISyntaxException {
+        HttpSession session = request.getSession();
+        SessionUser user = (SessionUser) session.getAttribute("user");
 
-        AddressDto addressDto = AddressDto.of(id, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
+        AddressDto addressDto = AddressDto.of(user.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
         RequirementDto requirementdto = RequirementRequest.toRequirementDto(requirementRequest);
-
-        Delivery delivery = deliveryUserService.save(id, addressDto, requirementdto);
-
+        Delivery delivery = deliveryUserService.save(user.getId(), addressDto, requirementdto);
         DeliveryResponse deliveryResponse = DeliveryResponse.of(delivery);
-
-        return ResponseEntity.created(new URI("/api/delivery/user/" + id)).body(deliveryResponse);
+        return ResponseEntity.created(new URI("/api/delivery/user/" + user.getId())).body(deliveryResponse);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/")
     public ResponseEntity<DeliveryResponse> update(
-            @PathVariable Long id,
+            HttpServletRequest request,
             @Valid @RequestBody AddressRequest addressRequest,
             @Valid @RequestBody RequirementRequest requirementRequest
     ) {
+        HttpSession session = request.getSession();
+        SessionUser user = (SessionUser) session.getAttribute("user");
 
-        AddressDto addressDto = AddressDto.of(id, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
-
+        AddressDto addressDto = AddressDto.of(user.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
         RequirementDto requirementdto = RequirementRequest.toRequirementDto(requirementRequest);
-
-        Delivery delivery = deliveryUserService.update(id, addressDto, requirementdto);
+        Delivery delivery = deliveryUserService.update(user.getId(), addressDto, requirementdto);
 
         DeliveryResponse deliveryResponse = DeliveryResponse.of(delivery);
 
         return ResponseEntity.ok(deliveryResponse);
     }
 
-    @DeleteMapping("/{userId}/{deliveryId}")
+    @DeleteMapping("/{deliveryId}")
     public ResponseEntity<DeliveryResponse> delete(
-            @PathVariable Long userId,
+            HttpServletRequest request,
             @PathVariable Long deliveryId
     ) {
-        deliveryUserService.delete(userId, deliveryId);
+        HttpSession session = request.getSession();
+        SessionUser user = (SessionUser) session.getAttribute("user");
+
+        deliveryUserService.delete(user.getId(), deliveryId);
 
         return ResponseEntity.noContent().build();
     }
 
 
-    @GetMapping("/{id}/all")
+    @GetMapping("/all")
     public ResponseEntity<List<DeliveryResponse>> selectAll(
-            @PathVariable Long id
+            HttpServletRequest request
     ) {
+        HttpSession session = request.getSession();
+        SessionUser user = (SessionUser) session.getAttribute("user");
 
-        List<Delivery> delivery = deliveryUserService.selectAll(id);
-
+        List<Delivery> delivery = deliveryUserService.selectAll(user.getId());
         List<DeliveryResponse> deliveryResponse = DeliveryResponse.convertList(delivery);
 
         return ResponseEntity.ok(deliveryResponse);
     }
 
-    @GetMapping("/{id}/{deliveryId}")
+    @GetMapping("/{deliveryId}")
     public ResponseEntity<DeliveryResponse> select(
-            @PathVariable Long id,
+            HttpServletRequest request,
             @PathVariable Long deliveryId
     ) {
+
+        HttpSession session = request.getSession();
+        SessionUser user = (SessionUser) session.getAttribute("user");
+
         DeliveryResponse deliveryResponse =
-                DeliveryResponse.of(deliveryUserService.select(id, deliveryId));
+                DeliveryResponse.of(deliveryUserService.select(user.getId(), deliveryId));
 
         return ResponseEntity.ok(deliveryResponse);
     }
