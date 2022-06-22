@@ -35,7 +35,7 @@ public class AddressApiController {
 
         AddressDto addressDto = AddressDto.of(addressRequest.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        Address address = addressService.create(userId, addressDto);
+        Address address = addressService.create(userId,addressDto);
 
         return ResponseEntity.ok().body(address);
     }
@@ -74,8 +74,8 @@ public class AddressApiController {
 
         Long userId = getSessionUserId(request);
         List<Address> address = addressService.select(userId);
-        List<AddressResponse> responses = AddressResponse.of(address);
-        mav.addObject("addressList", responses);
+        List<AddressResponse> responses= AddressResponse.of(address);
+        mav.addObject("addressList",responses);
         return mav;
     }
 
