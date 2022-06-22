@@ -99,15 +99,6 @@ public class DeliverySellerTest {
                         .orderQuantity(1)
                         .build());
 
-        sut.order(
-                user.getId(),
-                delivery,
-                orderLineRequests);
-
-        sut.order(
-                user.getId(),
-                delivery,
-                orderLineRequests2);
 
         List<Delivery> list = deliverySellerService.choiceStatus(status, user.getId());
 
@@ -148,10 +139,6 @@ public class DeliverySellerTest {
                         .orderQuantity(1)
                         .build());
 
-        sut.order(
-                user.getId(),
-                delivery,
-                orderLineRequests);
 
         Delivery adelivery = Delivery.of(requirement, address);
         Delivery dd = deliveryRepository.save(adelivery);
@@ -160,10 +147,6 @@ public class DeliverySellerTest {
         Order or = orderRepository.findById(1L).get();
         or.getDelivery().nextStepInstruct();    //안됨
 
-        sut.order(
-                user.getId(),
-                sdelivery,
-                orderLineRequests2);
 
         //판매자 id 조회
         // 그 주문 확인
