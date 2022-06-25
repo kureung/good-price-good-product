@@ -58,7 +58,6 @@ public class OrderAdapter {
     private OrderLineResponse toDto(OrderLine orderLine) {
         return OrderLineResponse.builder()
                 .itemName(orderLine.getItemName())
-                .itemCode(orderLine.getItemCode())
                 .itemPrice(orderLine.getPrice())
                 .orderQuantity(orderLine.getOrderQuantity())
                 .build();

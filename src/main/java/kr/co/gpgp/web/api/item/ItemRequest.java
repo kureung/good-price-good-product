@@ -1,9 +1,7 @@
 package kr.co.gpgp.web.api.item;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PastOrPresent;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemInfo;
 import lombok.Builder;
@@ -25,38 +23,21 @@ public class ItemRequest {
     @NotBlank
     @Length(max = 30)
     private String name;
-
-    @Range(min = 0, max = 10_000)
-    private int weight;
-
     @NotBlank
-    @Length(max = 30)
-    private String code;
-
-    private String imageUrl;
-
-    @PastOrPresent
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate releaseDate;
+    private String author;
 
     @Builder
-    private ItemRequest(int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
+    private ItemRequest(int price, int stockQuantity, String name, int weight, String code, String author, LocalDate releaseDate) {
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.name = name;
-        this.weight = weight;
-        this.code = code;
-        this.imageUrl = imageUrl;
-        this.releaseDate = releaseDate;
+        this.author = author;
     }
 
     public Item toEntity() {
         ItemInfo info = ItemInfo.builder()
-                .code(code)
-                .imageUrl(imageUrl)
+                .author(author)
                 .name(name)
-                .releaseDate(releaseDate)
-                .weight(weight)
                 .build();
 
         return Item.builder()

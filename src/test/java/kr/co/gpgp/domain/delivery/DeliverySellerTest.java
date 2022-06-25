@@ -76,8 +76,6 @@ public class DeliverySellerTest {
         Long userId = 1L;
 
         ItemInfo info = ItemInfo.builder()
-                .code("123")
-                .weight(10)
                 .build();
 
         Item item = Item.builder()
@@ -89,13 +87,11 @@ public class DeliverySellerTest {
 
         List<OrderLineRequest> orderLineRequests = List.of(
                 OrderLineRequest.builder()
-                        .itemCode(item.getInfo().getCode())
                         .orderQuantity(2)
                         .build());
 
         List<OrderLineRequest> orderLineRequests2 = List.of(
                 OrderLineRequest.builder()
-                        .itemCode(item.getInfo().getCode())
                         .orderQuantity(1)
                         .build());
 
@@ -116,8 +112,6 @@ public class DeliverySellerTest {
     @Test
     void 판매한_목록_배송_상태를_모두_조회할수_있다() {
         ItemInfo info = ItemInfo.builder()
-                .code("123")
-                .weight(10)
                 .build();
 
         Item item = Item.builder()
@@ -129,13 +123,11 @@ public class DeliverySellerTest {
 
         List<OrderLineRequest> orderLineRequests = List.of(
                 OrderLineRequest.builder()
-                        .itemCode(item.getInfo().getCode())
                         .orderQuantity(2)
                         .build());
 
         List<OrderLineRequest> orderLineRequests2 = List.of(
                 OrderLineRequest.builder()
-                        .itemCode(item.getInfo().getCode())
                         .orderQuantity(1)
                         .build());
 

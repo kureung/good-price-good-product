@@ -74,9 +74,7 @@ class OrderJpaRepositoryCustomImplTests {
             for (int k = 0; k < 5; k++) {
 
                 ItemInfo info = ItemInfo.builder()
-                        .code("123" + k)
                         .name("item" + k)
-                        .weight(k)
                         .build();
 
                 Item item = Item.builder()

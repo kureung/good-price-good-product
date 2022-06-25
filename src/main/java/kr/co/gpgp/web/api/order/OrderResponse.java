@@ -18,7 +18,7 @@ public class OrderResponse {
     private String roadName;
 
     private String zipCode;
-    
+
     private String orderCode;
     private String addressName;
 
@@ -52,16 +52,13 @@ public class OrderResponse {
 
         private final String itemName;
 
-        private final String itemCode;
-
         private final int itemPrice;
 
         private final int orderQuantity;
 
         @Builder
-        private OrderLineResponse(String itemName, String itemCode, int itemPrice, int orderQuantity) {
+        private OrderLineResponse(String itemName, int itemPrice, int orderQuantity) {
             this.itemName = itemName;
-            this.itemCode = itemCode;
             this.itemPrice = itemPrice;
             this.orderQuantity = orderQuantity;
         }

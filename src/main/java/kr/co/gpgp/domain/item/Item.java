@@ -3,7 +3,6 @@ package kr.co.gpgp.domain.item;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -42,24 +41,11 @@ public class Item extends BaseEntity {
         stockQuantity -= quantity;
     }
 
-    private void validationRemoveStock(int quantity) {
-        int restStock = stockQuantity - quantity;
-        if (restStock < 0) {
-            throw new IllegalStateException(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
-        }
-    }
-
     public void plusStock(int quantity) {
         validationAddStock(quantity);
         stockQuantity += quantity;
     }
 
-    private void validationAddStock(int quantity) {
-        int restStock = stockQuantity + quantity;
-        if (restStock > 1_000_000_000) {
-            throw new IllegalStateException(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
-        }
-    }
 
     public void update(int price, int stockQuantity, ItemInfo info) {
         this.price = price;
@@ -71,20 +57,8 @@ public class Item extends BaseEntity {
         return info.getName();
     }
 
-    public String getCode() {
-        return info.getCode();
-    }
-
-    public int getWeight() {
-        return info.getWeight();
-    }
-
-    public LocalDate getReleaseDate() {
-        return info.getReleaseDate();
-    }
-
-    public String getImageUrl() {
-        return info.getImageUrl();
+    public String getAuthor() {
+        return info.getAuthor();
     }
 
     @Override
@@ -100,4 +74,17 @@ public class Item extends BaseEntity {
         return Objects.hash(getId(), getPrice(), getStockQuantity(), getInfo());
     }
 
+    private void validationRemoveStock(int quantity) {
+        int restStock = stockQuantity - quantity;
+        if (restStock < 0) {
+            throw new IllegalStateException(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
+        }
+    }
+
+    private void validationAddStock(int quantity) {
+        int restStock = stockQuantity + quantity;
+        if (restStock > 1_000_000_000) {
+            throw new IllegalStateException(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
+        }
+    }
 }

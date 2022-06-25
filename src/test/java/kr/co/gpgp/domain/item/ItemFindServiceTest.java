@@ -28,7 +28,7 @@ class ItemFindServiceTest {
     void 상품_조회_테스트() {
         // given
         ItemInfo info = ItemInfo.builder()
-                .weight(10)
+                .name("name")
                 .build();
         Item item = Item.builder()
                 .info(info)
@@ -47,9 +47,7 @@ class ItemFindServiceTest {
         // given
         for (int i = 0; i < 100; i++) {
             ItemInfo info = ItemInfo.builder()
-                    .weight(i)
                     .name("item" + i)
-                    .code(i + "")
                     .build();
 
             Item item = Item.builder()
