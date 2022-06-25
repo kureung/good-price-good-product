@@ -64,6 +64,7 @@ public class AddressApiController {
     @GetMapping("")
     public ModelAndView home() {
         ModelAndView mav = new ModelAndView("address");
+
         UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         List<Address> address = addressService.select(user.getId());
