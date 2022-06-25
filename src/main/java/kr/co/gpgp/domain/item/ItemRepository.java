@@ -8,7 +8,7 @@ public interface ItemRepository {
 
     Optional<Item> findByInfoCode(String code);
 
-    boolean existsByInfoCode(String code);
+    boolean existsByInfoName(String name);
 
     Page<Item> searchItem(ItemSearchCondition condition, Pageable pageable);
 

@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ItemJpaRepository extends JpaRepository<Item, Long> {
 
-    Optional<Item> findByInfoCode(String code);
+    Optional<Item> findByInfoName(String name);
 
-    boolean existsByInfoCode(String code);
+    boolean existsByInfoName(String name);
 
 }
