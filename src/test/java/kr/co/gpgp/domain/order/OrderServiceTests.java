@@ -60,8 +60,7 @@ class OrderServiceTests {
         Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
-                .code("123")
-                .weight(10)
+                .name("name")
                 .build();
 
         Item item = Item.builder()
@@ -90,8 +89,7 @@ class OrderServiceTests {
         Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
-                .code("123")
-                .weight(10)
+                .name("name")
                 .build();
 
         Item item = Item.builder()
@@ -123,8 +121,7 @@ class OrderServiceTests {
         Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
-                .code("123")
-                .weight(10)
+                .name("name")
                 .build();
 
         Item item = Item.builder()
@@ -171,8 +168,7 @@ class OrderServiceTests {
 
         for (int i = 0; i < 100; i++) {
             ItemInfo info = ItemInfo.builder()
-                    .code("123")
-                    .weight(20)
+                    .name("name")
                     .build();
 
             Item item = Item.builder()

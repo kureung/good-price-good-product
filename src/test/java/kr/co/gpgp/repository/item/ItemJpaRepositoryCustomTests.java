@@ -28,9 +28,7 @@ class ItemJpaRepositoryCustomTests {
         // given
         for (int i = 0; i < 100; i++) {
             ItemInfo info = ItemInfo.builder()
-                    .weight(i)
                     .name("item" + i)
-                    .code(i + "")
                     .build();
 
             Item item = Item.builder()

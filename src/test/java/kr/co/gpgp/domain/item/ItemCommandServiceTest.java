@@ -4,9 +4,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import kr.co.gpgp.domain.item.Item;
-import kr.co.gpgp.domain.item.ItemCommandService;
-import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
 import kr.co.gpgp.web.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
@@ -27,7 +24,6 @@ class ItemCommandServiceTest {
     @Test
     void 상품_등록_테스트() {
         ItemInfo info = ItemInfo.builder()
-                .weight(10)
                 .build();
         Item item = Item.builder()
                 .info(info)
@@ -38,8 +34,7 @@ class ItemCommandServiceTest {
     @Test
     void 상품_중복_등록시_예외가_발생한다() {
         ItemInfo info = ItemInfo.builder()
-                .weight(10)
-                .code("123")
+                .name("name")
                 .build();
         Item item1 = Item.builder()
                 .info(info)
@@ -59,7 +54,6 @@ class ItemCommandServiceTest {
     @Test
     void 상품_수정_테스트() {
         ItemInfo info = ItemInfo.builder()
-                .weight(10)
                 .build();
         Item item = Item.builder()
                 .info(info)
