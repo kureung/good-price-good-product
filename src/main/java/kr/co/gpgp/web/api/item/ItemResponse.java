@@ -1,9 +1,7 @@
 package kr.co.gpgp.web.api.item;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.querydsl.core.annotations.QueryProjection;
-import java.time.LocalDate;
 import kr.co.gpgp.domain.item.Item;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,38 +18,25 @@ public class ItemResponse {
 
     private String name;
 
-    private int weight;
-
-    private String code;
-
-    private String imageUrl;
-
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate releaseDate;
+    private String author;
 
     @QueryProjection
     @Builder
-    public ItemResponse(Long id, int price, int stockQuantity, String name, int weight, String code, String imageUrl, LocalDate releaseDate) {
+    private ItemResponse(Long id, int price, int stockQuantity, String name, String author) {
         this.id = id;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.name = name;
-        this.weight = weight;
-        this.code = code;
-        this.imageUrl = imageUrl;
-        this.releaseDate = releaseDate;
+        this.author = author;
     }
 
     public static ItemResponse toDto(Item item) {
         return ItemResponse.builder()
                 .id(item.getId())
-                .code(item.getCode())
-                .imageUrl(item.getImageUrl())
                 .name(item.getName())
                 .price(item.getPrice())
-                .releaseDate(item.getReleaseDate())
+                .author(item.getAuthor())
                 .stockQuantity(item.getStockQuantity())
-                .weight(item.getWeight())
                 .build();
     }
 
