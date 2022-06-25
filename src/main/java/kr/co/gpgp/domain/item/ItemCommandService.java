@@ -14,7 +14,7 @@ public class ItemCommandService {
     private final ItemFindService itemFindService;
 
     public Item save(Item item) {
-        if (itemRepository.existsByInfoCode(item.getCode())) {
+        if (itemRepository.existsByInfoName(item.getName())) {
             throw new IllegalStateException(ErrorCode.ITEM_DUPLICATE_CHECK_ERROR.getMessage());
         }
 
