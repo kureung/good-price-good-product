@@ -16,15 +16,18 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String profileImage;
+    private Long id;
 
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes,String nameAttributeKey, String name, String email, String profileImage) {
-        this.attributes = attributes;
-        this.nameAttributeKey = nameAttributeKey;
+    public OAuthAttributes(String name, String nameAttributeKey, Map<String, Object> attributes, String email, String profileImage, Long id) {
         this.name = name;
+        this.nameAttributeKey = nameAttributeKey;
+        this.attributes = attributes;
         this.email = email;
         this.profileImage = profileImage;
+        this.id = id;
+
     }
 
     public static OAuthAttributes of(Map<String, Object> attributes) {
@@ -48,7 +51,7 @@ public class OAuthAttributes {
     }
 
     public User toEntity() {
-        return User.of(name, email, Role.USER,profileImage);
+        return User.of(name, email, Role.USER, profileImage);
     }
 
 }
