@@ -1,9 +1,10 @@
 package kr.co.gpgp.auth.service;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 import kr.co.gpgp.auth.dto.OAuthAttributes;
-import kr.co.gpgp.auth.dto.SessionUser;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService delegate = new DefaultOAuth2UserService();
-
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         // OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담을 클래스
@@ -40,15 +40,17 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         User user = saveOrUpdate(attributes);
 
-        //세션에 사용자 정보를 저장하기 위한 dto 클래스
-        httpSession.setAttribute("user", new SessionUser(user));
+        Map<String, Object> extraParams = new HashMap<String, Object>();
+        extraParams.putAll(attributes.getAttributes());
+        extraParams.put("userId", user.getId());
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
-                attributes.getAttributes(),
+                extraParams,
                 attributes.getNameAttributeKey()
         );
     }
+
 
     private User saveOrUpdate(OAuthAttributes attributes) {
 
