@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,8 +28,7 @@ public class AddressApiController {
 
     @PostMapping("")
     public ResponseEntity<Address> create(
-            AddressRequest addressRequest,
-            HttpServletRequest request
+            AddressRequest addressRequest
     ) {
 
         UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -40,7 +40,7 @@ public class AddressApiController {
         return ResponseEntity.ok().body(address);
     }
 
-    @DeleteMapping("/{addressId}")
+    @DeleteMapping("")
     public ResponseEntity<Void> delete(
             @Valid Long addressId
     ) {
@@ -48,7 +48,7 @@ public class AddressApiController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/update")
+    @PutMapping("")
     public ResponseEntity<Void> update(
             AddressRequest addressRequest
     ) {
