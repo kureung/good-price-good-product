@@ -19,7 +19,6 @@ public class ItemResponse {
 
     private String author;
 
-    @QueryProjection
     @Builder
     private ItemResponse(Long id, int price, int stockQuantity, String name, String author) {
         this.id = id;
