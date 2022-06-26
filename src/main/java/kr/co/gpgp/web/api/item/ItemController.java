@@ -19,8 +19,8 @@ public class ItemController {
     private final ItemCommandService itemCommandService;
 
     @GetMapping("/new")
-    public String createForm(@ModelAttribute NewItemCreateForm form) {
-        return "admin/create-new-item-form";
+    public String createForm(@ModelAttribute NewItemCreateForm newItemCreateForm) {
+        return "sellers/create-new-item-form";
     }
 
     @PostMapping("/new")
