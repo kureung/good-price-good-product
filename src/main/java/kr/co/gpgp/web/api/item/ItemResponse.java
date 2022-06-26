@@ -1,7 +1,6 @@
 package kr.co.gpgp.web.api.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.querydsl.core.annotations.QueryProjection;
 import kr.co.gpgp.domain.item.Item;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +19,6 @@ public class ItemResponse {
 
     private String author;
 
-    @QueryProjection
     @Builder
     private ItemResponse(Long id, int price, int stockQuantity, String name, String author) {
         this.id = id;
