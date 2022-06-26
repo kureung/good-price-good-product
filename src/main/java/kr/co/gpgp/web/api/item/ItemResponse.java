@@ -1,7 +1,6 @@
 package kr.co.gpgp.web.api.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.querydsl.core.annotations.QueryProjection;
 import kr.co.gpgp.domain.item.Item;
 import lombok.Builder;
 import lombok.Getter;
