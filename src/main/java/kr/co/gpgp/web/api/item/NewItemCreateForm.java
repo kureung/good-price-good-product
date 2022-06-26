@@ -1,15 +1,17 @@
 package kr.co.gpgp.web.api.item;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-@Getter
-@RequiredArgsConstructor
+@Data
+@NoArgsConstructor
 public class NewItemCreateForm {
 
-    private final String author;
-    private final int price;
-    private final int stockQuantity;
-    private final String name;
+    private String author = "";
+    private int price;
+    private int stockQuantity;
+    private String name = "";
 
 }
