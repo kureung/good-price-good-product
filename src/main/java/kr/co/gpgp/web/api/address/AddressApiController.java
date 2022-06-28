@@ -2,7 +2,6 @@ package kr.co.gpgp.web.api.address;
 
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import kr.co.gpgp.auth.dto.UserDetails;
 import kr.co.gpgp.domain.address.Address;
@@ -11,22 +10,22 @@ import kr.co.gpgp.domain.address.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/address")
 public class AddressApiController {
 
     private final AddressService addressService;
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<Address> create(
             AddressRequest addressRequest
     ) {
@@ -40,7 +39,7 @@ public class AddressApiController {
         return ResponseEntity.ok().body(address);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping
     public ResponseEntity<Void> delete(
             @Valid Long addressId
     ) {
@@ -48,7 +47,7 @@ public class AddressApiController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity<Void> update(
             AddressRequest addressRequest
     ) {
@@ -61,17 +60,15 @@ public class AddressApiController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("")
-    public ModelAndView home() {
-        ModelAndView mav = new ModelAndView("address");
-
+    @GetMapping
+    public String home(Model model) {
         UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         List<Address> address = addressService.select(user.getId());
         List<AddressResponse> responses = AddressResponse.of(address);
 
-        mav.addObject("addressList", responses);
-        return mav;
+        model.addAttribute("addressList", responses);
+        return "/address";
     }
 
 
