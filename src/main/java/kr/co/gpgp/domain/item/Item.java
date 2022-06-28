@@ -1,5 +1,6 @@
 package kr.co.gpgp.domain.item;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -8,7 +9,9 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import kr.co.gpgp.domain.common.BaseEntity;
+import kr.co.gpgp.domain.user.Seller;
 import kr.co.gpgp.web.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,8 +32,12 @@ public class Item extends BaseEntity {
     @Embedded
     private ItemInfo info;
 
+    @ManyToOne(fetch = LAZY)
+    private Seller seller;
+
     @Builder
-    private Item(int price, int stockQuantity, ItemInfo info) {
+    private Item(int price, int stockQuantity, ItemInfo info, Seller seller) {
+        this.seller = seller;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.info = info;
@@ -45,7 +52,6 @@ public class Item extends BaseEntity {
         validationAddStock(quantity);
         stockQuantity += quantity;
     }
-
 
     public void update(int price, int stockQuantity, ItemInfo info) {
         this.price = price;
@@ -87,4 +93,5 @@ public class Item extends BaseEntity {
             throw new IllegalStateException(ErrorCode.STOCK_OUT_OF_RANGE.getMessage());
         }
     }
+
 }
