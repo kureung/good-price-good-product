@@ -23,12 +23,12 @@ public class ItemController {
     private final ItemCommandService itemCommandService;
     private final SellerService sellerService;
 
-    @GetMapping("/new")
+    @GetMapping
     public String createForm(@ModelAttribute NewItemCreateForm newItemCreateForm) {
         return "sellers/create-new-item-form";
     }
 
-    @PostMapping("/new")
+    @PostMapping
     public String create(@Valid @ModelAttribute NewItemCreateForm form,
                          BindingResult bindingResult
     ) {
