@@ -7,6 +7,9 @@ spring:
   mvc:
     view:
       suffix: .html , .mustache
+    hiddenmethod:
+      filter:
+        enabled: true  # html form _> REST API 사용하기 위해 설정 spring boot 2.2 부터 직접 설정해 줘야함
   profiles:
     include: oauth
   output:
@@ -29,9 +32,6 @@ spring:
       enabled: true
     restart:
       enabled: true
-  thymeleaf:
-    cache: false
-
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
