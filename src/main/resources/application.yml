@@ -1,6 +1,6 @@
 jasypt:
   encryptor:
-    password: ${JASYPT_PASSWORD}
+    password: 1234
     bean: jasyptStringEncryptor
 
 spring:
