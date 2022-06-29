@@ -41,6 +41,12 @@ public class Requirement {
         this.id = id;
     }
 
+    private Requirement(User user, String message) {
+        validatMessage(message);
+        this.message = message;
+        this.user = user;
+    }
+
 
     private static void validatMessage(String message) {
         final int REQUIREMENT_MAX_LEN = 18;
@@ -49,6 +55,15 @@ public class Requirement {
             throw new IllegalArgumentException("요청사항은 " + REQUIREMENT_MAX_LEN + "자를 넘을수 없습니다.");
         }
 
+    }
+
+    public static Requirement of(User user, String message) {
+        return new Requirement(user, message);
+    }
+
+    public void updateMessage(String message) {
+        validatMessage(message);
+        this.message = message;
     }
 
     @Getter

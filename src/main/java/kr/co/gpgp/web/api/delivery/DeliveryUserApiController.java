@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import kr.co.gpgp.auth.dto.SessionUser;
+import kr.co.gpgp.auth.dto.UserDetails;
 import kr.co.gpgp.domain.address.AddressDto;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.delivery.DeliveryUserService;
@@ -15,6 +15,7 @@ import kr.co.gpgp.domain.requirement.RequirementRequest;
 import kr.co.gpgp.web.api.address.AddressRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,11 +33,8 @@ public class DeliveryUserApiController {
 
 
     @GetMapping("/")
-    public String get(
-            HttpServletRequest request
-    ) {
-        HttpSession session = request.getSession();
-        SessionUser user = (SessionUser) session.getAttribute("user");
+    public String get( ) {
+        UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         List<Delivery> delivery = deliveryUserService.selectAll(user.getId());
         List<DeliveryResponse> deliveryResponse = DeliveryResponse.convertList(delivery);
@@ -47,12 +45,10 @@ public class DeliveryUserApiController {
 
     @PostMapping("/")
     public ResponseEntity<DeliveryResponse> create(
-            HttpServletRequest request,
             @Valid @RequestBody AddressRequest addressRequest,
             @Valid @RequestBody RequirementRequest requirementRequest
     ) throws URISyntaxException {
-        HttpSession session = request.getSession();
-        SessionUser user = (SessionUser) session.getAttribute("user");
+        UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         AddressDto addressDto = AddressDto.of(user.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
         RequirementDto requirementdto = RequirementRequest.toRequirementDto(requirementRequest);
@@ -63,12 +59,10 @@ public class DeliveryUserApiController {
 
     @PutMapping("/")
     public ResponseEntity<DeliveryResponse> update(
-            HttpServletRequest request,
             @Valid @RequestBody AddressRequest addressRequest,
             @Valid @RequestBody RequirementRequest requirementRequest
     ) {
-        HttpSession session = request.getSession();
-        SessionUser user = (SessionUser) session.getAttribute("user");
+        UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         AddressDto addressDto = AddressDto.of(user.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
         RequirementDto requirementdto = RequirementRequest.toRequirementDto(requirementRequest);
@@ -81,11 +75,9 @@ public class DeliveryUserApiController {
 
     @DeleteMapping("/{deliveryId}")
     public ResponseEntity<DeliveryResponse> delete(
-            HttpServletRequest request,
             @PathVariable Long deliveryId
     ) {
-        HttpSession session = request.getSession();
-        SessionUser user = (SessionUser) session.getAttribute("user");
+        UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         deliveryUserService.delete(user.getId(), deliveryId);
 
@@ -95,10 +87,8 @@ public class DeliveryUserApiController {
 
     @GetMapping("/all")
     public ResponseEntity<List<DeliveryResponse>> selectAll(
-            HttpServletRequest request
     ) {
-        HttpSession session = request.getSession();
-        SessionUser user = (SessionUser) session.getAttribute("user");
+        UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         List<Delivery> delivery = deliveryUserService.selectAll(user.getId());
         List<DeliveryResponse> deliveryResponse = DeliveryResponse.convertList(delivery);
@@ -108,12 +98,10 @@ public class DeliveryUserApiController {
 
     @GetMapping("/{deliveryId}")
     public ResponseEntity<DeliveryResponse> select(
-            HttpServletRequest request,
             @PathVariable Long deliveryId
     ) {
 
-        HttpSession session = request.getSession();
-        SessionUser user = (SessionUser) session.getAttribute("user");
+        UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         DeliveryResponse deliveryResponse =
                 DeliveryResponse.of(deliveryUserService.select(user.getId(), deliveryId));
