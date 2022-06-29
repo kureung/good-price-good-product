@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요청사항 목록</title>
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+<div id="sidebar" style="width:185px;border: solid 1px; float:left; margin-right:90px;">
+  <div><a>주문내역</a></div>
+  <div style="margin-left: 20px;"><a href="#">주문 조회/변경/취소</a></div>
+  <div style="margin-left: 20px;"><a href="#">반품/교환 내역</a></div>
+  <div style="margin-left: 20px;"><a href="#">취소 주문 내역</a></div>
+  <div><a>배송 정보</a></div>
+  <div style="margin-left: 20px;"><a href="#">배송지 목록</a></div>
+  <div style="margin-left: 20px;"><a href="#">배송 조회</a></div>
+  <div><a>이벤트</a></div>
+  <div style="margin-left: 20px;"><a href="#">출석체크</a></div>
+  <div style="margin-left: 20px;"><a href="#">마일리지</a></div>
+  <div><a>회원정보 관리</a></div>
+  <div style="margin-left: 20px;"><a href="#">개인정보 수정</a></div>
+  <div style="margin-left: 20px;"><a href="#">회원 탈퇴</a></div>
+</div>
+<div>
+  <!-- 팝업 될 레이어 -->
+  <div>
+    <div>
+      <h1>요청 사항 등록 / 수정</h1>
+      <form name="frm" action="/requirement" method="POST">
+        <input type="hidden" id="id" name="id" class="form-control" value="-1">
+        <input type="text" id="message" name="message" class="form-control" placeholder="메시지">
+        <button type="submit">추가</button>
+      </form>
+    </div>
+  </div>
+  <br>
+  <!--  반복 되는 html -->
+  {{#requirementList}}
+    <table border="1" style="border:black;">
+      <tr align="center">
+        <td>{{message}}</td>
+        <td>
+          <div>
+            <form action="/requirement" method="post">
+              <input type="hidden" name="_method" value="delete"/>
+              <input type="hidden" name="requirementId" value="{{id}}"/>
+              <button type="submit"><span>삭제</span></button>
+            </form>
+          </div>
+        </td>
+        <td>
+          <button type="submit" onclick="toggleModal2({{id}},'{{message}}')"><span>수정</span></button>
+        </td>
+      </tr>
+    </table>
+  {{/requirementList}}
+  <div id="delete_form" style="display:none;">
+    <form name="del" action="/requirement" method="post">
+      <input type="hidden" name="_method" value="put"/>
+      <input type="hidden" id="id2" name="id" value=""/>
+      <input type="text" id="message2" name="message" class="form-control" placeholder="메시지">
+      <button type="submit"><span>수정</span></button>
+    </form>
+  </div>
+</div>
+<script>
+      function toggleModal2(id,message) {
+        var theForm = document.del;
+        document.getElementById("id2").value = id;
+        document.getElementById("message2").value = message;
+        document.getElementById("delete_form").style.display='block';
+    }
+</script>
+</body>
+</html>
