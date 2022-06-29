@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>배송지 목록</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="/js/applicationScript.js"></script>
+
+</head>
+<body>
+<div id="sidebar" style="width:185px;border: solid 1px; float:left; margin-right:90px;">
+  <div><a>주문내역</a></div>
+  <div style="margin-left: 20px;"><a href="#">주문 조회/변경/취소</a></div>
+  <div style="margin-left: 20px;"><a href="#">반품/교환 내역</a></div>
+  <div style="margin-left: 20px;"><a href="#">취소 주문 내역</a></div>
+  <div><a>배송 정보</a></div>
+  <div style="margin-left: 20px;"><a href="#">배송지 목록</a></div>
+  <div style="margin-left: 20px;"><a href="#">배송 조회</a></div>
+  <div><a>이벤트</a></div>
+  <div style="margin-left: 20px;"><a href="#">출석체크</a></div>
+  <div style="margin-left: 20px;"><a href="#">마일리지</a></div>
+  <div><a>회원정보 관리</a></div>
+  <div style="margin-left: 20px;"><a href="#">개인정보 수정</a></div>
+  <div style="margin-left: 20px;"><a href="#">회원 탈퇴</a></div>
+</div>
+<!-- 팝업 될 레이어 -->
+<div>
+  <br>
+
+  <!--  반복 되는 html -->
+  {{#user}}
+    <table border="1" style="border:black;">
+      <tr align="center">
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td>현재 권한 :{{role}}</td>
+        <td><img src="{{profileImageUrl}}"></td>
+      </tr>
+    </table>
+  {{/user}}
+  <div>
+    <form action="/user/s" method="post" id="roleForm">
+      <input type="hidden" name="_method" value="put"/>
+      <select name="role" id="role" >
+        <option value="">권한 변경</option>
+        <option value="USER">일반회원</option>
+        <option value="SELLER">판매자</option>
+        <option value="ADMIN">배달원</option>
+      </select>
+      <button type="submit"><span>변경</span></button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
