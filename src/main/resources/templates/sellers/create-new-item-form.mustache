@@ -3,7 +3,7 @@
 <div class="container">
   {{#newItemCreateForm}}
 
-    <form action="{/items/new}" class="row g-3">
+    <form class="row g-3" method="post">
       <div class="row mb-3">
         <label for="name">상품명</label>
         <input type="text" value="{{name}}">
@@ -23,10 +23,11 @@
         <label for="name">저자</label>
         <input type="text" value="{{author}}">
       </div>
+
       <div class="col-12">
       <button type="submit" class="btn btn-primary">등록</button>
-
       </div>
+
     </form>
   {{/newItemCreateForm}}
 

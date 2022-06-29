@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,7 +36,7 @@ public class ItemController {
     ) {
 
         if (bindingResult.hasErrors()) {
-            return "admin/create-new-item-form";
+            return "seller/create-new-item-form";
         }
         UserDetails userDetails = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         Long userId = userDetails.getId();
@@ -43,6 +45,22 @@ public class ItemController {
 
         Item item = ItemAdapter.toEntity(form, seller);
         itemCommandService.save(item);
+        return "redirect:/";
+    }
+
+    @PatchMapping("/{itemId}")
+    public String edit(@PathVariable Long itemId,
+                       @Valid @ModelAttribute NewItemCreateForm form,
+                       BindingResult bindingResult
+    ) {
+
+        if (bindingResult.hasErrors()) {
+            return "seller/create-new-item-form";
+        }
+
+        Item item = ItemAdapter.toEntity(form);
+        itemCommandService.update(itemId, item);
+
         return "redirect:/";
     }
 
