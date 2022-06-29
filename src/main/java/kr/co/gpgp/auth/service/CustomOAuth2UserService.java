@@ -28,25 +28,20 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final UserRepository userRepository;
 
-    private final HttpSession httpSession;
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2UserService delegate = new DefaultOAuth2UserService();
+        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        // OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담을 클래스
         OAuthAttributes attributes = OAuthAttributes.of(oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
 
-        Map<String, Object> extraParams = new HashMap<String, Object>();
-        extraParams.putAll(attributes.getAttributes());
-        extraParams.put("userId", user.getId());
+        attributes.getAttributes().put("userId", user.getId());
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
-                extraParams,
+                attributes.getAttributes(),
                 attributes.getNameAttributeKey()
         );
     }
