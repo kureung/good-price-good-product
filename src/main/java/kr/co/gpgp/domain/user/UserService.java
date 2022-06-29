@@ -15,6 +15,8 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
     }
 
+
+    @Transactional
     public void changeOfPermission(Long userId, Role role) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("권한 변경하려는 회원 을 찾을수 없습니다."));
