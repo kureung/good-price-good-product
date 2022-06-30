@@ -18,4 +18,9 @@ public class SellerRepositoryImpl implements SellerRepository {
         return jpaRepository.findByUser(user);
     }
 
+    @Override
+    public void save(Seller seller) {
+        jpaRepository.save(seller);
+    }
+
 }
