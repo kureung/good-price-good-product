@@ -21,5 +21,12 @@ public class Seller {
     private User user;
 
 
+    private Seller(User user) {
+        this.user = user;
+    }
+
+    public static Seller of(User user) {
+        return new Seller(user);
+    }
 }
 
