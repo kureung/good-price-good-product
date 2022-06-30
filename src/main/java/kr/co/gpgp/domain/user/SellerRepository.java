@@ -6,4 +6,5 @@ public interface SellerRepository {
 
     Optional<Seller> findByUser(User user);
 
+    void save(Seller seller);
 }
