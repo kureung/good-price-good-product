@@ -2,7 +2,7 @@ package kr.co.gpgp.domain.requirement;
 
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,10 +51,19 @@ public class RequirementService {
 
     public List<Requirement> select(Long userId) {
 
-        User user =userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 요청사항을 조회"));
 
         return requirementRepository.findByUserId(userId);
     }
 
+    public List<Requirement> selectSectionId(List<Long> addressIdList) {
+
+        return addressIdList.stream()
+                .map(
+                        ls -> requirementRepository.findById(ls)
+                                .orElseThrow(() -> new IllegalArgumentException("조회 하려는 delivery.requirementId 값이 존재 하지 않습니다."))
+                )
+                .collect(Collectors.toList());
+    }
 }
