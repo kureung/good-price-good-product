@@ -1,13 +1,14 @@
 package kr.co.gpgp.domain.delivery;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import kr.co.gpgp.domain.address.Address;
+import kr.co.gpgp.domain.address.AddressDto;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.requirement.Requirement.RequirementDto;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
 import kr.co.gpgp.repository.delivery.DeliveryRepositoryImpl;
-import kr.co.gpgp.domain.address.AddressDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,5 +87,17 @@ public class DeliveryUserService {
         Delivery delivery = Delivery.of(requirement, address);
 
         return deliveryRepository.save(delivery);
+    }
+
+    public List<Long> toAddressIdList(List<Delivery> delivery) {
+        return delivery.stream()
+                .map(ls -> ls.getAddress().getId())
+                .collect(Collectors.toList());
+    }
+
+    public List<Long> toRequirementIdList(List<Delivery> delivery) {
+        return delivery.stream()
+                .map(ls -> ls.getRequirement().getId())
+                .collect(Collectors.toList());
     }
 }

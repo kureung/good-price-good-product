@@ -1,6 +1,7 @@
 package kr.co.gpgp.domain.address;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.repository.user.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
@@ -65,4 +66,14 @@ public class AddressService {
         return addressRepository.findByUserId(userId);
     }
 
+
+    public List<Address> selectSectionId(List<Long> addressIdList) {
+        return addressIdList.stream()
+                .map(
+                        ls -> addressRepository.findById(ls)
+                                .orElseThrow(() -> new IllegalArgumentException("조회 하려는 addressId 값이 존재 하지 않습니다."))
+
+                )
+                .collect(Collectors.toList());
+    }
 }

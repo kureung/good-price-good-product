@@ -1,11 +1,14 @@
 package kr.co.gpgp.web.api.delivery;
 
 import com.querydsl.core.annotations.QueryProjection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.requirement.Requirement;
+import kr.co.gpgp.web.api.address.AddressResponse;
+import kr.co.gpgp.web.api.requirement.RequirementResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +24,7 @@ public class DeliveryResponse {
     private String addressName;
     private String detailedAddress;
 
+
     @QueryProjection
     public DeliveryResponse(Long id, String requirement, String roadName, String zipCode, String addressName, String detailedAddress) {
         this.id = id;
@@ -31,6 +35,7 @@ public class DeliveryResponse {
         this.detailedAddress = detailedAddress;
     }
 
+
     public static DeliveryResponse of(Long id, String requirement, String roadName, String zipCode, String addressName, String detailedAddress) {
         return new DeliveryResponse(id, requirement, roadName, zipCode, addressName, detailedAddress);
     }
@@ -40,7 +45,6 @@ public class DeliveryResponse {
     }
 
     public static DeliveryResponse of(Delivery delivery) {
-        System.out.println(delivery.getRequirement());
         return new DeliveryResponse(delivery.getId(), delivery.getRequirement().getMessage(), delivery.getAddressRoadName(), delivery.getAddressZipCode(), delivery.getAddressName(), delivery.getAddressDetailed());
     }
 
@@ -53,4 +57,35 @@ public class DeliveryResponse {
                 .map(DeliveryResponse::of)
                 .collect(Collectors.toList());
     }
+
+    public static List<DeliveryResponse> convertList(List<Delivery> list,
+            List<AddressResponse> addressResponses,
+            List<RequirementResponse> requirementResponses) {
+
+        List<DeliveryResponse> deliveryResponses = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            deliveryResponses.add(
+                    DeliveryResponse.of(
+                            list.get(i),
+                            addressResponses.get(i),
+                            requirementResponses.get(i)
+                    )
+            );
+        }
+
+        return deliveryResponses;
+    }
+
+    private static DeliveryResponse of(Delivery delivery, AddressResponse addressResponse, RequirementResponse requirementResponse) {
+        return DeliveryResponse.of(
+                delivery.getId(),
+                requirementResponse.getMessage(),
+                addressResponse.getRoadName(),
+                addressResponse.getZipCode(),
+                addressResponse.getName(),
+                addressResponse.getDetailed()
+        );
+    }
+
 }
