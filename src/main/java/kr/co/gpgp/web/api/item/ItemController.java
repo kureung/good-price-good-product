@@ -90,10 +90,6 @@ public class ItemController {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 10);
         Page<ItemSearchDto> searchItems = itemFindService.search(condition, pageRequest);
 
-        for (ItemSearchDto itemSearchDto : searchItems.getContent()) {
-            System.out.println("itemSearchDto = " + itemSearchDto);
-        }
-
         model.addAttribute("searchItems", searchItems);
 
         Pages<ItemSearchDto> pages = Pages.of(searchItems, 4);
