@@ -66,8 +66,8 @@ class ItemFindServiceTest {
         // when
         int PageSize = 10;
         PageRequest pageRequest = PageRequest.of(0, PageSize);
-        Page<Item> itemResponses = sut.search(condition, pageRequest);
-        List<Item> content = itemResponses.getContent();
+        Page<ItemSearchDto> itemResponses = sut.search(condition, pageRequest);
+        List<ItemSearchDto> content = itemResponses.getContent();
 
         // then
         assertThat(content.size()).isEqualTo(PageSize);

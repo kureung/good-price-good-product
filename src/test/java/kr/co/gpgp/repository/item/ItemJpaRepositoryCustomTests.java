@@ -6,6 +6,7 @@ import java.util.List;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemInfo;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
+import kr.co.gpgp.domain.item.ItemSearchDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,8 +48,8 @@ class ItemJpaRepositoryCustomTests {
         // when
         int PageSize = 10;
         PageRequest pageRequest = PageRequest.of(0, PageSize);
-        Page<Item> itemResponses = sut.searchItem(condition, pageRequest);
-        List<Item> content = itemResponses.getContent();
+        Page<ItemSearchDto> itemResponses = sut.searchItem(condition, pageRequest);
+        List<ItemSearchDto> content = itemResponses.getContent();
 
         // then
         assertThat(content.size()).isEqualTo(PageSize);

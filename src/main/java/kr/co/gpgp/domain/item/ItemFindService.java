@@ -24,7 +24,7 @@ public class ItemFindService {
                 .orElseThrow(() -> new NoSuchElementException("해당 상품을 찾을 수 없습니다."));
     }
 
-    public Page<Item> search(ItemSearchCondition condition, Pageable pageable) {
+    public Page<ItemSearchDto> search(ItemSearchCondition condition, Pageable pageable) {
         return itemRepository.searchItem(condition, pageable);
     }
 }

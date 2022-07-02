@@ -4,6 +4,7 @@ import java.util.Optional;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemRepository;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
+import kr.co.gpgp.domain.item.ItemSearchDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Repository;
 public class ItemRepositoryImpl implements ItemRepository {
 
     private final ItemJpaRepository jpaRepository;
-    private final ItemRepositoryCustom repositoryCustom;
 
     @Override
     public Optional<Item> findByInfoCode(String code) {
@@ -27,8 +27,8 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Page<Item> searchItem(ItemSearchCondition condition, Pageable pageable) {
-        return repositoryCustom.searchItem(condition, pageable);
+    public Page<ItemSearchDto> searchItem(ItemSearchCondition condition, Pageable pageable) {
+        return jpaRepository.searchItem(condition, pageable);
     }
 
     @Override

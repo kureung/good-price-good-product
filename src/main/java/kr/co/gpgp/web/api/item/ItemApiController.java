@@ -7,6 +7,7 @@ import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemCommandService;
 import kr.co.gpgp.domain.item.ItemFindService;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
+import kr.co.gpgp.domain.item.ItemSearchDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,16 +69,12 @@ public class ItemApiController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<ItemResponse>> itemSearch(
+    public ResponseEntity<Page<ItemSearchDto>> itemSearch(
             @Valid @RequestBody ItemSearchCondition condition,
             Pageable pageable
     ) {
-        Page<ItemResponse> searchItemResponses = itemFindService.search(condition, pageable)
-                .map(ItemResponse::toDto);
-
-        List<ItemResponse> content = searchItemResponses.getContent();
-
-        return ResponseEntity.ok(content);
+        Page<ItemSearchDto> searchItemResponses = itemFindService.search(condition, pageable);
+        return ResponseEntity.ok(searchItemResponses);
     }
 
 }
