@@ -46,9 +46,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     }
 
     private List<ItemSearchDto> searchItemContent(ItemSearchCondition condition, Pageable pageable) {
-        QItemSearchDto itemSearchDto = new QItemSearchDto(item.id, item.info.name, item.price);
+        QItemSearchDto itemSearchDto = new QItemSearchDto(item.id, item.info.name, item.price, item.info.author);
         return queryFactory
-                .select( itemSearchDto)
+                .select(itemSearchDto)
                 .from(item)
                 .where(
                         itemNameContains(condition.getItemName()),
@@ -63,7 +63,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     }
 
     private BooleanExpression authorContains(String author) {
-        return StringUtils.hasText(author) ? item.info.author.contains(author) : null;
+        return StringUtils.hasText(author) ? item.info.author.contains(author):null;
     }
 
 }

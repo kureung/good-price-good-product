@@ -10,11 +10,14 @@ public class ItemSearchDto {
     private String itemName;
     private int itemPrice;
 
+    private String author;
+
     @QueryProjection
-    public ItemSearchDto(Long itemId, String itemName, int itemPrice) {
+    public ItemSearchDto(Long itemId, String itemName, int itemPrice, String author) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
+        this.author = author;
     }
 
 }
