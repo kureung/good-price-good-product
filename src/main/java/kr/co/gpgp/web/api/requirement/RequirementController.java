@@ -21,42 +21,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/requirement")
-public class RequirementApiController {
+public class RequirementController {
 
     private final RequirementService requirementService;
 
     @PostMapping
-    public ResponseEntity<Requirement> create(
-            @Valid String message
+    public String create(
+             String message
     ) {
         UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
-        Requirement requirement = requirementService.create(user.getId(), message);
+        requirementService.create(user.getId(), message);
 
-        return ResponseEntity.ok().body(requirement);
+        return "redirect:/requirement";
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> delete(
-            @Valid Long requirementId
+    public String delete(
+             Long requirementId
     ) {
         UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         requirementService.delete(user.getId(), requirementId);
 
-        return ResponseEntity.ok().build();
+        return "redirect:/requirement";
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(
-            @Valid String message,
-            @Valid Long id
+    public String update(
+             String message,
+             Long id
     ) {
         UserDetails user = UserDetails.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         requirementService.update(user.getId(), id, message);
 
-        return ResponseEntity.ok().build();
+        return "redirect:/requirement";
     }
 
     @GetMapping
@@ -69,6 +69,7 @@ public class RequirementApiController {
         List<RequirementResponse> response = RequirementResponse.of(requirement);
 
         model.addAttribute("requirementList", response);
+
         return "/requirement";
     }
 
