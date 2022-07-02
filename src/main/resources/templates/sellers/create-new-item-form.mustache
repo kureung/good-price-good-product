@@ -1,33 +1,32 @@
 {{>layout/header}}
 
 <div class="container">
-  {{#newItemCreateForm}}
 
+  {{#newItemCreateForm}}
     <form class="row g-3" method="post">
       <div class="row mb-3">
         <label for="name">상품명</label>
-        <input type="text" value="{{name}}">
+        <input type="text" value="{{name}}" name="name">
       </div>
 
       <div class="row mb-3">
-        <label for="name">가격</label>
-        <input type="text" value="{{price}}">
+        <label>가격</label>
+        <input type="text" value="{{price}}" name="price">
       </div>
 
       <div class="row mb-3">
-        <label for="name">수량</label>
-        <input type="text" value="{{stockQuantity}}">
+        <label>수량</label>
+        <input type="text" value="{{stockQuantity}}" name="stockQuantity">
       </div>
 
       <div class="row mb-3">
-        <label for="name">저자</label>
-        <input type="text" value="{{author}}">
+        <label>저자</label>
+        <input type="text" value="{{author}}" name="author">
       </div>
 
       <div class="col-12">
       <button type="submit" class="btn btn-primary">등록</button>
       </div>
-
     </form>
   {{/newItemCreateForm}}
 

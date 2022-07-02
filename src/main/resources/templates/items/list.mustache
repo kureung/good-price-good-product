@@ -1,0 +1,40 @@
+{{>layout/header}}
+
+<div class="container">
+
+  <div>
+    <form action method="get">
+      <label for="name">책 검색</label>
+      <input type="text" class="form-control", name="itemName">
+    </form>
+  </div>
+
+  <table class="table table-sm">
+    <thead>
+    <tr>
+      <th>도서 명</th>
+      <th>가격</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#searchItems}}
+      <tr>
+        <td>{{itemName}}</td>
+        <td>{{itemPrice}}</td>
+      </tr>
+    {{/searchItems}}
+    </tbody>
+  </table>
+
+  <table>
+    {{#pages}}
+      <p>
+        <a href="/items/list?page={{.}}">{{.}}</a>
+      </p>
+    {{/pages}}
+
+  </table>
+
+</div>
+
+{{>layout/footer}}
