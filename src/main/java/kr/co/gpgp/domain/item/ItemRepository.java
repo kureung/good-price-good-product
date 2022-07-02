@@ -10,7 +10,7 @@ public interface ItemRepository {
 
     boolean existsByInfoName(String name);
 
-    Page<Item> searchItem(ItemSearchCondition condition, Pageable pageable);
+    Page<ItemSearchDto> searchItem(ItemSearchCondition condition, Pageable pageable);
 
     Optional<Item> findById(Long id);
 

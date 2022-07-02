@@ -4,7 +4,7 @@ import java.util.Optional;
 import kr.co.gpgp.domain.item.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ItemJpaRepository extends JpaRepository<Item, Long> {
+public interface ItemJpaRepository extends JpaRepository<Item, Long>, ItemRepositoryCustom {
 
     Optional<Item> findByInfoName(String name);
 
