@@ -76,17 +76,14 @@ public class DeliveryUserService {
         deliveryRepository.delete(findDelivery);
     }
 
-    public Delivery update(Long id, AddressDto addressdto, RequirementDto requirementDto) {
-        User user = userRepository.findById(id)
+    public void update(Long id,Long deliveryId) {
+         userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("유저 ID가 없어 배송을 수정정 할수 없습니."));
 
-        Requirement requirement = RequirementDto.toEntity(requirementDto);
+        Delivery findDelivery = deliveryRepository.findById(deliveryId)
+                    .orElseThrow(() -> new IllegalArgumentException("배송 ID가 존재하지 않아 구매 확정을 할수 없습니다."));
 
-        Address address = addressdto.toEntity(user);
-
-        Delivery delivery = Delivery.of(requirement, address);
-
-        return deliveryRepository.save(delivery);
+        findDelivery.nextStepPurchaseConfirmation();
     }
 
     public List<Long> toAddressIdList(List<Delivery> delivery) {
