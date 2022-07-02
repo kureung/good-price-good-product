@@ -42,8 +42,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .from(item)
                 .where(
                         itemNameContains(condition.getItemName()),
-                        priceGoe(condition.getPriceGoe()),
-                        priceLoe(condition.getPriceLoe()));
+                        authorContains(condition.getAuthor()));
     }
 
     private List<ItemSearchDto> searchItemContent(ItemSearchCondition condition, Pageable pageable) {
@@ -53,8 +52,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .from(item)
                 .where(
                         itemNameContains(condition.getItemName()),
-                        priceGoe(condition.getPriceGoe()),
-                        priceLoe(condition.getPriceLoe()))
+                        authorContains(condition.getAuthor()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -64,12 +62,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         return StringUtils.hasText(itemName) ? item.info.name.contains(itemName):null;
     }
 
-    private BooleanExpression priceGoe(Integer priceGoe) {
-        return priceGoe!=null ? item.price.goe(priceGoe):null;
-    }
-
-    private BooleanExpression priceLoe(Integer priceLoe) {
-        return priceLoe!=null ? item.price.loe(priceLoe):null;
+    private BooleanExpression authorContains(String author) {
+        return StringUtils.hasText(author) ? item.info.author.contains(author) : null;
     }
 
 }
