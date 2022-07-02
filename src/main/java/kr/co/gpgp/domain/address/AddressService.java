@@ -35,7 +35,10 @@ public class AddressService {
     }
 
     /** 주소는 삭제할수 있다. */
-    public void delete(Long addressId) {
+    public void delete(Long id,Long addressId) {
+
+        userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 주소를 삭제할수 없습니다."));
 
         Address address = addressRepository.findById(addressId)
                 .orElseThrow(() -> new IllegalArgumentException("address ID 가 없어 주소를 삭제할수 없습니다."));
@@ -44,9 +47,11 @@ public class AddressService {
     }
 
     /** 주소는 수정할수 있다. */
-    public void update(Long addressBeforeId, AddressDto address) {
+    public void update(Long userId, AddressDto address) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("조회하려는 User ID 값이 없어 주소를 변경 할수 없습니다."));
 
-        Address addressBefore = addressRepository.findById(addressBeforeId)
+        Address addressBefore = addressRepository.findById(address.getId())
                 .orElseThrow(() -> new IllegalArgumentException("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다."));
 
         addressBefore.update(
@@ -60,7 +65,7 @@ public class AddressService {
 
     /** 주소는 조회가 가능하다. */
     public List<Address> select(Long userId) {
-        User user = userRepository.findById(userId)
+        userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("조회하려는 User ID 값이 없어 주소를 조회할수 없습니다."));
 
         return addressRepository.findByUserId(userId);

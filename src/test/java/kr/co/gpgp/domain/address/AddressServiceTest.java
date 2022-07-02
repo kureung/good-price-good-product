@@ -86,14 +86,14 @@ public class AddressServiceTest {
         Address address = Address.of(user, "12345667899", "123-345", "2name", "delete Detailed");
         address = addressRepository.save(address);
 
-        addressService.delete(address.getId());
+        addressService.delete(1L,address.getId());
 
-        Mockito.verify(addressService).delete(address.getId());
+        Mockito.verify(addressService).delete(1L,address.getId());
     }
 
     @Test
     void 주소_삭제_테스트를_실패한다() {
-        assertThatThrownBy(() -> addressService.delete(Long.MAX_VALUE))
+        assertThatThrownBy(() -> addressService.delete(1L,Long.MAX_VALUE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
