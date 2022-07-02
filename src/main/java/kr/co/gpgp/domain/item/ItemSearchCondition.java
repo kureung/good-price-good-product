@@ -7,14 +7,12 @@ import lombok.Getter;
 public class ItemSearchCondition {
 
     private String itemName;
-    private Integer priceGoe;
-    private Integer priceLoe;
+    private String author;
 
     @Builder
-    private ItemSearchCondition(String itemName, Integer priceGoe, Integer priceLoe) {
+    private ItemSearchCondition(String itemName, String author) {
         this.itemName = itemName;
-        this.priceGoe = priceGoe;
-        this.priceLoe = priceLoe;
+        this.author = author;
     }
 
 }
