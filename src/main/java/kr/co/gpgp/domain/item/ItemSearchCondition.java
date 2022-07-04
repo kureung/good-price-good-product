@@ -1,18 +1,20 @@
 package kr.co.gpgp.domain.item;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class ItemSearchCondition {
 
-    private String itemName;
-    private String author;
+    private String itemNameOrAuthor;
 
-    @Builder
-    private ItemSearchCondition(String itemName, String author) {
-        this.itemName = itemName;
-        this.author = author;
+    private ItemSearchCondition(String itemNameOrAuthor) {
+        this.itemNameOrAuthor = itemNameOrAuthor;
+    }
+
+    public static ItemSearchCondition from(String itemNameOrAuthor) {
+        return new ItemSearchCondition(itemNameOrAuthor);
     }
 
 }
