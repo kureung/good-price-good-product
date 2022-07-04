@@ -72,7 +72,7 @@ public class ItemController {
         Item item = ItemAdapter.toEntity(form);
         itemCommandService.update(itemId, item);
 
-        return "redirect:/";
+        return "redirect:/items";
     }
 
     @GetMapping
