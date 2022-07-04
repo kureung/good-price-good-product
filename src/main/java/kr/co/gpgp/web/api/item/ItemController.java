@@ -60,6 +60,15 @@ public class ItemController {
         return "redirect:/items";
     }
 
+    @GetMapping("/{itemId}")
+    public String findOne(@PathVariable Long itemId,
+                          Model model) {
+        Item item = itemFindService.findOne(itemId);
+        NewItemCreateForm newItemCreateForm = ItemAdapter.toForm(item);
+        model.addAttribute(newItemCreateForm);
+        return "items/detailed";
+    }
+
     @PatchMapping("/{itemId}")
     public String edit(@PathVariable Long itemId,
                        @Valid @ModelAttribute NewItemCreateForm form,
@@ -72,7 +81,7 @@ public class ItemController {
         Item item = ItemAdapter.toEntity(form);
         itemCommandService.update(itemId, item);
 
-        return "redirect:/";
+        return "redirect:/items";
     }
 
     @GetMapping

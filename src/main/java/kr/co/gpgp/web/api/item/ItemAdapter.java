@@ -35,4 +35,11 @@ public class ItemAdapter {
                 .build();
     }
 
+    public static NewItemCreateForm toForm(Item item) {
+        return new NewItemCreateForm(item.getAuthor(),
+                item.getPrice(),
+                item.getStockQuantity(),
+                item.getName());
+    }
+
 }
