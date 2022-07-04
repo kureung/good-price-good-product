@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.Optional;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
 import kr.co.gpgp.domain.item.ItemSearchDto;
 import kr.co.gpgp.domain.item.QItemSearchDto;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 @Repository
 @RequiredArgsConstructor
@@ -50,7 +50,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     }
 
     private BooleanExpression containsCondition(String condition) {
-        return StringUtils.hasText(condition) ? itemNameContains(condition).or(authorContains(condition)): null;
+        String nullSafeCondition = Optional.ofNullable(condition).orElse("");
+        return itemNameContains(nullSafeCondition).or(authorContains(nullSafeCondition));
     }
 
     private BooleanExpression itemNameContains(String itemName) {
