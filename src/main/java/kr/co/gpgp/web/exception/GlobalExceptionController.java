@@ -1,6 +1,7 @@
 package kr.co.gpgp.web.exception;
 
 import java.util.List;
+import java.util.Optional;
 import kr.co.gpgp.web.exception.ErrorResponse.FieldError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,8 @@ public class GlobalExceptionController {
 
         log.error(e.getMessage(), e);
 
-        ErrorCode errorCode = ErrorCode.fromMessage(e.getMessage());
-
-        if (errorCode==null) {
-            errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
-        }
+        ErrorCode errorCode = Optional.ofNullable(ErrorCode.fromMessage(e.getMessage()))
+                .orElse(ErrorCode.INTERNAL_SERVER_ERROR);
 
         final ErrorResponse response = ErrorResponse.of(errorCode);
         return ResponseEntity
@@ -50,7 +48,9 @@ public class GlobalExceptionController {
 
         log.error(e.getMessage(), e);
 
-        final String value = e.getValue()==null ? "":e.getValue().toString();
+        String value = Optional.ofNullable(e.getValue())
+                .orElse("")
+                .toString();
         List<FieldError> errors = FieldError.of(e.getName(), value, e.getErrorCode());
         ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_TYPE_VALUE, errors);
 
