@@ -59,9 +59,7 @@ class ItemFindServiceTest {
             itemJpaRepository.save(item);
         }
 
-        ItemSearchCondition condition = ItemSearchCondition.builder()
-                .itemName("i")
-                .build();
+        ItemSearchCondition condition = ItemSearchCondition.from("1");
 
         // when
         int PageSize = 10;
