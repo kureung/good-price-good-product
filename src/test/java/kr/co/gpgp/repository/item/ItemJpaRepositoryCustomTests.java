@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 class ItemJpaRepositoryCustomTests {
 
     @Autowired
-    private ItemRepositoryCustom sut;
+    private ItemRepositoryCustomImpl sut;
 
     @Autowired
     private ItemJpaRepository itemJpaRepository;
@@ -41,9 +41,7 @@ class ItemJpaRepositoryCustomTests {
             itemJpaRepository.save(item);
         }
 
-        ItemSearchCondition condition = ItemSearchCondition.builder()
-                .itemName("i")
-                .build();
+        ItemSearchCondition condition = ItemSearchCondition.from("1");
 
         // when
         int PageSize = 10;

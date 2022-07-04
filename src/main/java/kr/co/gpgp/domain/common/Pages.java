@@ -1,4 +1,4 @@
-package kr.co.gpgp.web.common;
+package kr.co.gpgp.domain.common;
 
 import static java.util.stream.Collectors.*;
 
