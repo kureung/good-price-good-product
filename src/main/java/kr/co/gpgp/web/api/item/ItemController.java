@@ -1,18 +1,15 @@
 package kr.co.gpgp.web.api.item;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import kr.co.gpgp.auth.dto.UserDetails;
 import kr.co.gpgp.domain.item.Item;
 import kr.co.gpgp.domain.item.ItemCommandService;
 import kr.co.gpgp.domain.item.ItemFindService;
 import kr.co.gpgp.domain.item.ItemSearchCondition;
-import kr.co.gpgp.domain.item.ItemSearchCondition.ItemSearchConditionBuilder;
 import kr.co.gpgp.domain.item.ItemSearchDto;
 import kr.co.gpgp.domain.user.Seller;
 import kr.co.gpgp.domain.user.SellerService;
-import kr.co.gpgp.web.common.Pages;
+import kr.co.gpgp.domain.common.Pages;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -78,24 +75,21 @@ public class ItemController {
         return "redirect:/";
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public String searchItem(
-            @RequestParam(required = false) String itemName,
+            @RequestParam(required = false) String condition,
             Pageable pageable,
             Model model
     ) {
-        ItemSearchCondition condition = ItemSearchCondition.builder()
-                .itemName(itemName)
-                .build();
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 10);
-        Page<ItemSearchDto> searchItems = itemFindService.search(condition, pageRequest);
-
+        ItemSearchCondition searchCondition = ItemSearchCondition.from(condition);
+        Page<ItemSearchDto> searchItems = itemFindService.search(searchCondition, pageRequest);
         model.addAttribute("searchItems", searchItems);
 
         Pages<ItemSearchDto> pages = Pages.of(searchItems, 4);
-
         model.addAttribute("pages", pages.getPages());
 
+        log.info("condition='{}'", condition);
         log.info("pages.getPages()= '{}'", pages.getPages());
         log.info("firstPage='{}'", pages.getFirstPage());
         log.info("lastPage='{}'", pages.getLastPage());
