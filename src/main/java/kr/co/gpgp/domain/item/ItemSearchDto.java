@@ -2,14 +2,15 @@ package kr.co.gpgp.domain.item;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class ItemSearchDto {
 
     private Long itemId;
     private String itemName;
     private int itemPrice;
-
     private String author;
 
     @QueryProjection
