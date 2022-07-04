@@ -37,12 +37,12 @@ public class ItemController {
     private final ItemFindService itemFindService;
     private final SellerService sellerService;
 
-    @GetMapping
+    @GetMapping("/registration")
     public String createForm(@ModelAttribute NewItemCreateForm newItemCreateForm) {
         return "sellers/create-new-item-form";
     }
 
-    @PostMapping
+    @PostMapping("/registration")
     public String create(@Valid @ModelAttribute NewItemCreateForm newItemCreateForm,
                          BindingResult bindingResult
     ) {
