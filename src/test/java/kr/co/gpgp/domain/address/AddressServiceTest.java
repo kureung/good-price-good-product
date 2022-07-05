@@ -162,10 +162,10 @@ public class AddressServiceTest {
 
         AddressDto addressDto = AddressDto.of(address.getUser().getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        addressService.update(address.getId(), addressDto);
+        addressService.update(address.getUser().getId(), addressDto);
 
         Mockito.verify(addressService)
-                .update(address.getId(), addressDto);
+                .update(address.getUser().getId(), addressDto);
     }
 
     @Test
@@ -174,10 +174,10 @@ public class AddressServiceTest {
         address = addressRepository.save(address);
         AddressRequest addressRequest = AddressRequest.of(address.getId(), "경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
 
-        AddressDto addressDto = AddressDto.of(address.getUser().getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+        AddressDto addressDto = AddressDto.of(Long.MAX_VALUE, Long.MAX_VALUE, addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
 
-        assertThatThrownBy(() -> addressService.update(Long.MAX_VALUE, addressDto))
+        assertThatThrownBy(() -> addressService.update(address.getUser().getId(), addressDto))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다.");
     }
