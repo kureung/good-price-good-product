@@ -28,5 +28,4 @@ public class CourierRepositoryImpl implements CourierRepository {
         return jpaRepository.findByCourierArea(courierArea);
     }
 
-
 }
