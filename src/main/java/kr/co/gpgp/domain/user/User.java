@@ -1,5 +1,7 @@
 package kr.co.gpgp.domain.user;
 
+import static lombok.AccessLevel.PROTECTED;
+
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,25 +9,21 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "users")
+@NoArgsConstructor(access = PROTECTED)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    //    @OneToOne
-//    private Seller seller;
+
     @Enumerated(EnumType.STRING)
-    private Role role; //oauth2 login
+    private Role role;
     private String name;
     private String email;
     private String profileImage;
@@ -55,6 +53,9 @@ public class User {
         return new User(name, email, role);
     }
 
+    public static User of(String name, String email) {
+        return new User(name, email, Role.USER);
+    }
 
     public static User of(String name, String email, Role role, String profileImage) {
         return new User(name, email, role, profileImage);
@@ -79,6 +80,11 @@ public class User {
         return this;
     }
 
+    public boolean isUserRole() {
+        if (role==Role.USER) return true;
+        return false;
+    }
+
     @Transient
     private static final int EMAIL_MAX_LEN = 38;
     @Transient
@@ -94,13 +100,12 @@ public class User {
             "kakao.com"
     );
 
-
     //@Builder override 재정의 하고픔
     private static class UserValidator {
 
         private static void verifyName(String name) {
 
-            if (name == null || name.isBlank()) {
+            if (name==null || name.isBlank()) {
                 throw new IllegalArgumentException("이름은 비어있을 수 없습니다.");
             }
 
@@ -110,7 +115,7 @@ public class User {
         }
 
         private static void verifyEmail(String email) {
-            if (email == null || email.isBlank()) {
+            if (email==null || email.isBlank()) {
                 throw new IllegalArgumentException("이메일은 비어있을 수 없습니다");
             }
             if (!numberBetween(EMAIL_MIN_LEN, EMAIL_MAX_LEN, email.length())) {

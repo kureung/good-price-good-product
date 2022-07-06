@@ -4,41 +4,22 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
+import kr.co.gpgp.common.ServiceTest;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
-import kr.co.gpgp.domain.user.UserRepository;
 import kr.co.gpgp.web.api.delivery.DeliveryResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-@Transactional
-public class DeliveryUserServiceTest {
+public class DeliveryUserServiceTest extends ServiceTest {
 
     private User user;
     private Address address;
     private Requirement requirement;
     private Delivery delivery;
-
-    @SpyBean
-    public DeliveryUserService deliveryUserService;
-
-    @Autowired
-    public AddressRepository addressRepository;
-
-    @Autowired
-    public DeliveryRepository deliveryRepository;
-
-    @Autowired
-    public UserRepository userRepository;
 
     @BeforeEach
     void setup() {
