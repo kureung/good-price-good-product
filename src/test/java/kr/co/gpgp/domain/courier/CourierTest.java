@@ -10,10 +10,9 @@ import org.junit.jupiter.api.Test;
 
 public class CourierTest {
 
-
     @Test
-    void 배송원_생성(){
-        User user = User.of("user","kgh22522252@gmail.com", Role.USER);
+    void 배송원_생성() {
+        User user = User.of("user", "kgh22522252@gmail.com", Role.USER);
 
         Courier courier = Courier.of(user, CourierArea.SEOUL);
 
@@ -21,8 +20,8 @@ public class CourierTest {
     }
 
     @Test
-    void 배송원_지역_변경(){
-        User user = User.of("user","kgh22522252@gmail.com", Role.USER);
+    void 배송원_지역_변경() {
+        User user = User.of("user", "kgh22522252@gmail.com", Role.USER);
 
         Courier courier = Courier.of(user, CourierArea.SEOUL);
 
@@ -33,31 +32,27 @@ public class CourierTest {
     }
 
     @Test
-    void 배송원_택배_할당(){
-        User courierUser = User.of("courier","kgh22522252@gmail.com", Role.USER);
+    void 배송원_택배_할당() {
+        User courierUser = User.of("courier", "kgh22522252@gmail.com", Role.USER);
         Courier courier = Courier.of(courierUser, CourierArea.SEOUL);
 
-        User user =  User.of("user","kgh225222522@gmail.com", Role.USER);
-        Requirement requirement = Requirement.of(user,"test");
-        Address address = Address.of(user,"서울특별시 강남구 가나동 123","12345","우리집","1층");
-        Delivery delivery = Delivery.of(requirement,address);
-
-//        courier.addDelivery(delivery);
-//
-//        Assertions.assertThat(courier.getDeliverys().get(0).getAddress().getName()).isEqualTo("우리집");
+        User user = User.of("user", "kgh225222522@gmail.com", Role.USER);
+        Requirement requirement = Requirement.of(user, "test");
+        Address address = Address.of(user, "서울특별시 강남구 가나동 123", "12345", "우리집", "1층");
+        Delivery delivery = Delivery.of(requirement, address);
 
     }
 
     @Test
-    void 배송원_여러택배_할당(){
-        User courierUser = User.of("courier","kgh22522252@gmail.com", Role.USER);
+    void 배송원_여러택배_할당() {
+        User courierUser = User.of("courier", "kgh22522252@gmail.com", Role.USER);
         Courier courier = Courier.of(courierUser, CourierArea.SEOUL);
 
-        User user =  User.of("user","kgh225222522@gmail.com", Role.USER);
+        User user = User.of("user", "kgh225222522@gmail.com", Role.USER);
 
-        Requirement requirement = Requirement.of(user,"test");
-        Address address = Address.of(user,"서울특별시 강남구 가나동 123","12345","우리집1","1층");
-        Delivery delivery = Delivery.of(requirement,address);
+        Requirement requirement = Requirement.of(user, "test");
+        Address address = Address.of(user, "서울특별시 강남구 가나동 123", "12345", "우리집1", "1층");
+        Delivery delivery = Delivery.of(requirement, address);
 //        courier.addDelivery(delivery);
 //
 //        Requirement requirement2 = Requirement.of(user,"test");
