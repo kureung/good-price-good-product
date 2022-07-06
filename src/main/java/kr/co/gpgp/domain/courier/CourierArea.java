@@ -26,29 +26,31 @@ public enum CourierArea {
     BUSAN("부산광역시");
 
     private String area;
+
     CourierArea(String area) {
-        this.area=area;
+        this.area = area;
     }
-    public String getArea(){
+
+    public String getArea() {
         return area;
     }
 
     public static CourierArea findArea(String str) {
         return areaMap.get(str);
     }
-    static final Map<String,CourierArea> areaMap = areaInit();
 
-    private static Map<String,CourierArea> areaInit(){
-        Map<String,CourierArea> areaMap = new HashMap<>();
+    static final Map<String, CourierArea> areaMap = areaInit();
+
+    private static Map<String, CourierArea> areaInit() {
+        Map<String, CourierArea> areaMap = new HashMap<>();
 
         List<CourierArea> list = List.of(CourierArea.values());
 
         for (CourierArea courierArea : list) {
-            areaMap.put(courierArea.getArea(),courierArea );
+            areaMap.put(courierArea.getArea(), courierArea);
         }
 
         return areaMap;
     }
-
 
 }
