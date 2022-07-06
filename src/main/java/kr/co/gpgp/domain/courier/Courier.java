@@ -1,6 +1,5 @@
 package kr.co.gpgp.domain.courier;
 
-
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import kr.co.gpgp.domain.common.BaseEntity;
 import kr.co.gpgp.domain.user.User;
 import lombok.AccessLevel;
@@ -19,9 +17,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "courier")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Courier extends BaseEntity {
 
     @Id
@@ -34,7 +31,6 @@ public class Courier extends BaseEntity {
 
     @Enumerated(STRING)
     private CourierArea courierArea;
-
 
     private Courier(User user, CourierArea courierArea) {
         this.user = user;
