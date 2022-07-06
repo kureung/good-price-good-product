@@ -4,37 +4,27 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
+import kr.co.gpgp.common.ServiceTest;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
-import kr.co.gpgp.repository.address.AddressJpaRepository;
-import kr.co.gpgp.repository.user.UserJpaRepository;
 import kr.co.gpgp.web.api.address.AddressRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-@SpringBootTest
-public class AddressServiceTest {
+public class AddressServiceTest extends ServiceTest {
 
     @SpyBean
     AddressService addressService;
-
-    @Autowired
-    AddressJpaRepository addressRepository;
-
-    @Autowired
-    UserJpaRepository userRepository;
 
     private User user;
     private Address address;
 
     @BeforeEach
     void setups() {
-        user = User.of("asdf", "kgh22@gmail.com", Role.USER,"url");
+        user = User.of("asdf", "kgh22@gmail.com", Role.USER, "url");
         address = Address.of(user, "12345667899", "12345", "1번째", "detailed");
 
         userRepository.save(user);
@@ -48,9 +38,9 @@ public class AddressServiceTest {
                 address.getName(),
                 address.getDetailed());
 
-        AddressDto addressDto = AddressDto.of(1L, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
+        AddressDto addressDto = AddressDto.of(user.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
-        addressService.create(1L,addressDto);
+        addressService.create(user.getId(), addressDto);
 
         Assertions.assertAll(
                 () -> assertThat(address).isNotNull(),
@@ -70,10 +60,6 @@ public class AddressServiceTest {
                         address.getName(),
                         address.getDetailed());
 
-        AddressDto addressDto = AddressDto.of(1L, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
-        addressService.create(1L,addressDto);
-
         AddressDto addressDtos = AddressDto.of(1000000L, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
         assertThatThrownBy(() -> addressService.create(Long.MAX_VALUE, addressDtos))
@@ -86,15 +72,9 @@ public class AddressServiceTest {
         Address address = Address.of(user, "12345667899", "123-345", "2name", "delete Detailed");
         address = addressRepository.save(address);
 
-        addressService.delete(1L,address.getId());
+        addressService.delete(user.getId(), address.getId());
 
-        Mockito.verify(addressService).delete(1L,address.getId());
-    }
-
-    @Test
-    void 주소_삭제_테스트를_실패한다() {
-        assertThatThrownBy(() -> addressService.delete(1L,Long.MAX_VALUE))
-                .isInstanceOf(IllegalArgumentException.class);
+        Mockito.verify(addressService).delete(user.getId(), address.getId());
     }
 
     @Test
@@ -106,7 +86,7 @@ public class AddressServiceTest {
         addressRepository.save(address2);
 
         //queryDSL - 특정 회원의 주소 조회 조건
-        User user2 = User.of("select ", "kgh2222222@gmail.com", Role.USER,"url");
+        User user2 = User.of("select ", "kgh2222222@gmail.com", Role.USER, "url");
         Address address3 = Address.of(user2, "22222222222222", "33333", "4번쨰", "B");
         userRepository.save(user2);
         addressRepository.save(address3);
@@ -175,7 +155,6 @@ public class AddressServiceTest {
         AddressRequest addressRequest = AddressRequest.of(address.getId(), "경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
 
         AddressDto addressDto = AddressDto.of(Long.MAX_VALUE, Long.MAX_VALUE, addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
 
         assertThatThrownBy(() -> addressService.update(address.getUser().getId(), addressDto))
                 .isInstanceOf(IllegalArgumentException.class)
