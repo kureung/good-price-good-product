@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.UUID;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.address.AddressRepository;
+import kr.co.gpgp.domain.courier.Courier;
+import kr.co.gpgp.domain.courier.CourierArea;
+import kr.co.gpgp.domain.courier.CourierRepository;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.delivery.DeliveryRepository;
 import kr.co.gpgp.domain.item.Item;
@@ -18,6 +21,7 @@ import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
 import kr.co.gpgp.domain.user.UserRepository;
 import kr.co.gpgp.repository.item.ItemJpaRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,6 +53,17 @@ class OrderServiceTests {
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CourierRepository courierRepository;
+
+    @BeforeEach
+    void setup() {
+        User user = User.of("courier", "courier@gmail.com", Role.COURIER);
+        userRepository.save(user);
+        Courier courier = Courier.of(user, CourierArea.SEOUL);
+        courierRepository.save(courier);
+
+    }
 
     @Test
     void 상품_주문_테스트() {
@@ -57,7 +72,7 @@ class OrderServiceTests {
         User savedUser = userRepository.save(user);
 
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
+        Address address = Address.of(savedUser, "서울특별시 강남구 무슨동 1234", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
                 .name("name")
@@ -86,7 +101,7 @@ class OrderServiceTests {
         User savedUser = userRepository.save(user);
 
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
+        Address address = Address.of(savedUser, "서울특별시 강남구 무슨동 1234", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
                 .name("name")
@@ -118,7 +133,7 @@ class OrderServiceTests {
         User savedUser = userRepository.save(user);
 
         Requirement requirement = new Requirement("요청사항");
-        Address address = Address.of(savedUser, "123456789", "12345", "주소", "주소주소");
+        Address address = Address.of(savedUser, "서울특별시 강남구 무슨동 1234", "12345", "주소", "주소주소");
 
         ItemInfo info = ItemInfo.builder()
                 .name("name")
@@ -156,7 +171,7 @@ class OrderServiceTests {
         Requirement requirement = new Requirement("요청사항");
         requirementRepository.save(requirement);
 
-        Address address = Address.of(user, "123456789", "12345", "name1", "detailed");
+        Address address = Address.of(user, "서울특별시 강남구 무슨동 1234", "12345", "name1", "detailed");
         addressRepository.save(address);
 
         Delivery delivery = Delivery.of(requirement, address);
