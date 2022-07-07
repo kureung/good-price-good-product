@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class AddressService {
 
@@ -20,7 +19,8 @@ public class AddressService {
     private final UserRepositoryImpl userRepository;
     private final AddressRepository addressRepository;
 
-    public Address create(Long id, AddressDto addressDto) {
+    @Transactional
+    public Address create(Long id, String roadName, String zipCode, String name, String detailed) {
 
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
@@ -30,10 +30,12 @@ public class AddressService {
             throw new IllegalArgumentException(user.getName() + " 회원의 주소 생성개수가 초과되어 더이상 주소 생성을 할수없습니다.");
         }
 
-        Address address = addressDto.toEntity(user);
-        return addressRepository.save(address);
+        return addressRepository.save(
+                Address.of(user, roadName, zipCode, name, detailed)
+        );
     }
 
+    @Transactional
     public void delete(Long id, Long addressId) {
         userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
@@ -42,17 +44,13 @@ public class AddressService {
         addressRepository.delete(address);
     }
 
-    public void update(Long userId, AddressDto address) {
+    @Transactional
+    public void update(Long userId, Long addressId, String roadName, String zipCode, String name, String detailed) {
         userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
-        Address addressBefore = addressRepository.findById(address.getId()).orElseThrow(AddressNotFoundException::new);
+        Address addressBefore = addressRepository.findById(addressId).orElseThrow(AddressNotFoundException::new);
 
-        addressBefore.update(
-                address.getRoadName(),
-                address.getZipCode(),
-                address.getName(),
-                address.getDetailed()
-        );
+        addressBefore.update(roadName, zipCode, name, detailed);
     }
 
     public List<Address> select(Long userId) {
