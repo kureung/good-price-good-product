@@ -1,9 +1,9 @@
 package kr.co.gpgp.domain.requirement;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 import kr.co.gpgp.domain.user.User;
+import kr.co.gpgp.domain.user.UserNotFoundException;
 import kr.co.gpgp.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class RequirementService {
 
     public Requirement create(Long userId, String message) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 요청사항 를 생성할수 없습니다."));
+                .orElseThrow(UserNotFoundException::new);
 
         List<Requirement> requirementList = requirementRepository.findByUserId(userId);
 
@@ -30,29 +30,29 @@ public class RequirementService {
         Requirement requirement = Requirement.of(user, message);
 
         return requirementRepository.save(requirement);
+
     }
 
     public void delete(Long userId, Long requirementId) {
         userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 요청사항을 삭제할수 없습니다."));
+                .orElseThrow(UserNotFoundException::new);
 
         requirementRepository.deleteById(requirementId);
     }
 
     public void update(Long userId, Long id, String message) {
         userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 요청사항을 수정할수 없습니다."));
+                .orElseThrow(UserNotFoundException::new);
 
         Requirement req = requirementRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("requirement ID를 조회할수 없어 요청사항을 수정할수 없습니다."));
+                .orElseThrow(RequirementNotFoundException::new);
 
         req.updateMessage(message);
     }
 
     public List<Requirement> select(Long userId) {
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("user ID를 조회할수 없어 요청사항을 조회"));
+        userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
 
         return requirementRepository.findByUserId(userId);
     }
@@ -62,8 +62,9 @@ public class RequirementService {
         return addressIdList.stream()
                 .map(
                         ls -> requirementRepository.findById(ls)
-                                .orElseThrow(() -> new IllegalArgumentException("조회 하려는 delivery.requirementId 값이 존재 하지 않습니다."))
+                                .orElseThrow(RequirementNotFoundException::new)
                 )
                 .collect(Collectors.toList());
     }
+
 }
