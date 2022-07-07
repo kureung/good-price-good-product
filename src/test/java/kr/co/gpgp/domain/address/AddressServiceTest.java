@@ -7,6 +7,7 @@ import java.util.List;
 import kr.co.gpgp.common.ServiceTest;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
+import kr.co.gpgp.domain.user.UserNotFoundException;
 import kr.co.gpgp.web.api.address.AddressRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,9 +39,7 @@ public class AddressServiceTest extends ServiceTest {
                 address.getName(),
                 address.getDetailed());
 
-        AddressDto addressDto = AddressDto.of(user.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
-        addressService.create(user.getId(), addressDto);
+        addressService.create(user.getId(), address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
 
         Assertions.assertAll(
                 () -> assertThat(address).isNotNull(),
@@ -53,18 +52,15 @@ public class AddressServiceTest extends ServiceTest {
 
     @Test
     void 주소_생성시_유저가_없다면_테스트가_실패한다() {
-
         AddressRequest addressRequest = AddressRequest
                 .of(1L, address.getRoadName(),
                         address.getZipCode(),
                         address.getName(),
                         address.getDetailed());
 
-        AddressDto addressDtos = AddressDto.of(1000000L, addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
-        assertThatThrownBy(() -> addressService.create(Long.MAX_VALUE, addressDtos))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("user ID를 조회할수 없어 주소를 생성할수 없습니다.");
+        assertThatThrownBy(() -> addressService.create(Long.MAX_VALUE, addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed()))
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("회원을 찾을수 없습니다.");
     }
 
     @Test
@@ -119,8 +115,8 @@ public class AddressServiceTest extends ServiceTest {
         addressRepository.save(address2);
 
         assertThatThrownBy(() -> addressService.select(Long.MAX_VALUE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("조회하려는 User ID 값이 없어 주소를 조회할수 없습니다.");
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("회원을 찾을수 없습니다.");
     }
 
     @Test
@@ -131,34 +127,29 @@ public class AddressServiceTest extends ServiceTest {
         addressRepository.save(address2);
 
         assertThatThrownBy(() -> addressService.select(Long.MAX_VALUE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("조회하려는 User ID 값이 없어 주소를 조회할수 없습니다.");
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("회원을 찾을수 없습니다.");
     }
 
     @Test
     void 주소_수정_성공() {
         address = addressRepository.save(address);
-        AddressRequest addressRequest = AddressRequest.of(address.getId(), "경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
 
-        AddressDto addressDto = AddressDto.of(address.getUser().getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
-        addressService.update(address.getUser().getId(), addressDto);
+        addressService.update(address.getUser().getId(), address.getId(), address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
 
         Mockito.verify(addressService)
-                .update(address.getUser().getId(), addressDto);
+                .update(address.getUser().getId(), address.getId(), address.getRoadName(), address.getZipCode(), address.getName(), address.getDetailed());
     }
 
     @Test
     void 주소_수정할_주소_ID가_존재하지않아_수정_실패() {
-
         address = addressRepository.save(address);
+
         AddressRequest addressRequest = AddressRequest.of(address.getId(), "경기도 성남시 상대원1동", "12345", "updateName", "new 요청");
 
-        AddressDto addressDto = AddressDto.of(Long.MAX_VALUE, Long.MAX_VALUE, addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
-        assertThatThrownBy(() -> addressService.update(address.getUser().getId(), addressDto))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("변경할 Address ID 값을 조회할수 없어 변경을 할수 없습니다.");
+        assertThatThrownBy(() -> addressService.update(address.getUser().getId(), Long.MAX_VALUE, addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed()))
+                .isInstanceOf(AddressNotFoundException.class)
+                .hasMessage("주소를 찾을수 없습니다.");
     }
 
 }
