@@ -12,7 +12,6 @@ import kr.co.gpgp.web.api.requirement.RequirementResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @RequiredArgsConstructor
 public class DeliveryDtoFacade {
