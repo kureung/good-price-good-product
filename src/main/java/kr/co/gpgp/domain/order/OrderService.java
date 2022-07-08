@@ -6,6 +6,7 @@ import java.util.UUID;
 import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.address.AddressRepository;
 import kr.co.gpgp.domain.address.AddressService;
+import kr.co.gpgp.domain.courier.CourierContainerService;
 import kr.co.gpgp.domain.delivery.Delivery;
 import kr.co.gpgp.domain.orderline.OrderLine;
 import kr.co.gpgp.domain.requirement.Requirement;
@@ -23,12 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderRepository orderRepository;
     private final UserService userService;
     private final AddressService addressService;
-
+    private final CourierContainerService courierContainerService;
+    private final OrderRepository orderRepository;
     private final AddressRepository addressRepository;
-
     private final RequirementRepository requirementRepository;
 
     @Transactional
@@ -47,6 +47,7 @@ public class OrderService {
         User user = userService.findOne(userId);
 
         Delivery delivery = Delivery.of(findRequirement, findAddress);
+        courierContainerService.sellerToCourier(delivery);
 
         String orderCode = UUID.randomUUID().toString();
 

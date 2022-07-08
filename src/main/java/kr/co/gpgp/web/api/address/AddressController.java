@@ -1,10 +1,8 @@
 package kr.co.gpgp.web.api.address;
 
-
 import java.util.List;
 import kr.co.gpgp.auth.dto.UserDetails;
 import kr.co.gpgp.domain.address.Address;
-import kr.co.gpgp.domain.address.AddressDto;
 import kr.co.gpgp.domain.address.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -30,9 +28,7 @@ public class AddressController {
     ) {
         UserDetails user = UserDetails.of(authentication.getPrincipal());
 
-        AddressDto addressDto = AddressDto.of(addressRequest.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
-        addressService.create(user.getId(), addressDto);
+        addressService.create(user.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
         return "redirect:/address";
     }
@@ -44,7 +40,7 @@ public class AddressController {
     ) {
         UserDetails user = UserDetails.of(authentication.getPrincipal());
 
-        addressService.delete(user.getId(),addressId);
+        addressService.delete(user.getId(), addressId);
 
         return "redirect:/address";
     }
@@ -56,9 +52,7 @@ public class AddressController {
     ) {
         UserDetails user = UserDetails.of(authentication.getPrincipal());
 
-        AddressDto addressDto = AddressDto.of(addressRequest.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
-
-        addressService.update(user.getId(),  addressDto);
+        addressService.update(user.getId(), addressRequest.getId(), addressRequest.getRoadName(), addressRequest.getZipCode(), addressRequest.getName(), addressRequest.getDetailed());
 
         return "redirect:/address";
     }
@@ -77,6 +71,5 @@ public class AddressController {
 
         return "/address";
     }
-
 
 }

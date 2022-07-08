@@ -9,6 +9,7 @@ import kr.co.gpgp.domain.address.Address;
 import kr.co.gpgp.domain.requirement.Requirement;
 import kr.co.gpgp.domain.user.Role;
 import kr.co.gpgp.domain.user.User;
+import kr.co.gpgp.domain.user.UserNotFoundException;
 import kr.co.gpgp.web.api.delivery.DeliveryResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,8 +81,8 @@ public class DeliveryUserServiceTest extends ServiceTest {
     void ID가_존재하지않아_모든배송_조회_실패() {
         org.assertj.core.api.Assertions
                 .assertThatThrownBy(() -> deliveryUserService.selectAll(Long.MAX_VALUE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("유저 ID가 없어 배송을 조회할수 없습니다.");
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("회원을 찾을수 없습니다.");
     }
 
     @Test
@@ -112,8 +113,8 @@ public class DeliveryUserServiceTest extends ServiceTest {
     void 유저ID가_존재하지않아_선택_배송_조회_실패() {
 
         assertThatThrownBy(() -> deliveryUserService.select(Long.MAX_VALUE, null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("유저 ID가 없어 배송을 조회할수 없습니다.");
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("회원을 찾을수 없습니다.");
     }
 
     @Test
@@ -126,8 +127,8 @@ public class DeliveryUserServiceTest extends ServiceTest {
         deliveryRepository.save(delivery);
 
         assertThatThrownBy(() -> deliveryUserService.select(this.user.getId(), delivery.getId()))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("선택한 배송은 유저가 생성한게 아닙니다.");
+                .isInstanceOf(DeliveryNotFoundException.class)
+                .hasMessage("배송을 찾을수 없습니다.");
     }
 
     @Test
