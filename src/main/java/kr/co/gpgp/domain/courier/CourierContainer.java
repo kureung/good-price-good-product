@@ -1,10 +1,8 @@
 package kr.co.gpgp.domain.courier;
 
-import static javax.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +27,9 @@ public class CourierContainer extends BaseEntity {
     @ManyToOne
     private Delivery delivery;
 
-    @Enumerated(STRING)
-    private CourierStatus courierStatus;
-
     private CourierContainer(Courier courier, Delivery delivery) {
         this.courier = courier;
         this.delivery = delivery;
-        courierStatus = CourierStatus.init();
     }
 
     public static CourierContainer of(Courier courier, Delivery delivery) {
