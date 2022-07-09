@@ -32,9 +32,13 @@ public class Courier extends BaseEntity {
     @Enumerated(STRING)
     private CourierArea courierArea;
 
+    @Enumerated(STRING)
+    private CourierStatus courierStatus;
+
     private Courier(User user, CourierArea courierArea) {
         this.user = user;
         this.courierArea = courierArea;
+        courierStatus = CourierStatus.init();
     }
 
     public static Courier of(User user, CourierArea courierArea) {
@@ -43,6 +47,22 @@ public class Courier extends BaseEntity {
 
     public void updateCourierArea(CourierArea courierArea) {
         this.courierArea = courierArea;
+    }
+
+    public Courier deliverying() {
+        courierStatus = CourierStatus.SHIPPING;
+        return this;
+    }
+
+    public Courier completion() {
+        courierStatus = CourierStatus.COMPLETION;
+        return this;
+    }
+
+    public Courier waiting() {
+        courierStatus = CourierStatus.WAITING_FOR_DELIVERY;
+        return this;
+
     }
 
 }
