@@ -2,6 +2,7 @@ package kr.co.gpgp.common;
 
 import kr.co.gpgp.domain.address.AddressService;
 import kr.co.gpgp.domain.courier.CourierContainerService;
+import kr.co.gpgp.domain.courier.CourierService;
 import kr.co.gpgp.domain.delivery.DeliveryCourierService;
 import kr.co.gpgp.domain.delivery.DeliveryUserService;
 import kr.co.gpgp.domain.requirement.RequirementRepository;
@@ -31,5 +32,7 @@ public class ServiceTest extends RepositoryTest {
     public RequirementRepository requirementRepository;
     @Autowired
     public CourierContainerService courierContainerService;
+    @Autowired
+    public CourierService courierService;
 
 }
