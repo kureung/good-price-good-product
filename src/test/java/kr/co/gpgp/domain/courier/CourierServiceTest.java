@@ -2,6 +2,7 @@ package kr.co.gpgp.domain.courier;
 
 import kr.co.gpgp.common.ServiceTest;
 import kr.co.gpgp.domain.user.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,17 +21,23 @@ public class CourierServiceTest extends ServiceTest {
 
     @Test
     void 배송원은_배달을_출발한다() {
-        courierService.deliverying(user.getId());
+        Assertions.assertThatCode(() -> courierService.deliverying(user.getId()))
+                .doesNotThrowAnyException();
+
     }
 
     @Test
     void 배송원은_배달을_완료한다() {
-        courierService.completion(user.getId());
+        Assertions.assertThatCode(() -> courierService.completion(user.getId()))
+                .doesNotThrowAnyException();
+        
     }
 
     @Test
     void 배송원은_배달을_기다린다() {
-        courierService.waiting(user.getId());
+        Assertions.assertThatCode(() -> courierService.waiting(user.getId()))
+                .doesNotThrowAnyException();
+
     }
 
 }
