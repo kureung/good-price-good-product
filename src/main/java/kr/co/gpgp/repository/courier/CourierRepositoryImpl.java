@@ -1,6 +1,7 @@
 package kr.co.gpgp.repository.courier;
 
 import java.util.List;
+import java.util.Optional;
 import kr.co.gpgp.domain.courier.Courier;
 import kr.co.gpgp.domain.courier.CourierArea;
 import kr.co.gpgp.domain.courier.CourierRepository;
@@ -19,7 +20,7 @@ public class CourierRepositoryImpl implements CourierRepository {
     }
 
     @Override
-    public Courier findByUserId(Long id) {
+    public Optional<Courier> findByUserId(Long id) {
         return jpaRepository.findByUserId(id);
     }
 

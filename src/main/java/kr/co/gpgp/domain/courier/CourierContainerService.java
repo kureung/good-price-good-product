@@ -1,6 +1,7 @@
 package kr.co.gpgp.domain.courier;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import kr.co.gpgp.domain.delivery.Delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,22 +28,18 @@ public class CourierContainerService {
 
     private Courier productToCourier(CourierArea courierArea) {
 
-        List<Courier> courierList = courierRepository.findByCourierArea(courierArea);
+        List<Courier> courierList = courierRepository.findByCourierArea(courierArea)
+                .stream()
+                .filter(ls -> ls.getCourierStatus()==CourierStatus.WAITING_FOR_DELIVERY)
+                .collect(Collectors.toList());
 
-        for (Courier couriers : courierList) {
-            List<CourierContainer> courierContainerList = courierContainerRepository.findByCourierList(couriers);
-
-            int filterCourierContainer = (int) courierContainerList.stream()
-                    .filter(ls -> ls.getCourierStatus().equals(CourierStatus.WAITING_FOR_DELIVERY))
-                    .count();
-
-            if (filterCourierContainer < DELIVERY_COUNT_MAX) {
-                return couriers;
-            }
-
+        for (Courier courier : courierList) {
+            int count = courierContainerRepository.findByCourierList(courier).size();
+            if (count < DELIVERY_COUNT_MAX)
+                return courier;
         }
 
-        throw new IllegalArgumentException("인계 받을수 있는 배송원이 없습니다.");
+        throw new CourierNotFoundException(courierArea + " 지역에 배송원이 없습니다.");
     }
 
     private static CourierArea areaEnumValueOf(String roadName) {

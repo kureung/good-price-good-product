@@ -1,10 +1,9 @@
 package kr.co.gpgp.domain.courier;
 
-import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,19 +22,15 @@ public class CourierContainer extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     private Courier courier;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     private Delivery delivery;
-
-    @Enumerated(STRING)
-    private CourierStatus courierStatus;
 
     private CourierContainer(Courier courier, Delivery delivery) {
         this.courier = courier;
         this.delivery = delivery;
-        courierStatus = CourierStatus.init();
     }
 
     public static CourierContainer of(Courier courier, Delivery delivery) {
