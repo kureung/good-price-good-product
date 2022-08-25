@@ -34,7 +34,7 @@
 ![배송지목록](https://user-images.githubusercontent.com/105915960/186663437-0e87b8d9-9ff6-477d-9720-40e78c0af5c6.png)
 
 #### 판매원 배송관리 페이지
-![판매원배송관리](https://user-images.githubusercontent.com/105915960/186663449-abea0f1f-c61f-443d-bf9f-9f9536db0e85.png)
+![관리자배송관리](https://user-images.githubusercontent.com/105915960/186663790-a21d3fae-dd66-40f7-a31f-76c7e3723f22.png)
 
 
 #### 상세페이지 
